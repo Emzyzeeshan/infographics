@@ -8,7 +8,7 @@ import 'package:http/http.dart';
 import 'package:integraphics/Screens/Infographics.dart';
 import 'package:quickalert/quickalert.dart';
 
-import '../Screens/DropdownScreens/APC_Rehan.dart';
+import '../Screens/DropdownScreens/HR_Dashboard.dart';
 
 import 'widget/loginContainer.dart';
 import 'package:shared_preferences/shared_preferences.dart';

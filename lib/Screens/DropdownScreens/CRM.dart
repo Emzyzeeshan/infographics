@@ -1,23 +1,27 @@
 import 'dart:convert';
-
+import 'package:integraphics/Services/DropdownAPIService.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:integraphics/Services/DropdownAPIService.dart';
+import 'package:integraphics/main.dart';
+import 'package:integraphics/widgets/ChartSampleData.dart';
+import 'package:integraphics/widgets/ChartSampleData.dart';
 import 'package:integraphics/widgets/Tooltips.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
-import 'APC_Rehan.dart';
+import 'HR_Dashboard.dart';
 
-class HR_DashBoard extends StatefulWidget {
-  const HR_DashBoard({super.key});
+class CRM_Dashboard extends StatefulWidget {
+  const CRM_Dashboard({super.key});
 
   @override
-  State<HR_DashBoard> createState() => _HR_DashBoardState();
+  State<CRM_Dashboard> createState() => _CRM_DashboardState();
 }
 
-class _HR_DashBoardState extends State<HR_DashBoard> {
+class _CRM_DashboardState extends State<CRM_Dashboard> {
   @override
   void initState() {
-    // ChartdataAPi();_tooltipBehavior =
+    print(dataa);
     PipelineOPPProbabilityPCT_tooltipBehavior = TooltipBehavior(
         textAlignment: ChartAlignment.center,
         enable: true,
@@ -40,11 +44,11 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   TooltipBehavior? RevenueinPipelineByLeadType_tooltipBehavior;
   TooltipBehavior? PipelineByCountry_tooltipBehavior;
   TooltipBehavior? PipelineByProductandservice_tooltipBehavior;
-  var DropdownApidata;
-  var data;
-  late Future<dynamic> _value = ChartdataAPi();
+  var DropdownApidataa;
+
   @override
   Widget build(BuildContext context) {
+    late Future<dynamic> _value = AllChartdataAPi(context, Selectedinput);
     return Scaffold(
       body: FutureBuilder<dynamic>(
         future: _value,
@@ -210,7 +214,7 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
                 ),
               );
             } else {
-              return const Text('Empty data');
+              return const Text('Empty dataa');
             }
           } else {
             return Text('State: ${snapshot.connectionState}');
@@ -220,42 +224,42 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
     );
   }
 
-  Future<dynamic> ChartdataAPi() async {
-    await Future.delayed(Duration(seconds: 1));
-    var headers = {'Content-Type': 'application/json'};
-    var body = json.encode({"dashbordname": "CRM"});
-    var response = await post(
-      Uri.parse('http://192.169.1.211:8080/smartBi/smartIntBi/getChartCards'),
-      headers: headers,
-      body: body,
-    );
+  // Future<dynamic> chartDataAPi() async {
+  //   await Future.delayed(Duration(seconds: 1));
+  //   var headers = {'Content-Type': 'application/json'};
+  //   var body = json.encode({"dashbordname": "CRM"});
+  //   var response = await post(
+  //     Uri.parse('http://192.169.1.211:8080/smartBi/smartIntBi/getChartCards'),
+  //     headers: headers,
+  //     body: body,
+  //   );
 
-    if (response.statusCode == 200) {
-      setState(() {
-        DropdownApidata = response.body;
-        data = jsonDecode(response.body);
-      });
+  //   if (response.statusCode == 200) {
+  //     setState(() {
+  //       DropdownApidataa = response.body;
+  //       dataa = jsonDecode(response.body);
+  //     });
 
-      // print(data);
-      print(data['chartData15']['chartLevelsAndValueObj'][0]['X'].toString());
-    } else {
-      print(response.reasonPhrase);
-    }
-    return data;
-  }
+  //     // print(dataa);
+  //     print(dataa['chartData15']['chartLevelsAndValueObj'][0]['X'].toString());
+  //   } else {
+  //     print(response.reasonPhrase);
+  //   }
+  //   return dataa;
+  // }
 
 //Pipeline Value By Sales Person
   PipelineValueBySalesPerson() {
     List<ChartSampleData> apple = [];
     for (int i = 0;
-        i < data['chartData9']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData9']['chartLevelsAndValueObj'].length;
         i++) {
       apple.add(
         ChartSampleData(
-          x: data['chartData9']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: data['chartData9']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData9']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData9']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              ' ${data['chartData9']['chartLevelsAndValueObj'][i]['Y'].toString()}',
+              ' ${dataa['chartData9']['chartLevelsAndValueObj'][i]['Y'].toString()}',
         ),
       );
     }
@@ -279,9 +283,9 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
             explodeIndex: 0,
             explodeOffset: '10%',
             dataSource: apple,
-            xValueMapper: (ChartSampleData data, _) => data.x as String,
-            yValueMapper: (ChartSampleData data, _) => data.y,
-            dataLabelMapper: (ChartSampleData data, _) => data.text,
+            xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+            dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
             startAngle: 90,
             endAngle: 90,
             dataLabelSettings: const DataLabelSettings(isVisible: true)),
@@ -293,14 +297,14 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   PipelineByCountry() {
     List<ChartSampleData> PipelineByCountry = [];
     for (int i = 0;
-        i < data['chartData3']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData3']['chartLevelsAndValueObj'].length;
         i++) {
       PipelineByCountry.add(
         ChartSampleData(
-          x: data['chartData3']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: data['chartData3']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData3']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData3']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              '${data['chartData3']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${data['chartData3']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
+              '${dataa['chartData3']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${dataa['chartData3']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
         ),
       );
     }
@@ -343,14 +347,14 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   PipelineByProductandservice() {
     List<ChartSampleData> PipelineByProductandservice = [];
     for (int i = 0;
-        i < data['chartData4']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData4']['chartLevelsAndValueObj'].length;
         i++) {
       PipelineByProductandservice.add(
         ChartSampleData(
-          x: data['chartData4']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: data['chartData4']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData4']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData4']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              '${data['chartData4']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${data['chartData4']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
+              '${dataa['chartData4']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${dataa['chartData4']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
         ),
       );
     }
@@ -388,14 +392,14 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   RevenueinPipelineByLeadType() {
     List<ChartSampleData> RevenueinPipelineByLeadTypee = [];
     for (int i = 0;
-        i < data['chartData29']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData29']['chartLevelsAndValueObj'].length;
         i++) {
       RevenueinPipelineByLeadTypee.add(
         ChartSampleData(
-          x: data['chartData29']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: data['chartData29']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData29']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData29']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              '${data['chartData29']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${data['chartData29']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
+              '${dataa['chartData29']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${dataa['chartData29']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
         ),
       );
     }
@@ -410,9 +414,9 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
 
       series: FunnelSeries<ChartSampleData, String>(
           dataSource: RevenueinPipelineByLeadTypee,
-          //   textFieldMapper: (ChartSampleData data, _) => data.text,
-          xValueMapper: (ChartSampleData data, _) => data.x as String,
-          yValueMapper: (ChartSampleData data, _) => data.y,
+          //   textFieldMapper: (ChartSampleData dataa, _) => dataa.text,
+          xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+          yValueMapper: (ChartSampleData dataa, _) => dataa.y,
           dataLabelSettings: DataLabelSettings(
               isVisible: true, labelPosition: ChartDataLabelPosition.inside)),
     );
@@ -422,12 +426,12 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   PipelineOPPProbabilityPCT() {
     List<ChartSampleData> PipelineOPPProbabilityPCT = [];
     for (int i = 0;
-        i < data['chartData7']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData7']['chartLevelsAndValueObj'].length;
         i++) {
       PipelineOPPProbabilityPCT.add(
         ChartSampleData(
-            x: data['chartData7']['chartLevelsAndValueObj'][i]['X'].toString(),
-            y: data['chartData7']['chartLevelsAndValueObj'][i]['Y'],
+            x: dataa['chartData7']['chartLevelsAndValueObj'][i]['X'].toString(),
+            y: dataa['chartData7']['chartLevelsAndValueObj'][i]['Y'],
             size: 0.37,
             pointColor: Colors.orange[800]),
       );
@@ -454,7 +458,7 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
           maximumRadius: 2,
 
           /// It helps to render a bubble series as various colors,
-          /// which is given by user from data soruce.
+          /// which is given by user from dataa soruce.
           pointColorMapper: (ChartSampleData sales, _) => sales.pointColor,
           sizeValueMapper: (ChartSampleData sales, _) => 2,
         )
@@ -467,14 +471,14 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   PipelineValueByStage() {
     List<ChartSampleData> PipelineValueByStage = [];
     for (int i = 0;
-        i < data['chartData8']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData8']['chartLevelsAndValueObj'].length;
         i++) {
       PipelineValueByStage.add(
         ChartSampleData(
-          x: data['chartData8']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: data['chartData8']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData8']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData8']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              ' ${data['chartData8']['chartLevelsAndValueObj'][i]['Y'].toString()}',
+              ' ${dataa['chartData8']['chartLevelsAndValueObj'][i]['Y'].toString()}',
         ),
       );
     }
@@ -507,9 +511,9 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
             explodeIndex: 0,
             explodeOffset: '10%',
             dataSource: PipelineValueByStage,
-            xValueMapper: (ChartSampleData data, _) => data.x as String,
-            yValueMapper: (ChartSampleData data, _) => data.y,
-            dataLabelMapper: (ChartSampleData data, _) => data.text,
+            xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+            dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
             startAngle: 90,
             endAngle: 90,
             dataLabelSettings: const DataLabelSettings(isVisible: true)),
@@ -521,14 +525,14 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   AnalysisOfLostOpportunities() {
     List<ChartSampleData> AnalysisOfLostOpportunities = [];
     for (int i = 0;
-        i < data['chartData10']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData10']['chartLevelsAndValueObj'].length;
         i++) {
       AnalysisOfLostOpportunities.add(
         ChartSampleData(
-          x: data['chartData10']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: data['chartData10']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData10']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData10']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              ' ${data['chartData10']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
+              ' ${dataa['chartData10']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
         ),
       );
     }
@@ -561,9 +565,9 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
             explodeIndex: 0,
             explodeOffset: '10%',
             dataSource: AnalysisOfLostOpportunities,
-            xValueMapper: (ChartSampleData data, _) => data.x as String,
-            yValueMapper: (ChartSampleData data, _) => data.y,
-            dataLabelMapper: (ChartSampleData data, _) => data.text,
+            xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+            dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
             startAngle: 90,
             endAngle: 90,
             dataLabelSettings: const DataLabelSettings(isVisible: true)),
@@ -575,14 +579,14 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   PipelineOpportunitiesBySalesPerson() {
     List<ChartSampleData> PipelineOpportunitiesBySalesPerson = [];
     for (int i = 0;
-        i < data['chartData15']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData15']['chartLevelsAndValueObj'].length;
         i++) {
       PipelineOpportunitiesBySalesPerson.add(
         ChartSampleData(
-          x: data['chartData15']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: data['chartData15']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData15']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData15']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              '${data['chartData15']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${data['chartData15']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
+              '${dataa['chartData15']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${dataa['chartData15']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
         ),
       );
     }
@@ -621,14 +625,14 @@ class _HR_DashBoardState extends State<HR_DashBoard> {
   LeadsSource() {
     List<ChartSampleData> LeadsSource = [];
     for (int i = 0;
-        i < data['chartData17']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData17']['chartLevelsAndValueObj'].length;
         i++) {
       LeadsSource.add(
         ChartSampleData(
-          x: data['chartData17']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: data['chartData17']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData17']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData17']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              '${data['chartData17']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${data['chartData17']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
+              '${dataa['chartData17']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${dataa['chartData17']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
         ),
       );
     }

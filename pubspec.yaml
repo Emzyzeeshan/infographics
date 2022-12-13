@@ -34,12 +34,15 @@ dependencies:
   fl_chart: ^0.55.2
   flutter:
     sdk: flutter
+  flutter_radar_chart: ^0.2.1
   fluttertoast: ^8.1.1
   http: ^0.13.5
+  internet_connection_checker: ^1.0.0+1
   quickalert: ^1.0.0
   shared_preferences: ^2.0.15
 
   sleek_circular_slider: ^2.0.1
+  spider_chart: ^0.2.0
   syncfusion_flutter_charts: ^20.3.58
 
 dev_dependencies:

@@ -6,6 +6,9 @@ void main() {
   runApp(MyApp());
 }
 
+var Selectedinput;
+var dataa;
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override

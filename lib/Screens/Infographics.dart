@@ -5,10 +5,12 @@ import 'package:http/http.dart';
 import 'package:integraphics/Constants/ResponsiveSize.dart';
 import 'package:integraphics/widgets/CircularLoader.dart';
 import 'package:integraphics/widgets/Drawer.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 import '../Logout/logout.dart';
+import '../main.dart';
 import '../widgets/DropdownWidgets.dart';
-import 'DropdownScreens/APC_Rehan.dart';
+import 'DropdownScreens/HR_Dashboard.dart';
 import 'DropdownScreens/Cardwidget.dart';
 import 'DropdownScreens/CRM.dart';
 import 'DropdownScreens/Demand&Supply.dart';
@@ -24,11 +26,12 @@ class InfoGraphics extends StatefulWidget {
 class _InfoGraphicsState extends State<InfoGraphics> {
   @override
   void initState() {
+    print(result);
     super.initState();
   }
 
   late Future<dynamic> finaldata = DropdownApi();
-
+  Future<bool> result = InternetConnectionChecker().hasConnection;
   var DropdownApidata;
   var data;
   var data1;
@@ -111,6 +114,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                                     setState(() {
                                       selectedValue = value;
                                       print(selectedValue);
+                                      Selectedinput = selectedValue;
                                       // pageController.jumpToPage(
                                       //     data['dashBordlist']
                                       //         .indexOf(selectedValue));
@@ -214,7 +218,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
     switch (selectedValue) {
       case 'CRM':
         setState(() {
-          customwid = HR_DashBoard();
+          customwid = CRM_Dashboard();
         });
 
         break;
@@ -226,7 +230,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
         break;
       case 'Currency Charts':
         setState(() {
-          customwid = CI_Tree();
+          customwid = HR_Dashboard();
         });
 
         break;
@@ -238,7 +242,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
         break;
       case 'HR Dashboard':
         setState(() {
-          customwid = Apc_Rehan_Widget();
+          customwid = HR_Dashboard();
         });
         break;
       default:
