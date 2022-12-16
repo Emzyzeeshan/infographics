@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flip_card/flip_card.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:integraphics/Services/DropdownAPIService.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:integraphics/Services/DropdownAPIService.dart';
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/ChartSampleData.dart';
 import 'package:integraphics/widgets/ChartSampleData.dart';
+import 'package:integraphics/widgets/Flipcard.dart';
 import 'package:integraphics/widgets/Tooltips.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'HR_Dashboard.dart';
@@ -57,27 +60,78 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
           AsyncSnapshot<dynamic> snapshot,
         ) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                size: 100,
+                color: Color(0xff6d96fa),
+              ),
+
+              // Image.asset('assets/images/loader.gif')
+            );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return const Text('Error');
             } else if (snapshot.hasData) {
               return SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                   child: Column(
                     children: [
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: [
+                            FlipCardWidet(
+                              dataa['cardData11']['result'][2],
+                              dataa['cardData11']['result'][0],
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData12']['result'][2],
+                              dataa['cardData12']['result'][0],
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData13']['result'][2],
+                              dataa['cardData13']['result'][0],
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData14']['result'][2],
+                              dataa['cardData14']['result'][0],
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData24']['result'][2],
+                              dataa['cardData24']['result'][0],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       Card(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         child: Padding(
                             padding: EdgeInsets.all(12),
                             child: Row(
                               children: [
-                                PipelineValueBySalesPerson(),
-                                Tooltips()
+                                // PipelineValueBySalesPerson(),
+                                // Tooltips()
                               ],
                             )),
                       ),
@@ -85,7 +139,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                         height: 10,
                       ),
                       Card(
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
@@ -100,7 +154,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                         height: 10,
                       ),
                       Card(
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
@@ -117,7 +171,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                         height: 10,
                       ),
                       Card(
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
@@ -126,7 +180,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                             child: Row(
                               children: [
                                 RevenueinPipelineByLeadType(),
-                                Tooltips()
+                                Tooltips(),
                               ],
                             )),
                       ),
@@ -134,7 +188,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                         height: 10,
                       ),
                       Card(
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
@@ -142,8 +196,8 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                             padding: EdgeInsets.all(12),
                             child: Row(
                               children: [
-                                PipelineOPPProbabilityPCT(),
-                                Tooltips()
+                                // PipelineOPPProbabilityPCT(),
+                                // Tooltips()
                               ],
                             )),
                       ),
@@ -151,7 +205,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                         height: 10,
                       ),
                       Card(
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
@@ -165,7 +219,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                         height: 10,
                       ),
                       Card(
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
@@ -182,7 +236,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                         height: 10,
                       ),
                       Card(
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
@@ -199,7 +253,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
                         height: 10,
                       ),
                       Card(
-                        color: Colors.grey[200],
+                        color: Color(0xffe9f2ef),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15)),
                         elevation: 10,
@@ -249,49 +303,49 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
   // }
 
 //Pipeline Value By Sales Person
-  PipelineValueBySalesPerson() {
-    List<ChartSampleData> apple = [];
-    for (int i = 0;
-        i < dataa['chartData9']['chartLevelsAndValueObj'].length;
-        i++) {
-      apple.add(
-        ChartSampleData(
-          x: dataa['chartData9']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: dataa['chartData9']['chartLevelsAndValueObj'][i]['Y'],
-          text:
-              ' ${dataa['chartData9']['chartLevelsAndValueObj'][i]['Y'].toString()}',
-        ),
-      );
-    }
-    return SfCircularChart(
-      palette: [
-        Color.fromRGBO(75, 135, 185, 1),
-        Color.fromRGBO(192, 108, 132, 1),
-        Color.fromRGBO(246, 114, 128, 1),
-        Color.fromRGBO(248, 177, 149, 1),
-      ],
-      legend: Legend(
-          isVisible: true,
-          position: LegendPosition.bottom,
-          overflowMode: LegendItemOverflowMode.wrap),
-      title: ChartTitle(
-          text: 'Pipeline Value By Sales Person',
-          textStyle: TextStyle(fontWeight: FontWeight.bold)),
-      series: <DoughnutSeries<ChartSampleData, String>>[
-        DoughnutSeries<ChartSampleData, String>(
-            explode: true,
-            explodeIndex: 0,
-            explodeOffset: '10%',
-            dataSource: apple,
-            xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
-            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-            dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
-            startAngle: 90,
-            endAngle: 90,
-            dataLabelSettings: const DataLabelSettings(isVisible: true)),
-      ],
-    );
-  }
+  // PipelineValueBySalesPerson() {
+  //   List<ChartSampleData> apple = [];
+  //   for (int i = 0;
+  //       i < dataa['chartData9']['chartLevelsAndValueObj'].length;
+  //       i++) {
+  //     apple.add(
+  //       ChartSampleData(
+  //         x: dataa['chartData9']['chartLevelsAndValueObj'][i]['X'].toString(),
+  //         y: dataa['chartData9']['chartLevelsAndValueObj'][i]['Y'],
+  //         text:
+  //             ' ${dataa['chartData9']['chartLevelsAndValueObj'][i]['Y'].toString()}',
+  //       ),
+  //     );
+  //   }
+  //   return SfCircularChart(
+  //     palette: [
+  //       Color.fromRGBO(75, 135, 185, 1),
+  //       Color.fromRGBO(192, 108, 132, 1),
+  //       Color.fromRGBO(246, 114, 128, 1),
+  //       Color.fromRGBO(248, 177, 149, 1),
+  //     ],
+  //     legend: Legend(
+  //         isVisible: true,
+  //         position: LegendPosition.bottom,
+  //         overflowMode: LegendItemOverflowMode.wrap),
+  //     title: ChartTitle(
+  //         text: 'Pipeline Value By Sales Person',
+  //         textStyle: TextStyle(fontWeight: FontWeight.bold)),
+  //     series: <DoughnutSeries<ChartSampleData, String>>[
+  //       DoughnutSeries<ChartSampleData, String>(
+  //           explode: true,
+  //           explodeIndex: 0,
+  //           explodeOffset: '10%',
+  //           dataSource: apple,
+  //           xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+  //           yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+  //           dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
+  //           startAngle: 90,
+  //           endAngle: 90,
+  //           dataLabelSettings: const DataLabelSettings(isVisible: true)),
+  //     ],
+  //   );
+  // }
 
   //Pipeline By Country
   PipelineByCountry() {
@@ -392,14 +446,14 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
   RevenueinPipelineByLeadType() {
     List<ChartSampleData> RevenueinPipelineByLeadTypee = [];
     for (int i = 0;
-        i < dataa['chartData29']['chartLevelsAndValueObj'].length;
+        i < dataa['chartData25']['chartLevelsAndValueObj'].length;
         i++) {
       RevenueinPipelineByLeadTypee.add(
         ChartSampleData(
-          x: dataa['chartData29']['chartLevelsAndValueObj'][i]['X'].toString(),
-          y: dataa['chartData29']['chartLevelsAndValueObj'][i]['Y'],
+          x: dataa['chartData25']['chartLevelsAndValueObj'][i]['X'].toString(),
+          y: dataa['chartData25']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              '${dataa['chartData29']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${dataa['chartData29']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
+              '${dataa['chartData25']['chartLevelsAndValueObj'][i]['X'].toString()} \n ${dataa['chartData25']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
         ),
       );
     }
@@ -423,49 +477,49 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
   }
   //Pipeline OPP Probability PCT
 
-  PipelineOPPProbabilityPCT() {
-    List<ChartSampleData> PipelineOPPProbabilityPCT = [];
-    for (int i = 0;
-        i < dataa['chartData7']['chartLevelsAndValueObj'].length;
-        i++) {
-      PipelineOPPProbabilityPCT.add(
-        ChartSampleData(
-            x: dataa['chartData7']['chartLevelsAndValueObj'][i]['X'].toString(),
-            y: dataa['chartData7']['chartLevelsAndValueObj'][i]['Y'],
-            size: 0.37,
-            pointColor: Colors.orange[800]),
-      );
-    }
-    return SfCartesianChart(
-      tooltipBehavior: PipelineOPPProbabilityPCT_tooltipBehavior,
-      title: ChartTitle(text: 'Pipeline OPP Probability PCT'),
-      plotAreaBorderWidth: 0,
-      primaryXAxis: CategoryAxis(
-          majorGridLines: const MajorGridLines(width: 0),
-          labelIntersectAction: AxisLabelIntersectAction.rotate45),
-      primaryYAxis: NumericAxis(
-          axisLine: const AxisLine(width: 0),
-          minimum: 0,
-          maximum: 100,
-          rangePadding: ChartRangePadding.additional,
-          majorTickLines: const MajorTickLines(size: 0)),
-      series: <BubbleSeries<ChartSampleData, String>>[
-        BubbleSeries<ChartSampleData, String>(
-          dataSource: PipelineOPPProbabilityPCT,
-          opacity: 0.8,
-          xValueMapper: (ChartSampleData sales, _) => sales.x as String,
-          yValueMapper: (ChartSampleData sales, _) => sales.y,
-          maximumRadius: 2,
+  // PipelineOPPProbabilityPCT() {
+  //   List<ChartSampleData> PipelineOPPProbabilityPCT = [];
+  //   for (int i = 0;
+  //       i < dataa['chartData7']['chartLevelsAndValueObj'].length;
+  //       i++) {
+  //     PipelineOPPProbabilityPCT.add(
+  //       ChartSampleData(
+  //           x: dataa['chartData7']['chartLevelsAndValueObj'][i]['X'].toString(),
+  //           y: dataa['chartData7']['chartLevelsAndValueObj'][i]['Y'],
+  //           size: 0.37,
+  //           pointColor: Colors.orange[800]),
+  //     );
+  //   }
+  //   return SfCartesianChart(
+  //     tooltipBehavior: PipelineOPPProbabilityPCT_tooltipBehavior,
+  //     title: ChartTitle(text: 'Pipeline OPP Probability PCT'),
+  //     plotAreaBorderWidth: 0,
+  //     primaryXAxis: CategoryAxis(
+  //         majorGridLines: const MajorGridLines(width: 0),
+  //         labelIntersectAction: AxisLabelIntersectAction.rotate45),
+  //     primaryYAxis: NumericAxis(
+  //         axisLine: const AxisLine(width: 0),
+  //         minimum: 0,
+  //         maximum: 100,
+  //         rangePadding: ChartRangePadding.additional,
+  //         majorTickLines: const MajorTickLines(size: 0)),
+  //     series: <BubbleSeries<ChartSampleData, String>>[
+  //       BubbleSeries<ChartSampleData, String>(
+  //         dataSource: PipelineOPPProbabilityPCT,
+  //         opacity: 0.8,
+  //         xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+  //         yValueMapper: (ChartSampleData sales, _) => sales.y,
+  //         maximumRadius: 2,
 
-          /// It helps to render a bubble series as various colors,
-          /// which is given by user from dataa soruce.
-          pointColorMapper: (ChartSampleData sales, _) => sales.pointColor,
-          sizeValueMapper: (ChartSampleData sales, _) => 2,
-        )
-      ],
-      // tooltipBehavior: _tooltipBehavior,
-    );
-  }
+  //         /// It helps to render a bubble series as various colors,
+  //         /// which is given by user from dataa soruce.
+  //         pointColorMapper: (ChartSampleData sales, _) => sales.pointColor,
+  //         sizeValueMapper: (ChartSampleData sales, _) => 2,
+  //       )
+  //     ],
+  //     // tooltipBehavior: _tooltipBehavior,
+  //   );
+  // }
 
   //Pipeline Value By Stage
   PipelineValueByStage() {
@@ -532,7 +586,7 @@ class _CRM_DashboardState extends State<CRM_Dashboard> {
           x: dataa['chartData10']['chartLevelsAndValueObj'][i]['X'].toString(),
           y: dataa['chartData10']['chartLevelsAndValueObj'][i]['Y'],
           text:
-              ' ${dataa['chartData10']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
+              '${dataa['chartData10']['chartLevelsAndValueObj'][i]['Y'].toString()}%',
         ),
       );
     }

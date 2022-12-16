@@ -3,6 +3,9 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:integraphics/Constants/ResponsiveSize.dart';
+import 'package:integraphics/Screens/DropdownScreens/HT_Dashboard.dart';
+import 'package:integraphics/Screens/DropdownScreens/Product%20_and_service_spend.dart';
+import 'package:integraphics/Screens/DropdownScreens/Product_Dashboard.dart';
 import 'package:integraphics/widgets/CircularLoader.dart';
 import 'package:integraphics/widgets/Drawer.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -222,15 +225,13 @@ class _InfoGraphicsState extends State<InfoGraphics> {
         });
 
         break;
-      case 'Cards Save Test':
-        allinoneAPI();
-
-        customwid = AB(data1);
+      case 'HT':
+        customwid = HT_Dashboard();
 
         break;
-      case 'Currency Charts':
+      case 'Products':
         setState(() {
-          customwid = HR_Dashboard();
+          customwid = Product_Dashboard();
         });
 
         break;
@@ -243,6 +244,11 @@ class _InfoGraphicsState extends State<InfoGraphics> {
       case 'HR Dashboard':
         setState(() {
           customwid = HR_Dashboard();
+        });
+        break;
+      case 'Product and Service Spend':
+        setState(() {
+          customwid = Product_And_Service_Spend_Dashboard();
         });
         break;
       default:

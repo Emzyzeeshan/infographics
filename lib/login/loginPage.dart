@@ -171,33 +171,28 @@ class _LoginPageState extends State<LoginPage> {
               final result = await InternetAddress.lookup('example.com');
               if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
                 var res = await post(
-                    Uri.parse('https://imdrm.pilogcloud.com/V10/appUserLogin'),
+                    Uri.parse('http://192.169.1.211:8085/user/login'),
                     body: jsonEncode({
                       "rsUsername": userNameText.text.toUpperCase(), //userName
                       "rsPassword": passWordText.text, //passWord
-                      "language": "English",
                     }),
                     headers: {
                       'Content-Type': 'application/json',
                     });
                 var response = jsonDecode(res.body);
-                if (response['ERROR_MESG'] ==
-                    "Oops! User Does not exist,Please contact Administrator.") {
+                if (response['error'] == "Username Incorrect") {
                   setState(() {
                     final snackBar = SnackBar(
-                      content: const Text(
-                          'Oops! User Does not exist,Please contact Administrator.'),
+                      content: const Text('Username Incorrect'),
                       backgroundColor: (Colors.redAccent),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     islogin = false;
                   });
-                } else if (response['ERROR_MESG'] ==
-                    "Oops! User ID or Password shoult not be Empty.")
+                } else if (response['error'] == "Password Incorrect")
                   setState(() {
                     final snackBar = SnackBar(
-                      content: const Text(
-                          'Oops! User ID or Password shoult not be Empty.'),
+                      content: const Text('Password Incorrect'),
                       backgroundColor: (Colors.redAccent),
                       // action: SnackBarAction(
                       //   label: 'dismiss',
@@ -207,24 +202,24 @@ class _LoginPageState extends State<LoginPage> {
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                     islogin = false;
                   });
-                else if (response['ERROR_MESG'] ==
-                    "Oops Login Failed, Username or Password is wrong.")
-                  setState(() {
-                    final snackBar = SnackBar(
-                      content: const Text(
-                          'Oops Login Failed, Username or Password is wrong.'),
-                      backgroundColor: (Colors.redAccent),
-                      // action: SnackBarAction(
-                      //   label: 'dismiss',
-                      //   onPressed: () {},
-                      // ),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    passError = true;
-                    islogin = false;
-                  });
+                // else if (response['ERROR_MESG'] ==
+                //     "Oops Login Failed, Username or Password is wrong.")
+                //   setState(() {
+                //     final snackBar = SnackBar(
+                //       content: const Text(
+                //           'Oops Login Failed, Username or Password is wrong.'),
+                //       backgroundColor: (Colors.redAccent),
+                //       // action: SnackBarAction(
+                //       //   label: 'dismiss',
+                //       //   onPressed: () {},
+                //       // ),
+                //     );
+                //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                //     passError = true;
+                //     islogin = false;
+                //   });
                 else {
-                  var login = response['ssUsername'] ?? '';
+                  var login = response['rsUsername'] ?? '';
                   if (userNameText.text.toUpperCase() == login) {
                     islogin = true;
                     userDetails = {
@@ -247,10 +242,10 @@ class _LoginPageState extends State<LoginPage> {
                       logindata!.setBool('login', false);
                       logindata!.setString('username', username.toUpperCase());
                       logindata!.setString('password', password);
-                      logindata!.setString('role', response['ssRole']);
-                      logindata!.setString('ssLocale', response['ssLocale']);
-                      logindata!.setString('ssRegion', response['ssRegion']);
-                      logindata!.setString('ssOrgname', response['ssOrgname']);
+                      // logindata!.setString('role', response['ssRole']);
+                      // logindata!.setString('ssLocale', response['ssLocale']);
+                      // logindata!.setString('ssRegion', response['ssRegion']);
+                      // logindata!.setString('ssOrgname', response['ssOrgname']);
                       // await showLoaderDialog(context);
                       await Fluttertoast.showToast(
                           msg: "Welcome",

@@ -1,4 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:integraphics/Services/DropdownAPIService.dart';
 import 'package:integraphics/widgets/ChartSampledata.dart';
 import 'package:integraphics/widgets/Tooltips.dart';
@@ -14,6 +16,11 @@ class HR_Dashboard extends StatefulWidget {
 }
 
 class _HR_DashboardState extends State<HR_Dashboard> {
+  List<Map> Pielist = [];
+  // Map pichart;
+  int count = 0;
+  var singlekey;
+
   @override
   void initState() {
     PositionsStatus_tooltipBehavior =
@@ -46,267 +53,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             if (snapshot.hasError) {
               return const Text('Error');
             } else if (snapshot.hasData) {
-              return SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Column(
-                    children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                EmployeesCountByWorkExperience(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                EmployeesCountByAge(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                NoofPositionsByDesignation(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                NoOfL1InterviewsTakenByStatus(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                NoOfL2InterviewsTakenByStatus(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                NoofProfilesShortlistedbyStatus(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                NoOfVacanciesByPosition(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                EmployeesCountbyBloodGroup(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                TotalEmployeesCount(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                EmployeeCountbyDesignation(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                PositionsCountbyLocation(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                EmployeesCountbyMaritalStatus(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                EmployeesCountbyDepartment(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                PositionsStatus(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                EmployeesCountbyGender(),
-                                Tooltips(),
-                              ],
-                            )),
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              return Body();
             } else {
               return const Text('Empty data');
             }
@@ -314,6 +61,39 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             return Text('State: ${snapshot.connectionState}');
           }
         },
+      ),
+    );
+  }
+
+  Body() {
+    List piedata = [];
+    List Columndata = [];
+    List<Map> Pielist = [];
+    Map pichart;
+    int count = 0;
+    var singlekey;
+    print('----------');
+    print('Get keys:');
+    // Get all keys
+    dataa.keys.forEach((key) {
+      singlekey = key;
+      if (dataa['$key']['chartType'] == 'pie') {
+        piedata.add(key);
+      }
+    });
+    print(piedata.toList());
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: ListView.builder(
+        itemCount: piedata.length,
+        itemBuilder: ((context, index) => Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              elevation: 10,
+              color: Colors.grey[200],
+              child: Padding(
+                  padding: EdgeInsets.all(12), child: Piechart(piedata[index])),
+            )),
       ),
     );
   }
@@ -481,7 +261,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
         Color(0xff2f6345),
         Color(0xff40875e),
       ],
-      title: ChartTitle(text: 'Demand By Material Type'),
+      title: ChartTitle(text: 'No  Of L1 Interviews Taken By Status'),
       legend: Legend(
         isVisible: true,
         overflowMode: LegendItemOverflowMode.wrap,
@@ -928,15 +708,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           minimum: 0,
           maximum: 2,
           interval: 1,
-          majorGridLines: const MajorGridLines(width: 1),
-          majorTickLines: const MajorTickLines(size: 0)),
+          majorGridLines: MajorGridLines(width: 1),
+          majorTickLines: MajorTickLines(size: 0)),
       series: <ChartSeries<ChartSampleData, String>>[
         BarSeries<ChartSampleData, String>(
-          dataLabelSettings: const DataLabelSettings(isVisible: true),
+          dataLabelSettings: DataLabelSettings(isVisible: true),
           dataSource: EmployeesCountbyDepartment,
           xValueMapper: (ChartSampleData sales, _) => sales.x as String,
           yValueMapper: (ChartSampleData sales, _) => sales.y,
-        )
+        ),
       ],
     );
   }
@@ -1022,6 +802,46 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           dataLabelSettings: const DataLabelSettings(
               isVisible: true, textStyle: TextStyle(fontSize: 10)),
         )
+      ],
+    );
+  }
+
+  Piechart(String chartname) {
+    List<ChartSampleData> Piechart = [];
+    for (int i = 0;
+        i < dataa['$chartname']['chartLevelsAndValueObj'].length;
+        i++) {
+      Piechart.add(
+        ChartSampleData(
+            x: dataa['$chartname']['chartLevelsAndValueObj'][i]['X'].toString(),
+            y: dataa['$chartname']['chartLevelsAndValueObj'][i]['Y'],
+            text:
+                ' ${(dataa['$chartname']['chartLevelsAndValueObj'][i]['X']).toString()}\n${(dataa['$chartname']['chartLevelsAndValueObj'][i]['Y']).toString()}'),
+      );
+    }
+    return SfCircularChart(
+      palette: [
+        Color(0xff2f6345),
+        Color(0xff40875e),
+      ],
+      title: ChartTitle(text: '${dataa['$chartname']['chartTitle']}'),
+      legend: Legend(
+        isVisible: true,
+        overflowMode: LegendItemOverflowMode.wrap,
+        position: LegendPosition.bottom,
+      ),
+      series: <PieSeries<ChartSampleData, String>>[
+        PieSeries<ChartSampleData, String>(
+            explode: true,
+            explodeIndex: 0,
+            explodeOffset: '0%',
+            dataSource: Piechart,
+            xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+            dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
+            startAngle: 0,
+            endAngle: 0,
+            dataLabelSettings: const DataLabelSettings(isVisible: true)),
       ],
     );
   }
