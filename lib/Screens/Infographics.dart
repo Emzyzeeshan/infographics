@@ -14,7 +14,7 @@ import '../Logout/logout.dart';
 import '../main.dart';
 import '../widgets/DropdownWidgets.dart';
 import 'DropdownScreens/HR_Dashboard.dart';
-import 'DropdownScreens/Cardwidget.dart';
+
 import 'DropdownScreens/CRM.dart';
 import 'DropdownScreens/Demand&Supply.dart';
 
@@ -183,7 +183,8 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                 //         return const Text('Error');
                 //       } else if (snapshot.hasData) {
                 //         return custompage();
-                //       } else {
+                //       } else
+                // {
                 //         return const Text('Empty data');
                 //       }
                 //     } else {

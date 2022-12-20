@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:integraphics/Services/DropdownAPIService.dart';
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/ChartSampledata.dart';
@@ -35,7 +36,13 @@ class _Product_And_Service_Spend_DashboardState
           AsyncSnapshot<dynamic> snapshot,
         ) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                size: 100,
+                color: Color(0xff6d96fa),
+              ),
+            );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return const Text('Error');

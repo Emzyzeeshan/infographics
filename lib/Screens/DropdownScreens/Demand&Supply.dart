@@ -1,12 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_echarts/flutter_echarts.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
+import 'package:integraphics/Constants/colorpalette.dart';
 import 'package:integraphics/Screens/DropdownScreens/HR_Dashboard.dart';
 import 'package:integraphics/Services/DropdownAPIService.dart';
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/ChartSampleData.dart';
+import 'package:integraphics/widgets/Colorsfunction.dart';
 import 'package:integraphics/widgets/Tooltips.dart';
 import 'package:spider_chart/spider_chart.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -50,7 +55,13 @@ class _DemandSupplyState extends State<DemandSupply> {
           AsyncSnapshot<dynamic> snapshot,
         ) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                size: 100,
+                color: Color(0xff6d96fa),
+              ),
+            );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return const Text('Error');
@@ -72,7 +83,39 @@ class _DemandSupplyState extends State<DemandSupply> {
                             child: Row(
                               children: [
                                 DemandByCategory(),
-                                Tooltips(),
+                                Tooltips(
+                                  color: () {
+                                    void changeColor(Color color) {
+                                      setState(() {
+                                        pickerColor = color;
+                                      });
+                                    }
+
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: const Text('Pick a color!'),
+                                        content: SingleChildScrollView(
+                                          child: ColorPicker(
+                                            pickerColor: pickerColor,
+                                            onColorChanged: changeColor,
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          ElevatedButton(
+                                            child: const Text('Got it'),
+                                            onPressed: () {
+                                              setState(() =>
+                                                  DemandByCategorycolor =
+                                                      pickerColor);
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ],
                             )),
                       ),
@@ -88,7 +131,42 @@ class _DemandSupplyState extends State<DemandSupply> {
                         child: Padding(
                             padding: EdgeInsets.all(12),
                             child: Row(
-                              children: [SupplybyVendor(), Tooltips()],
+                              children: [
+                                SupplybyVendor(),
+                                Tooltips(
+                                  color: () {
+                                    void changeColor(Color color) {
+                                      setState(() {
+                                        pickerColor = color;
+                                      });
+                                    }
+
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: const Text('Pick a color!'),
+                                        content: SingleChildScrollView(
+                                          child: ColorPicker(
+                                            pickerColor: pickerColor,
+                                            onColorChanged: changeColor,
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          ElevatedButton(
+                                            child: const Text('Got it'),
+                                            onPressed: () {
+                                              setState(() =>
+                                                  SupplybyVendorcolor =
+                                                      pickerColor);
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                )
+                              ],
                             )),
                       ),
                       SizedBox(
@@ -103,7 +181,59 @@ class _DemandSupplyState extends State<DemandSupply> {
                         child: Padding(
                             padding: EdgeInsets.all(12),
                             child: Row(
-                              children: [ProductByUoM(), Tooltips()],
+                              children: [
+                                ProductByUoM(),
+                                Tooltips(
+                                  color: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: ((context) => AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              content: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
+                                                height: 150,
+                                                width: 150,
+                                                child: Colorpanel(
+                                                  ontapblue: () {
+                                                    setState(() {
+                                                      ProductByUoMpalett =
+                                                          palette2;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontapGreen: () {
+                                                    setState(() {
+                                                      ProductByUoMpalett =
+                                                          palette1;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontapred: () {
+                                                    setState(() {
+                                                      ProductByUoMpalett =
+                                                          palette4;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontappink: () {
+                                                    setState(() {
+                                                      ProductByUoMpalett =
+                                                          palette5;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ),
+                                            )));
+                                  },
+                                )
+                              ],
                             )),
                       ),
                       SizedBox(
@@ -148,7 +278,59 @@ class _DemandSupplyState extends State<DemandSupply> {
                         child: Padding(
                             padding: EdgeInsets.all(12),
                             child: Row(
-                              children: [DemandByMaterialType(), Tooltips()],
+                              children: [
+                                DemandByMaterialType(),
+                                Tooltips(
+                                  color: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: ((context) => AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              content: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
+                                                height: 150,
+                                                width: 150,
+                                                child: Colorpanel(
+                                                  ontapblue: () {
+                                                    setState(() {
+                                                      DemandByMaterialTypepalette =
+                                                          palette2;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontapGreen: () {
+                                                    setState(() {
+                                                      DemandByMaterialTypepalette =
+                                                          palette1;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontapred: () {
+                                                    setState(() {
+                                                      DemandByMaterialTypepalette =
+                                                          palette4;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontappink: () {
+                                                    setState(() {
+                                                      DemandByMaterialTypepalette =
+                                                          palette5;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ),
+                                            )));
+                                  },
+                                )
+                              ],
                             )),
                       ),
                       SizedBox(
@@ -226,24 +408,64 @@ class _DemandSupplyState extends State<DemandSupply> {
                         child: Padding(
                             padding: EdgeInsets.all(12),
                             child: Row(
-                              children: [ProductsByCommodity(), Tooltips()],
+                              children: [
+                                ProductsByCommodity(),
+                                Tooltips(
+                                  color: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: ((context) => AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15)),
+                                              content: Container(
+                                                decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15)),
+                                                height: 150,
+                                                width: 150,
+                                                child: Colorpanel(
+                                                  ontapblue: () {
+                                                    setState(() {
+                                                      ProductsByCommoditypalette =
+                                                          palette2;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontapGreen: () {
+                                                    setState(() {
+                                                      ProductsByCommoditypalette =
+                                                          palette1;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontapred: () {
+                                                    setState(() {
+                                                      ProductsByCommoditypalette =
+                                                          palette4;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                  ontappink: () {
+                                                    setState(() {
+                                                      ProductsByCommoditypalette =
+                                                          palette5;
+                                                    });
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ),
+                                            )));
+                                  },
+                                )
+                              ],
                             )),
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      // Card(
-                      //   shape: RoundedRectangleBorder(
-                      //       side: BorderSide(color: Colors.blueAccent),
-                      //       borderRadius: BorderRadius.circular(15)),
-                      //   elevation: 10,
-                      //   color: Colors.grey[200],
-                      //   child: Padding(
-                      //       padding: EdgeInsets.all(12),
-                      //       child: Row(
-                      //         children: [ProducByOrganisation(), Tooltips()],
-                      //       )),
-                      // ),
                     ],
                   ),
                 ),
@@ -284,6 +506,7 @@ class _DemandSupplyState extends State<DemandSupply> {
   // }
 
   //Demand By Category
+  Color DemandByCategorycolor = Color(0xff443a49);
   DemandByCategory() {
     List<ChartSampleData> PipelineByProductandservice = [];
     for (int i = 0;
@@ -300,9 +523,7 @@ class _DemandSupplyState extends State<DemandSupply> {
     }
     return SfCartesianChart(
       tooltipBehavior: DemandByCategory_tooltipBehavior,
-      palette: <Color>[
-        Color.fromRGBO(0, 168, 181, 1),
-      ],
+      palette: <Color>[DemandByCategorycolor],
       plotAreaBorderWidth: 0,
       title: ChartTitle(
           text: 'Demand By Category',
@@ -329,6 +550,7 @@ class _DemandSupplyState extends State<DemandSupply> {
   }
 
   //Supply by Vendor
+  Color SupplybyVendorcolor = Color.fromRGBO(192, 108, 132, 1);
   SupplybyVendor() {
     List<ChartSampleData> SupplybyVendor = [];
 
@@ -346,18 +568,7 @@ class _DemandSupplyState extends State<DemandSupply> {
     }
     return SfCartesianChart(
       tooltipBehavior: DemandByCategory_tooltipBehavior,
-      palette: <Color>[
-        Color.fromRGBO(192, 108, 132, 1),
-        Color.fromRGBO(246, 114, 128, 1),
-        Color.fromRGBO(248, 177, 149, 1),
-        Color.fromRGBO(116, 180, 155, 1),
-        Color.fromRGBO(0, 168, 181, 1),
-        Color.fromRGBO(73, 76, 162, 1),
-        Color.fromRGBO(255, 205, 96, 1),
-        Color.fromRGBO(255, 240, 219, 1),
-        Color.fromRGBO(238, 238, 238, 1),
-        Color.fromRGBO(238, 238, 238, 1),
-      ],
+      palette: <Color>[SupplybyVendorcolor],
       plotAreaBorderWidth: 0,
       title: ChartTitle(
           text: 'Supply by Vendor',
@@ -384,6 +595,13 @@ class _DemandSupplyState extends State<DemandSupply> {
   }
 
   //Products By UOM
+  List<Color> ProductByUoMpalett = [
+    Colors.orange.shade100,
+    Colors.orange.shade200,
+    Colors.orange.shade300,
+    Colors.orange.shade400,
+    Colors.orange.shade500,
+  ];
   ProductByUoM() {
     num total = 0;
     for (int i = 0;
@@ -408,20 +626,7 @@ class _DemandSupplyState extends State<DemandSupply> {
       );
     }
     return SfCircularChart(
-      palette: [
-        Color.fromRGBO(75, 135, 185, 1),
-        Color.fromRGBO(192, 108, 132, 1),
-        Color.fromRGBO(246, 114, 128, 1),
-        Color.fromRGBO(248, 177, 149, 1),
-        Color.fromRGBO(75, 135, 185, 1),
-        Color.fromRGBO(192, 108, 132, 1),
-        Color.fromRGBO(246, 114, 128, 1),
-        Color.fromRGBO(248, 177, 149, 1),
-        Color.fromRGBO(75, 135, 185, 1),
-        Color.fromRGBO(192, 108, 132, 1),
-        Color.fromRGBO(246, 114, 128, 1),
-        Color.fromRGBO(248, 177, 149, 1),
-      ],
+      palette: ProductByUoMpalett,
       legend: Legend(
         isVisible: true,
         overflowMode: LegendItemOverflowMode.wrap,
@@ -548,6 +753,14 @@ class _DemandSupplyState extends State<DemandSupply> {
   }
 
   //Demand By Material Type
+  List<Color> DemandByMaterialTypepalette = [
+    Color.fromRGBO(248, 177, 149, 1),
+    Color.fromRGBO(116, 180, 155, 1),
+    Color.fromRGBO(0, 168, 181, 1),
+    Color.fromRGBO(73, 76, 162, 1),
+    Color.fromRGBO(255, 205, 96, 1),
+    Color.fromRGBO(255, 240, 219, 1),
+  ];
   DemandByMaterialType() {
     num total = 0;
     for (int i = 0;
@@ -572,6 +785,7 @@ class _DemandSupplyState extends State<DemandSupply> {
       );
     }
     return SfCircularChart(
+      palette: DemandByMaterialTypepalette,
       title: ChartTitle(text: 'Demand By Material Type'),
       legend: Legend(
         isVisible: true,
@@ -748,6 +962,12 @@ class _DemandSupplyState extends State<DemandSupply> {
   }
 
   //Products By Commodity
+  List<Color> ProductsByCommoditypalette = [
+    Color.fromRGBO(116, 180, 155, 1),
+    Color.fromRGBO(0, 168, 181, 1),
+    Color.fromRGBO(73, 76, 162, 1),
+    Color.fromRGBO(255, 205, 96, 1),
+  ];
   ProductsByCommodity() {
     List<ChartSampleData> ProductsByCommodity = [];
 
@@ -764,6 +984,7 @@ class _DemandSupplyState extends State<DemandSupply> {
       );
     }
     return SfCartesianChart(
+      palette: ProductsByCommoditypalette,
       plotAreaBorderWidth: 0,
       title: ChartTitle(text: 'Products By Commodity'),
       primaryXAxis: CategoryAxis(

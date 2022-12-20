@@ -6,6 +6,8 @@ void main() {
   runApp(MyApp());
 }
 
+Color currentColor = Color(0xff443a49);
+Color pickerColor = Color(0xff443a49);
 var Selectedinput;
 var dataa;
 

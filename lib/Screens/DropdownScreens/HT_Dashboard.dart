@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:integraphics/Services/DropdownAPIService.dart';
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/ChartSampledata.dart';
@@ -38,7 +39,13 @@ class _HT_DashboardState extends State<HT_Dashboard> {
           AsyncSnapshot<dynamic> snapshot,
         ) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(
+              child: SpinKitSpinningLines(
+                lineWidth: 5,
+                size: 100,
+                color: Color(0xff6d96fa),
+              ),
+            );
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return const Text('Error');
@@ -133,6 +140,7 @@ class _HT_DashboardState extends State<HT_Dashboard> {
       ),
       series: <PieSeries<ChartSampleData, String>>[
         PieSeries<ChartSampleData, String>(
+            enableTooltip: true,
             explode: true,
             explodeIndex: 0,
             explodeOffset: '0%',
