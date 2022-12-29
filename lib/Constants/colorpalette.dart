@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-final List<Color> palette1 = [
+List<List<Color>> Allcolorpalette = [
+  palette1,
+  palette2,
+  palette3,
+  palette4,
+  palette5
+];
+List<Color> palette1 = [
   Colors.green.shade100,
   Colors.green.shade200,
   Colors.green.shade300,
@@ -34,4 +41,47 @@ List<Color> palette5 = [
   Colors.pink.shade300,
   Colors.pink.shade400,
   Colors.pink.shade500,
+];
+
+List<List<Color>> selectedpallete = [
+  ProductByUoMpalett,
+  ProductByUoMpalett1,
+  ProductByUoMpalett2,
+  ProductByUoMpalett3,
+  ProductByUoMpalett4
+];
+List<Color> ProductByUoMpalett = [
+  Colors.orange.shade100,
+  Colors.orange.shade200,
+  Colors.orange.shade300,
+  Colors.orange.shade400,
+  Colors.orange.shade500,
+];
+List<Color> ProductByUoMpalett1 = [
+  Colors.orange.shade100,
+  Colors.orange.shade200,
+  Colors.orange.shade300,
+  Colors.orange.shade400,
+  Colors.orange.shade500,
+];
+List<Color> ProductByUoMpalett2 = [
+  Colors.orange.shade100,
+  Colors.orange.shade200,
+  Colors.orange.shade300,
+  Colors.orange.shade400,
+  Colors.orange.shade500,
+];
+List<Color> ProductByUoMpalett3 = [
+  Colors.orange.shade100,
+  Colors.orange.shade200,
+  Colors.orange.shade300,
+  Colors.orange.shade400,
+  Colors.orange.shade500,
+];
+List<Color> ProductByUoMpalett4 = [
+  Colors.orange.shade100,
+  Colors.orange.shade200,
+  Colors.orange.shade300,
+  Colors.orange.shade400,
+  Colors.orange.shade500,
 ];

@@ -1,11 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_echarts/flutter_echarts.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:integraphics/Constants/colorpalette.dart';
 import 'package:integraphics/Screens/DropdownScreens/HR_Dashboard.dart';
 import 'package:integraphics/Services/DropdownAPIService.dart';
@@ -13,6 +17,10 @@ import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/ChartSampleData.dart';
 import 'package:integraphics/widgets/Colorsfunction.dart';
 import 'package:integraphics/widgets/Tooltips.dart';
+import 'package:integraphics/widgets/showimagecapture.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:spider_chart/spider_chart.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -24,6 +32,14 @@ class DemandSupply extends StatefulWidget {
 }
 
 class _DemandSupplyState extends State<DemandSupply> {
+  //Create an instance of ScreenshotController
+  ScreenshotController screenshotController = ScreenshotController();
+  ScreenshotController screenshotControllerProductByUOM =
+      ScreenshotController();
+  ScreenshotController screenshotControllerSupplybyVendor =
+      ScreenshotController();
+  bool Isvisibile = true;
+  Color pickerColor = Color(0xff443a49);
   @override
   void initState() {
     DemandBySubCategory_tooltipBehavior = TooltipBehavior(
@@ -45,6 +61,7 @@ class _DemandSupplyState extends State<DemandSupply> {
   TooltipBehavior? DemandBySubCategory_tooltipBehavior;
 
   late Future<dynamic> _value = AllChartdataAPi(context, Selectedinput);
+  bool savetool = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,53 +89,61 @@ class _DemandSupplyState extends State<DemandSupply> {
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   child: Column(
                     children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.blueAccent),
-                            borderRadius: BorderRadius.circular(15)),
-                        elevation: 10,
-                        color: Colors.grey[200],
-                        child: Padding(
-                            padding: EdgeInsets.all(12),
-                            child: Row(
-                              children: [
-                                DemandByCategory(),
-                                Tooltips(
-                                  color: () {
-                                    void changeColor(Color color) {
-                                      setState(() {
-                                        pickerColor = color;
-                                      });
-                                    }
+                      Isvisibile == true
+                          ? Card(
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: Colors.blueAccent),
+                                  borderRadius: BorderRadius.circular(15)),
+                              elevation: 10,
+                              color: Colors.grey[200],
+                              child: Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: Row(
+                                    children: [
+                                      DemandByCategory(),
+                                      Tooltips(
+                                        delete: () {
+                                          setState(() {
+                                            Isvisibile = false;
+                                          });
+                                        },
+                                        color: () {
+                                          void changeColor(Color color) {
+                                            setState(() {
+                                              pickerColor = color;
+                                            });
+                                          }
 
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: const Text('Pick a color!'),
-                                        content: SingleChildScrollView(
-                                          child: ColorPicker(
-                                            pickerColor: pickerColor,
-                                            onColorChanged: changeColor,
-                                          ),
-                                        ),
-                                        actions: <Widget>[
-                                          ElevatedButton(
-                                            child: const Text('Got it'),
-                                            onPressed: () {
-                                              setState(() =>
-                                                  DemandByCategorycolor =
-                                                      pickerColor);
-                                              Navigator.of(context).pop();
-                                            },
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
-                            )),
-                      ),
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                              title:
+                                                  const Text('Pick a color!'),
+                                              content: SingleChildScrollView(
+                                                child: ColorPicker(
+                                                  pickerColor: pickerColor,
+                                                  onColorChanged: changeColor,
+                                                ),
+                                              ),
+                                              actions: <Widget>[
+                                                ElevatedButton(
+                                                  child: const Text('Got it'),
+                                                  onPressed: () {
+                                                    setState(() =>
+                                                        DemandByCategorycolor =
+                                                            pickerColor);
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      )
+                                    ],
+                                  )),
+                            )
+                          : Container(),
                       SizedBox(
                         height: 10,
                       ),
@@ -134,6 +159,9 @@ class _DemandSupplyState extends State<DemandSupply> {
                               children: [
                                 SupplybyVendor(),
                                 Tooltips(
+                                  ChartName: dataa['chartData1']['chartTitle'],
+                                  screenshotController:
+                                      screenshotControllerSupplybyVendor,
                                   color: () {
                                     void changeColor(Color color) {
                                       setState(() {
@@ -184,6 +212,9 @@ class _DemandSupplyState extends State<DemandSupply> {
                               children: [
                                 ProductByUoM(),
                                 Tooltips(
+                                  screenshotController:
+                                      screenshotControllerProductByUOM,
+                                  ChartName: dataa['chartData2']['chartTitle'],
                                   color: () {
                                     showDialog(
                                         context: context,
@@ -200,13 +231,6 @@ class _DemandSupplyState extends State<DemandSupply> {
                                                 height: 150,
                                                 width: 150,
                                                 child: Colorpanel(
-                                                  ontapblue: () {
-                                                    setState(() {
-                                                      ProductByUoMpalett =
-                                                          palette2;
-                                                    });
-                                                    Navigator.pop(context);
-                                                  },
                                                   ontapGreen: () {
                                                     setState(() {
                                                       ProductByUoMpalett =
@@ -521,31 +545,36 @@ class _DemandSupplyState extends State<DemandSupply> {
         ),
       );
     }
-    return SfCartesianChart(
-      tooltipBehavior: DemandByCategory_tooltipBehavior,
-      palette: <Color>[DemandByCategorycolor],
-      plotAreaBorderWidth: 0,
-      title: ChartTitle(
-          text: 'Demand By Category',
-          textStyle: TextStyle(fontWeight: FontWeight.bold)),
-      primaryXAxis: CategoryAxis(
-        labelRotation: 35,
-        labelsExtent: 50,
-        majorGridLines: const MajorGridLines(width: 1),
+    return Expanded(
+      child: Card(
+        color: Colors.grey[200],
+        child: SfCartesianChart(
+          tooltipBehavior: DemandByCategory_tooltipBehavior,
+          palette: <Color>[DemandByCategorycolor],
+          plotAreaBorderWidth: 0,
+          title: ChartTitle(
+              text: 'Demand By Category',
+              textStyle: TextStyle(fontWeight: FontWeight.bold)),
+          primaryXAxis: CategoryAxis(
+            labelRotation: 35,
+            labelsExtent: 50,
+            majorGridLines: const MajorGridLines(width: 1),
+          ),
+          primaryYAxis: NumericAxis(
+              axisLine: const AxisLine(width: 1),
+              labelFormat: '{value}',
+              majorTickLines: const MajorTickLines(size: 0)),
+          series: <ColumnSeries<ChartSampleData, String>>[
+            ColumnSeries<ChartSampleData, String>(
+              dataSource: PipelineByProductandservice,
+              xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+              yValueMapper: (ChartSampleData sales, _) => sales.y,
+              dataLabelSettings: const DataLabelSettings(
+                  isVisible: true, textStyle: TextStyle(fontSize: 10)),
+            )
+          ],
+        ),
       ),
-      primaryYAxis: NumericAxis(
-          axisLine: const AxisLine(width: 1),
-          labelFormat: '{value}',
-          majorTickLines: const MajorTickLines(size: 0)),
-      series: <ColumnSeries<ChartSampleData, String>>[
-        ColumnSeries<ChartSampleData, String>(
-          dataSource: PipelineByProductandservice,
-          xValueMapper: (ChartSampleData sales, _) => sales.x as String,
-          yValueMapper: (ChartSampleData sales, _) => sales.y,
-          dataLabelSettings: const DataLabelSettings(
-              isVisible: true, textStyle: TextStyle(fontSize: 10)),
-        )
-      ],
     );
   }
 
@@ -566,31 +595,39 @@ class _DemandSupplyState extends State<DemandSupply> {
         ),
       );
     }
-    return SfCartesianChart(
-      tooltipBehavior: DemandByCategory_tooltipBehavior,
-      palette: <Color>[SupplybyVendorcolor],
-      plotAreaBorderWidth: 0,
-      title: ChartTitle(
-          text: 'Supply by Vendor',
-          textStyle: TextStyle(fontWeight: FontWeight.bold)),
-      primaryXAxis: CategoryAxis(
-        labelRotation: 35,
-        labelsExtent: 50,
-        majorGridLines: const MajorGridLines(width: 1),
+    return Expanded(
+      child: Screenshot(
+        controller: screenshotControllerSupplybyVendor,
+        child: Card(
+          color: Colors.grey[200],
+          child: SfCartesianChart(
+            tooltipBehavior: DemandByCategory_tooltipBehavior,
+            palette: <Color>[SupplybyVendorcolor],
+            plotAreaBorderWidth: 0,
+            title: ChartTitle(
+                text: 'Supply by Vendor',
+                textStyle: TextStyle(fontWeight: FontWeight.bold)),
+            primaryXAxis: CategoryAxis(
+              labelRotation: 35,
+              labelsExtent: 50,
+              majorGridLines: const MajorGridLines(width: 1),
+            ),
+            primaryYAxis: NumericAxis(
+                axisLine: const AxisLine(width: 1),
+                labelFormat: '{value}',
+                majorTickLines: const MajorTickLines(size: 0)),
+            series: <ColumnSeries<ChartSampleData, String>>[
+              ColumnSeries<ChartSampleData, String>(
+                dataSource: SupplybyVendor,
+                xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+                yValueMapper: (ChartSampleData sales, _) => sales.y,
+                dataLabelSettings: const DataLabelSettings(
+                    isVisible: true, textStyle: TextStyle(fontSize: 10)),
+              )
+            ],
+          ),
+        ),
       ),
-      primaryYAxis: NumericAxis(
-          axisLine: const AxisLine(width: 1),
-          labelFormat: '{value}',
-          majorTickLines: const MajorTickLines(size: 0)),
-      series: <ColumnSeries<ChartSampleData, String>>[
-        ColumnSeries<ChartSampleData, String>(
-          dataSource: SupplybyVendor,
-          xValueMapper: (ChartSampleData sales, _) => sales.x as String,
-          yValueMapper: (ChartSampleData sales, _) => sales.y,
-          dataLabelSettings: const DataLabelSettings(
-              isVisible: true, textStyle: TextStyle(fontSize: 10)),
-        )
-      ],
     );
   }
 
@@ -625,30 +662,38 @@ class _DemandSupplyState extends State<DemandSupply> {
                 ' ${((dataa['chartData2']['chartLevelsAndValueObj'][i]['Y'] / total) * 100).toString().characters.take(5)}%'),
       );
     }
-    return SfCircularChart(
-      palette: ProductByUoMpalett,
-      legend: Legend(
-        isVisible: true,
-        overflowMode: LegendItemOverflowMode.wrap,
-        position: LegendPosition.bottom,
+    return Expanded(
+      child: Screenshot(
+        controller: screenshotControllerProductByUOM,
+        child: Card(
+          color: Colors.grey[200],
+          child: SfCircularChart(
+            palette: ProductByUoMpalett,
+            legend: Legend(
+              isVisible: true,
+              overflowMode: LegendItemOverflowMode.wrap,
+              position: LegendPosition.bottom,
+            ),
+            title: ChartTitle(
+                text: 'Products By UOM',
+                textStyle: TextStyle(fontWeight: FontWeight.bold)),
+            series: <DoughnutSeries<ChartSampleData, String>>[
+              DoughnutSeries<ChartSampleData, String>(
+                  enableTooltip: true,
+                  explode: true,
+                  explodeIndex: 0,
+                  explodeOffset: '10%',
+                  dataSource: ProductByUoM,
+                  xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+                  yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                  dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
+                  startAngle: 90,
+                  endAngle: 90,
+                  dataLabelSettings: const DataLabelSettings(isVisible: true)),
+            ],
+          ),
+        ),
       ),
-      title: ChartTitle(
-          text: 'Products By UOM',
-          textStyle: TextStyle(fontWeight: FontWeight.bold)),
-      series: <DoughnutSeries<ChartSampleData, String>>[
-        DoughnutSeries<ChartSampleData, String>(
-            enableTooltip: true,
-            explode: true,
-            explodeIndex: 0,
-            explodeOffset: '10%',
-            dataSource: ProductByUoM,
-            xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
-            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-            dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
-            startAngle: 90,
-            endAngle: 90,
-            dataLabelSettings: const DataLabelSettings(isVisible: true)),
-      ],
     );
   }
 

@@ -6,9 +6,11 @@ import 'package:integraphics/Constants/ResponsiveSize.dart';
 import 'package:integraphics/Screens/DropdownScreens/HT_Dashboard.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product%20_and_service_spend.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product_Dashboard.dart';
+import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/widgets/CircularLoader.dart';
 import 'package:integraphics/widgets/Drawer.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 
 import '../Logout/logout.dart';
 import '../main.dart';
@@ -44,6 +46,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
   @override
   Widget build(BuildContext context) {
     DeviceSizeConfig().init(context);
+    bool toogle = false;
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
@@ -168,48 +171,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
             ),
             Container(
               child: Expanded(
-                child: custompage(),
-                // FutureBuilder<dynamic>(
-                //   future: data['dashBordlist'],
-                //   builder: (
-                //     BuildContext context,
-                //     snapshot,
-                //   ) {
-                //     if (snapshot.connectionState == ConnectionState.waiting) {
-                //       return CircularProgressIndicator();
-                //     } else if (snapshot.connectionState ==
-                //         ConnectionState.done) {
-                //       if (snapshot.hasError) {
-                //         return const Text('Error');
-                //       } else if (snapshot.hasData) {
-                //         return custompage();
-                //       } else
-                // {
-                //         return const Text('Empty data');
-                //       }
-                //     } else {
-                //       return Text('State: ${snapshot.connectionState}');
-                //     }
-                //   },
-                // ),
-
-                // PageView.builder(
-                //     physics: NeverScrollableScrollPhysics(),
-                //     controller: pageController,
-                //     onPageChanged: (value) {
-                //       setState(() {
-                //         if (value == null) {
-                //           print('nullll');
-                //         }
-                //       });
-                //     },
-                //     itemCount: containers.length,
-                //     itemBuilder: ((context, count) => Padding(
-                //           padding: const EdgeInsets.all(8.0),
-                //           child: data == null
-                //               ? Center(child: buildBody())
-                //               : containers[count + 1],
-                //         )))
+                child: HR_Dashboard(),
               ),
             ),
           ])),
@@ -222,23 +184,23 @@ class _InfoGraphicsState extends State<InfoGraphics> {
     switch (selectedValue) {
       case 'CRM':
         setState(() {
-          customwid = CRM_Dashboard();
+          customwid = HR_Dashboard();
         });
 
         break;
       case 'HT':
-        customwid = HT_Dashboard();
+        customwid = HR_Dashboard();
 
         break;
       case 'Products':
         setState(() {
-          customwid = Product_Dashboard();
+          customwid = HR_Dashboard();
         });
 
         break;
       case 'Demand & Supply':
         setState(() {
-          customwid = DemandSupply();
+          customwid = HR_Dashboard();
         });
 
         break;
@@ -249,7 +211,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
         break;
       case 'Product and Service Spend':
         setState(() {
-          customwid = Product_And_Service_Spend_Dashboard();
+          customwid = HR_Dashboard();
         });
         break;
       default:
@@ -261,7 +223,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
 //note: Api call for Dropdown element of infographics
 
   Future<dynamic> DropdownApi() async {
-    await Future.delayed(Duration(seconds: 1));
+    // await Future.delayed(Duration(seconds: 1));
     var headers = {'Content-Type': 'application/json'};
     var body = json.encode({});
     var response = await post(

@@ -43,6 +43,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   initState() {
+    userNameText.text = 'sasi_mgr';
+    passWordText.text = 'P@ssw0rd';
     check_if_already_login();
     super.initState();
   }
@@ -171,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
               final result = await InternetAddress.lookup('example.com');
               if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
                 var res = await post(
-                    Uri.parse('http://192.169.1.211:8085/user/login'),
+                    Uri.parse('http://192.169.1.211:8082/user/login'),
                     body: jsonEncode({
                       "rsUsername": userNameText.text.toUpperCase(), //userName
                       "rsPassword": passWordText.text, //passWord
@@ -306,5 +308,48 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      transitionDuration: Duration(milliseconds: 2000),
+      reverseTransitionDuration: Duration(milliseconds: 2000),
+      opaque: false,
+      barrierDismissible: false,
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          InfoGraphics(logindata),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var screenSize = MediaQuery.of(context).size;
+        Offset center = Offset(screenSize.width - 40, screenSize.height - 40);
+        double beginRadius = 0.0;
+        double endRadius = screenSize.height * 1.2;
+
+        var tween = Tween(begin: beginRadius, end: endRadius);
+        var radiusTweenAnimation = animation.drive(tween);
+
+        return ClipPath(
+          clipper:
+              CircleRevealClipper(radius: radiusTweenAnimation, center: center),
+          child: child,
+        );
+      },
+    );
+  }
+}
+
+class CircleRevealClipper extends CustomClipper<Path> {
+  final center;
+  final radius;
+
+  CircleRevealClipper({this.center, this.radius});
+
+  @override
+  Path getClip(Size size) {
+    return Path()..addOval(Rect.fromCircle(radius: radius, center: center));
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
   }
 }
