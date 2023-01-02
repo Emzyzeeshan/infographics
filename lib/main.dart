@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'Screens/Infographics.dart';
 import 'Services/themesetup/DarkThemeProvider.dart';
 import 'Services/themesetup/styles.dart';
 import 'login/loginPage.dart';

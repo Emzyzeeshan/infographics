@@ -59,10 +59,10 @@ class _drawerState extends State<drawer> {
             ),
             title: const Text('Info Graphics'),
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => InfoGraphics(logindata))));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: ((context) => InfoGraphics(logindata))));
             },
           ),
           ListTile(

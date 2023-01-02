@@ -40,7 +40,6 @@ class _InfoGraphicsState extends State<InfoGraphics> {
   var DropdownApidata;
   var data;
   var data1;
-  String? selectedValue;
 
   PageController pageController = PageController();
   @override
@@ -115,12 +114,12 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                                                 ),
                                               ))
                                       .toList(),
-                                  value: selectedValue,
+                                  value: Selectedinput,
                                   onChanged: (value) {
                                     setState(() {
-                                      selectedValue = value;
-                                      print(selectedValue);
-                                      Selectedinput = selectedValue;
+                                      Selectedinput = value;
+                                      print(Selectedinput);
+                                      Selectedinput = Selectedinput;
                                       // pageController.jumpToPage(
                                       //     data['dashBordlist']
                                       //         .indexOf(selectedValue));
@@ -181,7 +180,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
   Widget custompage() {
     var customwid;
 
-    switch (selectedValue) {
+    switch (Selectedinput) {
       case 'CRM':
         setState(() {
           customwid = HR_Dashboard();
@@ -236,7 +235,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
       setState(() {
         DropdownApidata = response.body;
         data = jsonDecode(response.body);
-        selectedValue = data['dashBordlist'][0];
+        Selectedinput = data['dashBordlist'][0];
       });
 
       // print(data);
@@ -250,7 +249,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
   allinoneAPI() async {
     // await Future.delayed(Duration(seconds: 1));
     var headers = {'Content-Type': 'application/json'};
-    var body = json.encode({"dashbordname": "$selectedValue"});
+    var body = json.encode({"dashbordname": "$Selectedinput"});
     var response = await post(
       Uri.parse('http://192.169.1.211:8080/smartBi/smartIntBi/getChartCards'),
       headers: headers,

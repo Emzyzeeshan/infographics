@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/Constants/colorpalette.dart';
@@ -29,7 +30,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
   // Map pichart;
   int count = 0;
   var singlekey;
-
+  int colorindex = 0;
   @override
   void initState() {
     Funneltooltip = TooltipBehavior(enable: true, format: 'point.x : point.y');
@@ -94,9 +95,11 @@ class _HR_DashboardState extends State<HR_Dashboard> {
     List columncount = [];
     List<Widget> Bardata = [];
     List<Widget> FunnelData = [];
+    List funnelcount = [];
     List Barcount = [];
     List<Widget> Scatterdata = [];
     List<Widget> Spline = [];
+    List Splinecount = [];
     List sortlist = [];
     print('----------');
     print('Get keys:');
@@ -124,27 +127,10 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             child: Screenshot(
               controller: PieScreeshotcontrollerlist[piedata.length],
               child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
                 child: SfCircularChart(
-                  palette: dataa['$chartname']['chartTitle'] ==
-                          'No  Of Vacancies By Position '
-                      ? [
-                          Color(0xff2f6345),
-                          Color(0xff40875e),
-                          Color.fromRGBO(75, 135, 185, 1),
-                          Color.fromRGBO(192, 108, 132, 1),
-                          Color.fromRGBO(246, 114, 128, 1),
-                          Color.fromRGBO(248, 177, 149, 1),
-                          Color.fromRGBO(116, 180, 155, 1),
-                          Color.fromRGBO(0, 168, 181, 1),
-                          Color.fromRGBO(73, 76, 162, 1),
-                          Color.fromRGBO(255, 205, 96, 1),
-                          Color.fromRGBO(255, 240, 219, 1),
-                          Color.fromRGBO(238, 238, 238, 1)
-                        ]
-                      : [
-                          Color(0xff2f6345),
-                          Color(0xff40875e),
-                        ],
+                  palette: Allpiecolorlist[piecount.indexOf(key)],
                   title:
                       ChartTitle(text: '${dataa['$chartname']['chartTitle']}'),
                   legend: Legend(
@@ -190,13 +176,59 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         screenshotController:
                             PieScreeshotcontrollerlist[piedata.length],
                         ChartName: dataa['$key']['chartTitle'],
+                        color: () {
+                          showDialog(
+                              context: context,
+                              builder: ((context) => AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    content: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      height: 150,
+                                      width: 150,
+                                      child: Colorpanel(
+                                        ontapblue: () {
+                                          setState(() {
+                                            Allpiecolorlist[piecount
+                                                .indexOf(key)] = bluepalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        ontapGreen: () {
+                                          setState(() {
+                                            Allpiecolorlist[piecount
+                                                .indexOf(key)] = Greenpalett;
+                                          });
+
+                                          Navigator.pop(context);
+                                        },
+                                        ontapred: () {
+                                          setState(() {
+                                            Allpiecolorlist[piecount
+                                                .indexOf(key)] = redpalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        ontappink: () {
+                                          setState(() {
+                                            Allpiecolorlist[piecount
+                                                .indexOf(key)] = pinkpalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  )));
+                        },
                       )
                     ],
                   ))),
         );
-        print('piechart');
       } else if (dataa['$key']['chartType'] == 'donut') {
-        //Doughnut chart
+        doughnutcount.add(key);
         Doughnut(String donutchart) {
           List<ChartSampleData> EmployeesCountByWorkExperience = [];
           for (int i = 0;
@@ -217,7 +249,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               controller: DonutScreeshotcontrollerlist[Doughnutt.length],
               child: Card(
                 child: SfCircularChart(
-                  palette: selectedpallete[Doughnutt.length],
+                  palette: Allcolorpalette[doughnutcount.indexOf(key)],
                   legend: Legend(
                       isVisible: true,
                       position: LegendPosition.bottom,
@@ -247,7 +279,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           );
         }
 
-        doughnutcount.add(key);
         Doughnutt.add(
           Card(
               shape: RoundedRectangleBorder(
@@ -279,29 +310,30 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                       child: Colorpanel(
                                         ontapblue: () {
                                           setState(() {
-                                            selectedpallete[Doughnutt.length] =
-                                                Allcolorpalette[0];
+                                            Allcolorpalette[doughnutcount
+                                                .indexOf(key)] = bluepalett;
                                           });
                                           Navigator.pop(context);
                                         },
                                         ontapGreen: () {
                                           setState(() {
-                                            selectedpallete[Doughnutt.length] =
-                                                Allcolorpalette[1];
+                                            Allcolorpalette[doughnutcount
+                                                .indexOf(key)] = Greenpalett;
                                           });
+
                                           Navigator.pop(context);
                                         },
                                         ontapred: () {
                                           setState(() {
-                                            selectedpallete[Doughnutt.length] =
-                                                Allcolorpalette[2];
+                                            Allcolorpalette[doughnutcount
+                                                .indexOf(key)] = redpalett;
                                           });
                                           Navigator.pop(context);
                                         },
                                         ontappink: () {
                                           setState(() {
-                                            selectedpallete[Doughnutt.length] =
-                                                Allcolorpalette[3];
+                                            Allcolorpalette[doughnutcount
+                                                .indexOf(key)] = pinkpalett;
                                           });
                                           Navigator.pop(context);
                                         },
@@ -313,29 +345,13 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ],
                   ))),
         );
-        print('doughnut');
       } else if (dataa['$key']['chartType'] == 'column') {
-        Color color1 = Colors.pink.shade500;
-        Color color2 = Colors.orange.shade500;
-        Color color3 = Colors.red.shade500;
-        Color color4 = Colors.blue.shade500;
-        Color color5 = Colors.green.shade500;
-        Color color6 = Colors.red.shade500;
-        Color color7 = Colors.blue.shade500;
-        Color color8 = Colors.green.shade500;
-        List<Color> allcolor = [
-          color1,
-          color2,
-          color3,
-          color4,
-          color5,
-          color6,
-          color7,
-          color8
-        ];
+        columncount.add(key);
+
+        int i;
         Column(String Coloumnchart) {
           List<ChartSampleData> EmployeesCountByAge = [];
-          for (int i = 0;
+          for (i = 0;
               i < dataa['$Coloumnchart']['chartLevelsAndValueObj'].length;
               i++) {
             EmployeesCountByAge.add(
@@ -359,7 +375,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                       enablePanning: true,
                       enablePinching: true),
                   tooltipBehavior: EmployeesCountByAge_tooltipBehavior,
-                  // palette: <Color>[allcolor[Columndata.length]],
+                  palette: <Color>[allcolor[Columndata.length]],
                   plotAreaBorderWidth: 0,
                   title: ChartTitle(
                       text: '${dataa['$Coloumnchart']['chartTitle']}',
@@ -375,7 +391,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                       majorTickLines: const MajorTickLines(size: 0)),
                   series: <ColumnSeries<ChartSampleData, String>>[
                     ColumnSeries<ChartSampleData, String>(
-                      color: allcolor[Columndata.length],
+                      color: allcolor[columncount.indexOf(key)],
                       isVisible: true,
                       dataSource: EmployeesCountByAge,
                       xValueMapper: (ChartSampleData sales, _) =>
@@ -391,7 +407,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           );
         }
 
-        columncount.add(key);
         Columndata.add(
           Card(
               shape: RoundedRectangleBorder(
@@ -424,7 +439,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                   child: const Text('Got it'),
                                   onPressed: () {
                                     setState(() {
-                                      allcolor[columncount.length] =
+                                      allcolor[columncount.indexOf(key)] =
                                           pickerColor;
                                     });
 
@@ -443,8 +458,8 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ],
                   ))),
         );
-        print('column');
       } else if (dataa['$key']['chartType'] == 'bar') {
+        Barcount.add(key);
         BarSeies(String Bar) {
           List<ChartSampleData> PositionsCountbyLocation = [];
           for (int i = 0;
@@ -466,9 +481,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               child: Card(
                 child: SfCartesianChart(
                   tooltipBehavior: PositionsCountbyLocation_tooltipBehavior,
-                  palette: <Color>[
-                    Color(0xff1864b1),
-                  ],
+                  palette: AllBarcolorlist[Barcount.indexOf(key)],
                   title: ChartTitle(
                       text: '${dataa['$Bar']['chartTitle']}',
                       textStyle: TextStyle(fontWeight: FontWeight.bold)),
@@ -503,7 +516,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           );
         }
 
-        Barcount.add(key);
         Bardata.add(
           Card(
               shape: RoundedRectangleBorder(
@@ -519,12 +531,64 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         screenshotController:
                             BarScreeshotcontrollerlist[Bardata.length],
                         ChartName: dataa['$key']['chartTitle'],
+                        color: () {
+                          showDialog(
+                              context: context,
+                              builder: ((context) => AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    content: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      height: 150,
+                                      width: 150,
+                                      child: Colorpanel(
+                                        ontapblue: () {
+                                          setState(() {
+                                            AllBarcolorlist[
+                                                    Barcount.indexOf(key)] =
+                                                bluepalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        ontapGreen: () {
+                                          setState(() {
+                                            AllBarcolorlist[
+                                                    Barcount.indexOf(key)] =
+                                                Greenpalett;
+                                          });
+
+                                          Navigator.pop(context);
+                                        },
+                                        ontapred: () {
+                                          setState(() {
+                                            AllBarcolorlist[
+                                                    Barcount.indexOf(key)] =
+                                                redpalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        ontappink: () {
+                                          setState(() {
+                                            AllBarcolorlist[
+                                                    Barcount.indexOf(key)] =
+                                                pinkpalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  )));
+                        },
                       )
                     ],
                   ))),
         );
         print('bar');
       } else if (dataa['$key']['chartType'] == 'funnel') {
+        funnelcount.add(key);
         Funnelchart(String Funneldata) {
           List<ChartSampleData> Funnelchart = [];
           for (int i = 0;
@@ -545,18 +609,20 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               controller: FunnelScreeshotcontrollerlist[FunnelData.length],
               child: Card(
                 child: SfFunnelChart(
+                  palette: AllFunnelcolorlist[funnelcount.indexOf(key)],
                   //   smartLabelMode: SmartLabelMode.none,
                   title:
                       ChartTitle(text: '${dataa['$Funneldata']['chartTitle']}'),
                   tooltipBehavior: Funneltooltip,
 
                   /// To enable the legend for funnel chart.
-                  // legend:
-                  //     Legend(isVisible: true, overflowMode: LegendItemOverflowMode.wrap),
+                  // legend: Legend(
+                  //     isVisible: true,
+                  //     overflowMode: LegendItemOverflowMode.wrap),
 
                   series: FunnelSeries<ChartSampleData, String>(
                       dataSource: Funnelchart,
-                      //   textFieldMapper: (ChartSampleData dataa, _) => dataa.text,
+                      textFieldMapper: (ChartSampleData dataa, _) => dataa.text,
                       xValueMapper: (ChartSampleData dataa, _) =>
                           dataa.x as String,
                       yValueMapper: (ChartSampleData dataa, _) => dataa.y,
@@ -584,11 +650,57 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         screenshotController:
                             FunnelScreeshotcontrollerlist[FunnelData.length],
                         ChartName: dataa['$key']['chartTitle'],
+                        color: () {
+                          showDialog(
+                              context: context,
+                              builder: ((context) => AlertDialog(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15)),
+                                    content: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      height: 150,
+                                      width: 150,
+                                      child: Colorpanel(
+                                        ontapblue: () {
+                                          setState(() {
+                                            AllFunnelcolorlist[funnelcount
+                                                .indexOf(key)] = bluepalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        ontapGreen: () {
+                                          setState(() {
+                                            AllFunnelcolorlist[funnelcount
+                                                .indexOf(key)] = Greenpalett;
+                                          });
+
+                                          Navigator.pop(context);
+                                        },
+                                        ontapred: () {
+                                          setState(() {
+                                            AllFunnelcolorlist[funnelcount
+                                                .indexOf(key)] = redpalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        ontappink: () {
+                                          setState(() {
+                                            AllFunnelcolorlist[funnelcount
+                                                .indexOf(key)] = pinkpalett;
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                    ),
+                                  )));
+                        },
                       )
                     ],
                   ))),
         );
-        print('funnel');
       } else if (dataa['$key']['chartType'] == 'scatter') {
         scattercount.add(key);
         Scatterchart(String Scatterdataa) {
@@ -685,8 +797,8 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             sortlist
                 .add(dataa['$Lineschart']['chartLevelsAndValueObj'][i]['Y']);
           }
-          print(sortlist.reduce((curr, next) => curr > next ? curr : next));
-          print(sortlist.reduce((curr, next) => curr < next ? curr : next));
+          // print(sortlist.reduce((curr, next) => curr > next ? curr : next));
+          // print(sortlist.reduce((curr, next) => curr < next ? curr : next));
           return Expanded(
             child: Screenshot(
               controller: LinesScreeshotcontrollerlist[Spline.length],
@@ -747,16 +859,17 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ],
                   ))),
         );
-        print('Lines: ${Linescount.toList()}');
       }
     });
 
-    // print('pie: ${piecount.toList()}');
-    // print('Column: ${columncount.toList()}');
-    // print('Bar: ${Barcount.toList()}');
-    // print('doughnut: ${doughnutcount.toList()}');
-    // print('Scatter: ${scattercount.toList()}');
-    //
+    print('pie: ${piecount.toList()}');
+    print('Column: ${columncount.toList()}');
+    print('Bar: ${Barcount.toList()}');
+    print('doughnut: ${doughnutcount.toList()}');
+    print('Scatter: ${scattercount.toList()}');
+    print('Funnel : ${funnelcount.toList()}');
+    print('Spline : ${Linescount.toList()}');
+
     List<Widget> all = [
       ...piedata,
       ...Doughnutt,
@@ -781,45 +894,59 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       } else {
         return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: ListView(
+            child:
+                // Column(
+                //   children: [
+                //     Expanded(
+                //       child:
+                //        ListView.builder(
+                //           itemCount: Doughnutt.length,
+                //           itemBuilder: ((context, index) {
+                //             return Doughnutt[index];
+                //           })),
+                //     ),
+                //   ],
+                // )
+
+                ListView(
               children: [
                 Selectedinput == 'CRM'
                     ? SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            // FlipCardWidet(
-                            //   dataa['cardData6']['result'][2].toString(),
-                            //   dataa['cardData6']['result'][0].toString(),
-                            // ),
-                            // SizedBox(
-                            //   width: 10,
-                            // ),
-                            // FlipCardWidet(
-                            //   dataa['cardData12']['result'][2].toString(),
-                            //   dataa['cardData12']['result'][0].toString(),
-                            // ),
-                            // SizedBox(
-                            //   width: 10,
-                            // ),
-                            // FlipCardWidet(
-                            //   dataa['cardData13']['result'][2].toString(),
-                            //   dataa['cardData13']['result'][0].toString(),
-                            // ),
-                            // SizedBox(
-                            //   width: 10,
-                            // ),
-                            // FlipCardWidet(
-                            //   dataa['cardData14']['result'][2].toString(),
-                            //   dataa['cardData14']['result'][0].toString(),
-                            // ),
-                            // SizedBox(
-                            //   width: 10,
-                            // ),
-                            // FlipCardWidet(
-                            //   dataa['cardData24']['result'][2].toString(),
-                            //   dataa['cardData24']['result'][0].toString(),
-                            // ),
+                            FlipCardWidet(
+                              dataa['cardData0']['result'][1].toString(),
+                              dataa['cardData0']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData6']['result'][1].toString(),
+                              dataa['cardData6']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData5']['result'][1].toString(),
+                              dataa['cardData5']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData12']['result'][1].toString(),
+                              dataa['cardData12']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData24']['result'][1].toString(),
+                              dataa['cardData24']['result'][0].toString(),
+                            ),
                           ],
                         ),
                       )
