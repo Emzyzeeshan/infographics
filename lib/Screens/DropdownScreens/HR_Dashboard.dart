@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -714,7 +715,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                       .toString(),
                   y: dataa['$Scatterdataa']['chartLevelsAndValueObj'][i]['Y'],
                   size: 0.37,
-                  pointColor: Colors.purple),
+                  pointColor: Scattercolor[scattercount.indexOf(key)]),
             );
           }
           return Expanded(
@@ -722,6 +723,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               controller: ScatterScreeshotcontrollerlist[Scatterdata.length],
               child: Card(
                 child: SfCartesianChart(
+                  palette: [
+                    Color.fromRGBO(248, 177, 149, 1),
+                    Color.fromRGBO(116, 180, 155, 1),
+                    Color.fromRGBO(0, 168, 181, 1),
+                    Color.fromRGBO(73, 76, 162, 1),
+                    Color.fromRGBO(255, 205, 96, 1),
+                    Color.fromRGBO(255, 240, 219, 1),
+                    Color.fromRGBO(238, 238, 238, 1)
+                  ],
                   // tooltipBehavior: DemandBySubCategory_tooltipBehavior,
                   title: ChartTitle(
                       text: '${dataa['$Scatterdataa']['chartTitle']}'),
@@ -773,11 +783,44 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         screenshotController:
                             ScatterScreeshotcontrollerlist[Scatterdata.length],
                         ChartName: dataa['$key']['chartTitle'],
+                        color: () {
+                          void changeColor(Color color) {
+                            pickerColor = color;
+                          }
+
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Pick a color!'),
+                              content: SingleChildScrollView(
+                                child: ColorPicker(
+                                  pickerColor: pickerColor,
+                                  onColorChanged: changeColor,
+                                ),
+                              ),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  child: const Text('Got it'),
+                                  onPressed: () {
+                                    setState(() {
+                                      Scattercolor[scattercount.indexOf(key)] =
+                                          pickerColor;
+                                    });
+
+                                    print(pickerColor);
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       )
                     ],
                   ))),
         );
       } else if (dataa['$key']['chartType'] == 'lines') {
+        Map sortlistt = <dynamic, dynamic>{};
         Linescount.add(key);
         Lineschart(String Lineschart) {
           List<ChartSampleData> Linescharts = [];
@@ -794,16 +837,28 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                   pointColor: Colors.purple),
             );
 
-            sortlist
-                .add(dataa['$Lineschart']['chartLevelsAndValueObj'][i]['Y']);
+            // sortlist
+            //     .add();
+
+            sortlistt.addAll({
+              Linescount.indexOf(key): dataa['$Lineschart']
+                  ['chartLevelsAndValueObj'][i]['Y']
+            });
+
+            sortlistt.forEach((key, value) {
+              sortlist.add(value);
+            });
           }
-          // print(sortlist.reduce((curr, next) => curr > next ? curr : next));
-          // print(sortlist.reduce((curr, next) => curr < next ? curr : next));
+
+          print(sortlist.toList());
+          print(sortlist.reduce((curr, next) => curr > next ? curr : next));
+          print(sortlist.reduce((curr, next) => curr < next ? curr : next));
           return Expanded(
             child: Screenshot(
               controller: LinesScreeshotcontrollerlist[Spline.length],
               child: Card(
                 child: SfCartesianChart(
+                  palette: <Color>[Linescolor[Linescount.indexOf(key)]],
                   zoomPanBehavior: ZoomPanBehavior(
                       enableDoubleTapZooming: true,
                       enableSelectionZooming: true,
@@ -818,8 +873,12 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                       majorGridLines: const MajorGridLines(width: 0),
                       labelPlacement: LabelPlacement.onTicks),
                   primaryYAxis: NumericAxis(
-                      minimum: 0,
-                      maximum: 2000,
+                      minimum: sortlist.reduce(
+                              (curr, next) => curr < next ? curr : next) +
+                          .0,
+                      maximum: sortlist.reduce(
+                              (curr, next) => curr > next ? curr : next) +
+                          .0,
                       axisLine: const AxisLine(width: 0),
                       edgeLabelPlacement: EdgeLabelPlacement.shift,
                       labelFormat: '{value}',
@@ -855,6 +914,38 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         screenshotController:
                             LinesScreeshotcontrollerlist[Spline.length],
                         ChartName: dataa['$key']['chartTitle'],
+                        color: () {
+                          void changeColor(Color color) {
+                            pickerColor = color;
+                          }
+
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Pick a color!'),
+                              content: SingleChildScrollView(
+                                child: ColorPicker(
+                                  pickerColor: pickerColor,
+                                  onColorChanged: changeColor,
+                                ),
+                              ),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  child: const Text('Got it'),
+                                  onPressed: () {
+                                    setState(() {
+                                      Linescolor[Linescount.indexOf(key)] =
+                                          pickerColor;
+                                    });
+
+                                    print(pickerColor);
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       )
                     ],
                   ))),
@@ -889,7 +980,11 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     crossAxisCount: 2),
                 itemCount: all.length,
                 itemBuilder: ((context, index) {
-                  return all[index];
+                  return Column(
+                    children: [
+                      Flexible(child: all[index]),
+                    ],
+                  );
                 })));
       } else {
         return Padding(

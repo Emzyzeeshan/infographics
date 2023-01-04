@@ -17,27 +17,52 @@ Future<dynamic> ShowCapturedWidget(
       body: Center(
           child: capturedImage != null
               ? SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      Image.memory(capturedImage),
-                      ElevatedButton(
-                          onPressed: () async {
-                            // Uint8List capturedImage;
-                            var status = await Permission.storage.request();
-                            if (status.isGranted) {
-                              // String savePath = appDocDir.path+'/temp';
-                              final result = await ImageGallerySaver.saveImage(
-                                  quality: 100,
-                                  capturedImage,
-                                  name: 'graph_${chartname}_${DateTime.now()}');
-
-                              print(result);
-                              // screenshotController
-                              //     .captureAndSave(appDocDir.path);
-                            }
-                          },
-                          child: Text('Save'))
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Image.memory(capturedImage),
+                        SizedBox(height: 20),
+                        Container(
+                          width: 120,
+                          child: MaterialButton(
+                            onPressed: () async {
+                              // Uint8List capturedImage;
+                              var status = await Permission.storage.request();
+                              if (status.isGranted) {
+                                // String savePath = appDocDir.path+'/temp';
+                                final result = await ImageGallerySaver.saveImage(
+                                    quality: 100,
+                                    capturedImage,
+                                    name:
+                                        'graph_${chartname}_${DateTime.now()}');
+                                print(result);
+                                // screenshotController
+                                //     .captureAndSave(appDocDir.path);
+                              }
+                            },
+                            color: Color(0xff6d96fa),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Save',
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.download_for_offline,
+                                  color: Colors.white,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 )
               : Container()),

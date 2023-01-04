@@ -345,3 +345,28 @@ List<List<Color>> AllBarcolorlist = [
   Barcolordefault4,
   Barcolordefault5,
 ];
+
+//Scatter chart color
+
+List<Color> Scattercolor = [
+  color1,
+  color2,
+  color3,
+  color4,
+  color5,
+  color6,
+  color7,
+  color8
+];
+
+//Lines chart colour
+List<Color> Linescolor = [
+  color1,
+  color2,
+  color3,
+  color4,
+  color5,
+  color6,
+  color7,
+  color8
+];
