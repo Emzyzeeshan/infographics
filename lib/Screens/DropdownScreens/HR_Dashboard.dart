@@ -1,11 +1,11 @@
 import 'dart:math';
 
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/Constants/colorpalette.dart';
@@ -14,6 +14,7 @@ import 'package:integraphics/widgets/ChartSampledata.dart';
 import 'package:integraphics/widgets/Colorsfunction.dart';
 import 'package:integraphics/widgets/Flipcard.dart';
 import 'package:integraphics/widgets/Tooltips.dart';
+import 'package:integraphics/widgets/radarchart.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -55,6 +56,11 @@ class _HR_DashboardState extends State<HR_Dashboard> {
   Widget build(BuildContext context) {
     late Future<dynamic> _value = AllChartdataAPi(context, Selectedinput);
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //     onPressed: (() {
+      //       setState(() {});
+      //     }),
+      // child: Icon(Icons.refresh_sharp)),
       body: FutureBuilder<dynamic>(
         future: _value,
         builder: (
@@ -102,6 +108,8 @@ class _HR_DashboardState extends State<HR_Dashboard> {
     List<Widget> Spline = [];
     List Splinecount = [];
     List sortlist = [];
+    List<Widget> Radardata = [];
+    List Radarcount = [];
     print('----------');
     print('Get keys:');
     // Get all keys
@@ -850,9 +858,9 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             });
           }
 
-          print(sortlist.toList());
-          print(sortlist.reduce((curr, next) => curr > next ? curr : next));
-          print(sortlist.reduce((curr, next) => curr < next ? curr : next));
+          // print(sortlist.toList());
+          // print(sortlist.reduce((curr, next) => curr > next ? curr : next));
+          // print(sortlist.reduce((curr, next) => curr < next ? curr : next));
           return Expanded(
             child: Screenshot(
               controller: LinesScreeshotcontrollerlist[Spline.length],
@@ -950,16 +958,108 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ],
                   ))),
         );
+      } else if (dataa['$key']['chartType'] == 'scatterpolar') {
+        bool useSides = false;
+        const ticks = [0, 100, 20, 30, 40, 50, 60];
+        List<int> tickss = [];
+        List<int> initial = [];
+        Radarcount.add(key);
+        RadarChartt(String Radachartdata) {
+          tickss.clear();
+          initial.clear();
+          List<String> features = [];
+          List<int> data = [];
+          List<List<int>> finaldata = [data];
+          List length = [];
+          for (int i = 0;
+              i < dataa['$Radachartdata']['chartLevelsAndValueObj'].length;
+              i++) {
+            features.add(dataa['$Radachartdata']['chartLevelsAndValueObj'][i]
+                    ['X']
+                .toString());
+
+            data.add(dataa['$Radachartdata']['chartLevelsAndValueObj'][i]['Y']);
+            length
+                .add(dataa['$Radachartdata']['chartLevelsAndValueObj'][i]['Y']);
+          }
+          // print(features.toList());
+          // print(data.toList());
+          int max = length.reduce((curr, next) => curr > next ? curr : next);
+          int min = length.reduce((curr, next) => curr < next ? curr : next);
+
+          tickss.add(min);
+          tickss.add((max / 5).toInt());
+          tickss.add((max / 4).toInt());
+          tickss.add((max / 3).toInt());
+          tickss.add(max);
+          print('new data');
+          print(tickss.toList());
+          return Container(
+            height: MediaQuery.of(context).orientation == Orientation.landscape
+                ? 335
+                : 300,
+            width: MediaQuery.of(context).orientation == Orientation.landscape
+                ? MediaQuery.of(context).size.width * 0.4
+                : MediaQuery.of(context).size.width * 0.76,
+            child: Screenshot(
+              controller: RadarScreeshotcontrollerlist[Radardata.length],
+              child: Card(
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 50.0),
+                  child: Radar.light(
+                    ticks: tickss,
+                    features: features,
+                    data: finaldata,
+                    reverseAxis: false,
+                    // useSides: useSides,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+
+        Radardata.add(
+          Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              elevation: 10,
+              color: Colors.grey[200],
+              child: Column(
+                children: [
+                  Text(
+                    dataa['$key']['chartTitle'],
+                    style: TextStyle(
+                        fontSize: 15.0,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.all(12),
+                      child: Row(
+                        children: [
+                          RadarChartt(key),
+                          Tooltips(
+                            screenshotController:
+                                RadarScreeshotcontrollerlist[Radardata.length],
+                            ChartName: dataa['$key']['chartTitle'],
+                          )
+                        ],
+                      )),
+                ],
+              )),
+        );
       }
     });
 
-    print('pie: ${piecount.toList()}');
-    print('Column: ${columncount.toList()}');
-    print('Bar: ${Barcount.toList()}');
-    print('doughnut: ${doughnutcount.toList()}');
-    print('Scatter: ${scattercount.toList()}');
-    print('Funnel : ${funnelcount.toList()}');
-    print('Spline : ${Linescount.toList()}');
+    // print('pie: ${piecount.toList()}');
+    // print('Column: ${columncount.toList()}');
+    // print('Bar: ${Barcount.toList()}');
+    // print('doughnut: ${doughnutcount.toList()}');
+    // print('Scatter: ${scattercount.toList()}');
+    // print('Funnel : ${funnelcount.toList()}');
+    // print('Spline : ${Linescount.toList()}');
 
     List<Widget> all = [
       ...piedata,
@@ -968,7 +1068,8 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       ...Bardata,
       ...FunnelData,
       ...Scatterdata,
-      ...Spline
+      ...Spline,
+      ...Radardata,
     ];
     return LayoutBuilder(
         builder: (BuildContext ctx, BoxConstraints constraints) {
@@ -1010,20 +1111,20 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            FlipCardWidet(
-                              dataa['cardData0']['result'][1].toString(),
-                              dataa['cardData0']['result'][0].toString(),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            FlipCardWidet(
-                              dataa['cardData6']['result'][1].toString(),
-                              dataa['cardData6']['result'][0].toString(),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
+                            // FlipCardWidet(
+                            //   dataa['cardData0']['result'][1].toString(),
+                            //   dataa['cardData0']['result'][0].toString(),
+                            // ),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
+                            // FlipCardWidet(
+                            //   dataa['cardData6']['result'][1].toString(),
+                            //   dataa['cardData6']['result'][0].toString(),
+                            // ),
+                            // SizedBox(
+                            //   width: 10,
+                            // ),
                             FlipCardWidet(
                               dataa['cardData5']['result'][1].toString(),
                               dataa['cardData5']['result'][0].toString(),
@@ -1052,7 +1153,8 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                 ...Bardata,
                 ...FunnelData,
                 ...Scatterdata,
-                ...Spline
+                ...Spline,
+                ...Radardata
               ],
             ));
       }

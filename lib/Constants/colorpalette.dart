@@ -370,3 +370,13 @@ List<Color> Linescolor = [
   color7,
   color8
 ];
+
+//Radar Chart Palette
+List<List<Color>> Radarcolorpalette = [
+  palette1,
+  palette2,
+  palette3,
+  palette4,
+  palette5,
+  palette6,
+];

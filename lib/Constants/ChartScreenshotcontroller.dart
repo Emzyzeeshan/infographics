@@ -172,6 +172,32 @@ List<ScreenshotController> LinesScreeshotcontrollerlist = [
   LinesScreenshotcontroller10,
 ];
 
+//Radar Chart Screenshot controller
+
+var RadarScreenshotcontroller1 = ScreenshotController();
+var RadarScreenshotcontroller2 = ScreenshotController();
+var RadarScreenshotcontroller3 = ScreenshotController();
+var RadarScreenshotcontroller4 = ScreenshotController();
+var RadarScreenshotcontroller5 = ScreenshotController();
+var RadarScreenshotcontroller6 = ScreenshotController();
+var RadarScreenshotcontroller7 = ScreenshotController();
+var RadarScreenshotcontroller8 = ScreenshotController();
+var RadarScreenshotcontroller9 = ScreenshotController();
+var RadarScreenshotcontroller10 = ScreenshotController();
+
+List<ScreenshotController> RadarScreeshotcontrollerlist = [
+  RadarScreenshotcontroller1,
+  RadarScreenshotcontroller2,
+  RadarScreenshotcontroller3,
+  RadarScreenshotcontroller4,
+  RadarScreenshotcontroller5,
+  RadarScreenshotcontroller6,
+  RadarScreenshotcontroller7,
+  RadarScreenshotcontroller8,
+  RadarScreenshotcontroller9,
+  RadarScreenshotcontroller10,
+];
+
 List<Color> Pallete1 = [
   Colors.green.shade100,
   Colors.green.shade200,

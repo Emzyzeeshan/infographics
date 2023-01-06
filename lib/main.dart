@@ -14,6 +14,7 @@ Color currentColor = Color(0xff443a49);
 
 var Selectedinput;
 var dataa;
+List<Widget> allgraph = [];
 
 class MyApp extends StatefulWidget {
   @override

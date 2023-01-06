@@ -6,6 +6,7 @@ import 'package:integraphics/Constants/ResponsiveSize.dart';
 import 'package:integraphics/Screens/DropdownScreens/HT_Dashboard.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product%20_and_service_spend.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product_Dashboard.dart';
+import 'package:integraphics/Screens/testpage.dart';
 import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/widgets/CircularLoader.dart';
 import 'package:integraphics/widgets/Drawer.dart';
@@ -47,134 +48,171 @@ class _InfoGraphicsState extends State<InfoGraphics> {
     DeviceSizeConfig().init(context);
     bool toogle = false;
     return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-          drawer: drawer(),
-          appBar: AppBar(
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Logout(widget.logindata),
-              ),
-            ],
-            backgroundColor: Color(0xff6d96fa),
-            title: Text(
-              'Info Graphics',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontSize: 15),
-            ),
-            centerTitle: true,
-            elevation: 0,
-          ),
-          body: Column(children: [
-            Container(
-              height: DeviceSizeConfig.screenHeight! * 0.1,
-              decoration: BoxDecoration(
-                color: Color(0xff6d96fa),
-              ),
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: FutureBuilder(
-                      future: finaldata,
-                      builder: ((context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return Align(
-                              alignment: Alignment.bottomCenter,
-                              child: buildBody());
-                        } else if (snapshot.connectionState ==
-                            ConnectionState.done) {
-                          if (snapshot.hasError) {
-                            return const Text('Error');
-                          } else if (snapshot.hasData) {
-                            return Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton2(
-                                  hint: Text(
-                                    'ok',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      color: Theme.of(context).hintColor,
-                                    ),
-                                  ),
-                                  items: data['dashBordlist']
-                                      .map<DropdownMenuItem<String>>(
-                                          (item) => DropdownMenuItem<String>(
-                                                value: item,
-                                                child: Text(
-                                                  item.toString(),
-                                                  style: const TextStyle(
-                                                    fontSize: 14,
-                                                  ),
-                                                ),
-                                              ))
-                                      .toList(),
-                                  value: Selectedinput,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      Selectedinput = value;
-                                      print(Selectedinput);
-                                      Selectedinput = Selectedinput;
-                                      // pageController.jumpToPage(
-                                      //     data['dashBordlist']
-                                      //         .indexOf(selectedValue));
-                                      // print(data['dashBordlist']
-                                      //     .indexOf(selectedValue));
-                                    });
-                                  },
-                                  buttonHeight: 50,
-                                  buttonWidth:
-                                      MediaQuery.of(context).size.width,
-                                  itemHeight: 40,
-                                  iconSize: 14,
-                                  buttonPadding: const EdgeInsets.only(
-                                      left: 14, right: 14),
-                                  buttonDecoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(14),
-                                    color: Colors.grey[200],
-                                  ),
-                                  itemPadding: const EdgeInsets.only(
-                                      left: 14, right: 14),
-                                  dropdownPadding: null,
-                                  dropdownElevation: 8,
-                                  dropdownOverButton: true,
-                                  scrollbarRadius: const Radius.circular(40),
-                                  scrollbarThickness: 6,
-                                  dropdownFullScreen: false,
-                                  dropdownDecoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(15)),
-                                  dropdownMaxHeight:
-                                      MediaQuery.of(context).size.height * 0.5,
-                                  scrollbarAlwaysShow: true,
-                                  offset: const Offset(-20, 0),
-                                  isDense: true,
-                                ),
-                              ),
-                            );
-                          } else {
-                            return const Text('Empty data');
-                          }
-                        } else {
-                          return Text('State: ${snapshot.connectionState}');
-                        }
-                      }),
+        onWillPop: () async => false,
+        child: Scaffold(
+            drawer: drawer(),
+            // appBar: AppBar(
+            //   actions: [
+            //     Padding(
+            //       padding: const EdgeInsets.only(right: 8.0),
+            //       child: Logout(widget.logindata),
+            //     ),
+            //   ],
+            //   backgroundColor: Color(0xff6d96fa),
+            //   title: Text(
+            //     'Info Graphics',
+            //     style: TextStyle(
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.white,
+            //         fontSize: 15),
+            //   ),
+            //   centerTitle: true,
+            //   elevation: 0,
+            // ),
+            body: NestedScrollView(
+                headerSliverBuilder:
+                    (BuildContext context, bool innerBoxIsScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
+                      backgroundColor: Color(0xff6d96fa),
+                      flexibleSpace: FlexibleSpaceBar(
+                        background: Padding(
+                          padding: const EdgeInsets.only(top: 28.0),
+                          child:
+                              Image.asset('assets/images/IntegralGifLogo.gif'),
+                        ),
+                      ),
+                      actions: [
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Logout(widget.logindata),
+                        ),
+                      ],
+                    )
+                  ];
+                },
+                body: Column(children: [
+                  Container(
+                    height: MediaQuery.of(context).orientation ==
+                            Orientation.landscape
+                        ? DeviceSizeConfig.screenHeight! * 0.2
+                        : DeviceSizeConfig.screenHeight! * 0.14,
+                    decoration: BoxDecoration(
+                      color: Color(0xff6d96fa),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 22.0),
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: FutureBuilder(
+                              future: finaldata,
+                              builder: ((context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: buildBody());
+                                } else if (snapshot.connectionState ==
+                                    ConnectionState.done) {
+                                  if (snapshot.hasError) {
+                                    return const Text('Error');
+                                  } else if (snapshot.hasData) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: DropdownButtonHideUnderline(
+                                        child: DropdownButton2(
+                                          hint: Text(
+                                            'ok',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color:
+                                                  Theme.of(context).hintColor,
+                                            ),
+                                          ),
+                                          items: data['dashBordlist']
+                                              .map<DropdownMenuItem<String>>(
+                                                  (item) =>
+                                                      DropdownMenuItem<String>(
+                                                        value: item,
+                                                        child: Text(
+                                                          item.toString(),
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                      ))
+                                              .toList(),
+                                          value: Selectedinput,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              Selectedinput = value;
+                                              print(Selectedinput);
+                                              Selectedinput = Selectedinput;
+                                              // pageController.jumpToPage(
+                                              //     data['dashBordlist']
+                                              //         .indexOf(selectedValue));
+                                              // print(data['dashBordlist']
+                                              //     .indexOf(selectedValue));
+                                            });
+                                          },
+                                          buttonHeight: 50,
+                                          buttonWidth:
+                                              MediaQuery.of(context).size.width,
+                                          itemHeight: 40,
+                                          iconSize: 14,
+                                          buttonPadding: const EdgeInsets.only(
+                                              left: 14, right: 14),
+                                          buttonDecoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            color: Colors.grey[200],
+                                          ),
+                                          itemPadding: const EdgeInsets.only(
+                                              left: 14, right: 14),
+                                          dropdownPadding: null,
+                                          dropdownElevation: 8,
+                                          dropdownOverButton: true,
+                                          scrollbarRadius:
+                                              const Radius.circular(40),
+                                          scrollbarThickness: 6,
+                                          dropdownFullScreen: false,
+                                          dropdownDecoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15)),
+                                          dropdownMaxHeight:
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.5,
+                                          scrollbarAlwaysShow: true,
+                                          offset: const Offset(-20, 0),
+                                          isDense: true,
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return const Text('Empty data');
+                                  }
+                                } else {
+                                  return Text(
+                                      'State: ${snapshot.connectionState}');
+                                }
+                              }),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Container(
-              child: Expanded(
-                child: HR_Dashboard(),
-              ),
-            ),
-          ])),
-    );
+                  Container(
+                    child: Expanded(
+                      child: HR_Dashboard(),
+                    ),
+                  ),
+                ]))));
   }
 
   Widget custompage() {

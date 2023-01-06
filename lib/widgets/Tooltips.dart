@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:integraphics/Screens/Datatable.dart';
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/showimagecapture.dart';
 import 'package:integraphics/widgets/zoomwidget.dart';
@@ -40,7 +41,12 @@ class _TooltipsState extends State<Tooltips> {
             child: Tooltip(
               message: 'Show Data',
               child: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: ((context) {
+                    return Sampledatagrid();
+                  })));
+                },
                 icon: Icon(
                   Icons.grid_on_outlined,
                   size: 26,
@@ -51,7 +57,7 @@ class _TooltipsState extends State<Tooltips> {
           ),
           Neumorphic(
             child: Tooltip(
-              message: 'Show Data',
+              message: 'Filter',
               child: IconButton(
                 onPressed: () {},
                 icon: Icon(
@@ -75,7 +81,7 @@ class _TooltipsState extends State<Tooltips> {
           // ),
           Neumorphic(
             child: Tooltip(
-              message: 'Show Data',
+              message: 'Full Screen',
               child: IconButton(
                 onPressed: () {
                   widget.screenshotController!
@@ -122,7 +128,7 @@ class _TooltipsState extends State<Tooltips> {
           // ),
           Neumorphic(
             child: Tooltip(
-              message: 'Show Data',
+              message: 'Color pallete',
               child: IconButton(
                 onPressed: widget.color,
 
@@ -184,7 +190,7 @@ class _TooltipsState extends State<Tooltips> {
           ),
           Neumorphic(
             child: Tooltip(
-              message: 'Show Data',
+              message: 'Download',
               child: IconButton(
                 onPressed: () {
                   widget.screenshotController!
