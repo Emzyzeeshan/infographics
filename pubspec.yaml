@@ -94,6 +94,8 @@ flutter:
     - assets/images/Master_Detail_Editable.png
     - assets/images/Home-Iocn.png
     - assets/images/loader.gif
+    - assets/database.png
+    - assets/barimg.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

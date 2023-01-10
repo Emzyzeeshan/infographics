@@ -17,28 +17,57 @@ class _FlipCardWidetState extends State<FlipCardWidet> {
       fill: Fill
           .fillBack, // Fill the back side of the card to make in the same size as the front.
       direction: FlipDirection.HORIZONTAL, // default
-      front: Row(
-        children: [
-          Container(
-            height: 150,
-            width: 100,
-            decoration: BoxDecoration(
-                color: Color(0xff6d96fa).withOpacity(0.3),
-                borderRadius: BorderRadius.circular(15)),
-            child: Center(
-                child: Padding(
-              padding: const EdgeInsets.only(left: 10.0),
-              child: Text(
-                widget.Frontext,
-                style: TextStyle(fontWeight: FontWeight.bold),
+      front: Container(
+        height: 150,
+        width: 200,
+        decoration: BoxDecoration(
+            color: Color(0xff6d96fa).withOpacity(0.3),
+            borderRadius: BorderRadius.circular(15)),
+        child: Center(
+            child: Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Image.asset(
+                      'assets/database.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      widget.Frontext,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Expanded(
+                    child: Image.asset(
+                      'assets/barimg.png',
+                      height: 25,
+                      width: 25,
+                    ),
+                  ),
+                ],
               ),
-            )),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                '2021-2022',
+                style: TextStyle(color: Colors.blueAccent),
+              ),
+            ],
           ),
-        ],
+        )),
       ),
       back: Container(
         height: 150,
-        width: 100,
+        width: 200,
         decoration: BoxDecoration(
             color: Color(0xff6d96fa).withOpacity(0.3),
             borderRadius: BorderRadius.circular(15)),

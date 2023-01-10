@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/login/loginPage.dart';
+import 'package:integraphics/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Logout extends StatefulWidget {
@@ -41,8 +42,9 @@ class _LogoutState extends State<Logout> {
     if (response.body == 'Success') {
       print(response.body);
       logindata.setBool('login', true);
-      Navigator.push(
-          context, new MaterialPageRoute(builder: (context) => LoginPage()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+
       await Fluttertoast.showToast(
           msg: "ThankYou",
           toastLength: Toast.LENGTH_SHORT,

@@ -133,33 +133,38 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             );
           }
           return Expanded(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              child: SfCircularChart(
-                palette: Allpiecolorlist[piecount.indexOf(key)],
-                title: ChartTitle(text: '${dataa['$chartname']['chartTitle']}'),
-                legend: Legend(
-                  isVisible: true,
-                  overflowMode: LegendItemOverflowMode.wrap,
-                  position: LegendPosition.bottom,
+            child: Screenshot(
+              controller: PieScreeshotcontrollerlist[piedata.length],
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                child: SfCircularChart(
+                  palette: Allpiecolorlist[piecount.indexOf(key)],
+                  title:
+                      ChartTitle(text: '${dataa['$chartname']['chartTitle']}'),
+                  legend: Legend(
+                    isVisible: true,
+                    overflowMode: LegendItemOverflowMode.wrap,
+                    position: LegendPosition.bottom,
+                  ),
+                  series: <PieSeries<ChartSampleData, String>>[
+                    PieSeries<ChartSampleData, String>(
+                        enableTooltip: true,
+                        explode: true,
+                        explodeIndex: 0,
+                        explodeOffset: '10%',
+                        dataSource: Piechart,
+                        xValueMapper: (ChartSampleData dataa, _) =>
+                            dataa.x as String,
+                        yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                        dataLabelMapper: (ChartSampleData dataa, _) =>
+                            dataa.text,
+                        startAngle: 0,
+                        endAngle: 0,
+                        dataLabelSettings:
+                            const DataLabelSettings(isVisible: true)),
+                  ],
                 ),
-                series: <PieSeries<ChartSampleData, String>>[
-                  PieSeries<ChartSampleData, String>(
-                      enableTooltip: true,
-                      explode: true,
-                      explodeIndex: 0,
-                      explodeOffset: '10%',
-                      dataSource: Piechart,
-                      xValueMapper: (ChartSampleData dataa, _) =>
-                          dataa.x as String,
-                      yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                      dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
-                      startAngle: 0,
-                      endAngle: 0,
-                      dataLabelSettings:
-                          const DataLabelSettings(isVisible: true)),
-                ],
               ),
             ),
           );
@@ -177,9 +182,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     children: [
                       Piechart(key),
                       Tooltips(
-                        screenshotController:
-                            PieScreeshotcontrollerlist[piedata.length],
-                        ChartName: dataa['$key']['chartTitle'],
                         color: () {
                           showDialog(
                               context: context,
@@ -227,6 +229,9 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                     ),
                                   )));
                         },
+                        screenshotController:
+                            PieScreeshotcontrollerlist[piedata.length],
+                        ChartName: dataa['$key']['chartTitle'],
                       )
                     ],
                   ))),
@@ -249,31 +254,35 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             );
           }
           return Expanded(
-            child: Card(
-              child: SfCircularChart(
-                palette: Allcolorpalette[doughnutcount.indexOf(key)],
-                legend: Legend(
-                    isVisible: true,
-                    position: LegendPosition.bottom,
-                    overflowMode: LegendItemOverflowMode.wrap),
-                title: ChartTitle(
-                    text: '${dataa['$donutchart']['chartTitle']}',
-                    textStyle: TextStyle(fontWeight: FontWeight.bold)),
-                series: <DoughnutSeries<ChartSampleData, String>>[
-                  DoughnutSeries<ChartSampleData, String>(
-                      explode: true,
-                      explodeIndex: 0,
-                      explodeOffset: '10%',
-                      dataSource: EmployeesCountByWorkExperience,
-                      xValueMapper: (ChartSampleData dataa, _) =>
-                          dataa.x as String,
-                      yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                      dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
-                      startAngle: 90,
-                      endAngle: 90,
-                      dataLabelSettings:
-                          const DataLabelSettings(isVisible: true)),
-                ],
+            child: Screenshot(
+              controller: DonutScreeshotcontrollerlist[Doughnutt.length],
+              child: Card(
+                child: SfCircularChart(
+                  palette: Allcolorpalette[doughnutcount.indexOf(key)],
+                  legend: Legend(
+                      isVisible: true,
+                      position: LegendPosition.bottom,
+                      overflowMode: LegendItemOverflowMode.wrap),
+                  title: ChartTitle(
+                      text: '${dataa['$donutchart']['chartTitle']}',
+                      textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                  series: <DoughnutSeries<ChartSampleData, String>>[
+                    DoughnutSeries<ChartSampleData, String>(
+                        explode: true,
+                        explodeIndex: 0,
+                        explodeOffset: '10%',
+                        dataSource: EmployeesCountByWorkExperience,
+                        xValueMapper: (ChartSampleData dataa, _) =>
+                            dataa.x as String,
+                        yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                        dataLabelMapper: (ChartSampleData dataa, _) =>
+                            dataa.text,
+                        startAngle: 90,
+                        endAngle: 90,
+                        dataLabelSettings:
+                            const DataLabelSettings(isVisible: true)),
+                  ],
+                ),
               ),
             ),
           );
@@ -291,9 +300,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     children: [
                       Doughnut(key),
                       Tooltips(
-                        screenshotController:
-                            DonutScreeshotcontrollerlist[Doughnutt.length],
-                        ChartName: dataa['$key']['chartTitle'],
                         color: () {
                           showDialog(
                               context: context,
@@ -341,6 +347,9 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                     ),
                                   )));
                         },
+                        screenshotController:
+                            DonutScreeshotcontrollerlist[Doughnutt.length],
+                        ChartName: dataa['$key']['chartTitle'],
                       )
                     ],
                   ))),
@@ -1145,7 +1154,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                 ...FunnelData,
                 ...Scatterdata,
                 ...Spline,
-                ...Radardata
+                ...Radardata,
               ],
             ));
       }
