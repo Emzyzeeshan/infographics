@@ -14,6 +14,7 @@ import 'package:integraphics/widgets/ChartSampledata.dart';
 import 'package:integraphics/widgets/Colorsfunction.dart';
 import 'package:integraphics/widgets/Flipcard.dart';
 import 'package:integraphics/widgets/Tooltips.dart';
+import 'package:integraphics/widgets/allcharts.dart';
 import 'package:integraphics/widgets/radarchart.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -42,6 +43,10 @@ class _HR_DashboardState extends State<HR_Dashboard> {
         TooltipBehavior(enable: true, canShowMarker: false, header: '');
     EmployeesCountByAge_tooltipBehavior =
         TooltipBehavior(enable: true, header: '', canShowMarker: false);
+    ColumnConvert_tooltipBehavior =
+        TooltipBehavior(enable: true, header: '', canShowMarker: false);
+    BarSeiesConvert_tooltipBehavior =
+        TooltipBehavior(enable: true, canShowMarker: false, header: '');
     // TODO: implement initState
     super.initState();
   }
@@ -110,6 +115,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
     List sortlist = [];
     List<Widget> Radardata = [];
     List Radarcount = [];
+    List<Widget> Doubleline = [];
     print('----------');
     print('Get keys:');
     // Get all keys
@@ -232,6 +238,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         screenshotController:
                             PieScreeshotcontrollerlist[piedata.length],
                         ChartName: dataa['$key']['chartTitle'],
+                        chartkey: '$key',
                       )
                     ],
                   ))),
@@ -350,6 +357,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         screenshotController:
                             DonutScreeshotcontrollerlist[Doughnutt.length],
                         ChartName: dataa['$key']['chartTitle'],
+                        chartkey: '$key',
                       )
                     ],
                   ))),
@@ -463,6 +471,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         screenshotController:
                             ColumnScreeshotcontrollerlist[Columndata.length],
                         ChartName: dataa['$key']['chartTitle'],
+                        chartkey: '$key',
                       )
                     ],
                   ))),
@@ -537,6 +546,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     children: [
                       BarSeies(key),
                       Tooltips(
+                        chartkey: '$key',
                         screenshotController:
                             BarScreeshotcontrollerlist[Bardata.length],
                         ChartName: dataa['$key']['chartTitle'],
@@ -553,41 +563,36 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                               BorderRadius.circular(15)),
                                       height: 150,
                                       width: 150,
-                                      child: Colorpanel(
-                                        ontapblue: () {
-                                          setState(() {
-                                            AllBarcolorlist[
-                                                    Barcount.indexOf(key)] =
-                                                bluepalett;
-                                          });
-                                          Navigator.pop(context);
-                                        },
-                                        ontapGreen: () {
-                                          setState(() {
-                                            AllBarcolorlist[
-                                                    Barcount.indexOf(key)] =
-                                                Greenpalett;
-                                          });
+                                      child: Colorpanel(ontapblue: () {
+                                        setState(() {
+                                          AllBarcolorlist[
+                                                  Barcount.indexOf(key)] =
+                                              bluepalett;
+                                        });
+                                        Navigator.pop(context);
+                                      }, ontapGreen: () {
+                                        setState(() {
+                                          AllBarcolorlist[
+                                                  Barcount.indexOf(key)] =
+                                              Greenpalett;
+                                        });
 
-                                          Navigator.pop(context);
-                                        },
-                                        ontapred: () {
-                                          setState(() {
-                                            AllBarcolorlist[
-                                                    Barcount.indexOf(key)] =
-                                                redpalett;
-                                          });
-                                          Navigator.pop(context);
-                                        },
-                                        ontappink: () {
-                                          setState(() {
-                                            AllBarcolorlist[
-                                                    Barcount.indexOf(key)] =
-                                                pinkpalett;
-                                          });
-                                          Navigator.pop(context);
-                                        },
-                                      ),
+                                        Navigator.pop(context);
+                                      }, ontapred: () {
+                                        setState(() {
+                                          AllBarcolorlist[
+                                                  Barcount.indexOf(key)] =
+                                              redpalett;
+                                        });
+                                        Navigator.pop(context);
+                                      }, ontappink: () {
+                                        setState(() {
+                                          AllBarcolorlist[
+                                                  Barcount.indexOf(key)] =
+                                              pinkpalett;
+                                        });
+                                        Navigator.pop(context);
+                                      }),
                                     ),
                                   )));
                         },
@@ -656,6 +661,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     children: [
                       Funnelchart(key),
                       Tooltips(
+                        chartkey: '$key',
                         screenshotController:
                             FunnelScreeshotcontrollerlist[FunnelData.length],
                         ChartName: dataa['$key']['chartTitle'],
@@ -788,6 +794,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     children: [
                       Scatterchart(key),
                       Tooltips(
+                        chartkey: '$key',
                         screenshotController:
                             ScatterScreeshotcontrollerlist[Scatterdata.length],
                         ChartName: dataa['$key']['chartTitle'],
@@ -828,6 +835,125 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                   ))),
         );
       } else if (dataa['$key']['chartType'] == 'lines') {
+        if (dataa['$key']['chartTitle'] ==
+            'Final/Quoted Amount Account Owner') {
+          List<ChartSampleData> chartData = [];
+
+          doubleline(String Doublechartkey) {
+            for (int i = 0;
+                i < dataa['$Doublechartkey']['chartLevelsAndValueObj'].length;
+                i++) {
+              chartData.add(
+                ChartSampleData(
+                    x: dataa['$Doublechartkey']['chartLevelsAndValueObj'][i]
+                            ['X']
+                        .toString(),
+                    y: dataa['$Doublechartkey']['chartLevelsAndValueObj'][i]
+                        ['Y'],
+                    secondSeriesYValue: dataa['$Doublechartkey']
+                        ['chartLevelsAndValueObj'][i]['Z'],
+                    size: 0.37,
+                    pointColor: Colors.purple),
+              );
+
+              // sortlist
+              //     .add();
+
+            }
+            return SfCartesianChart(
+              plotAreaBorderWidth: 0,
+              title:
+                  ChartTitle(text: '${dataa['$Doublechartkey']['chartTitle']}'),
+              legend: Legend(
+                  isVisible: true,
+                  position: LegendPosition.bottom,
+                  overflowMode: LegendItemOverflowMode.wrap),
+              primaryXAxis: CategoryAxis(
+                  labelsExtent: 20,
+                  labelRotation: 75,
+                  majorGridLines: const MajorGridLines(width: 0),
+                  labelPlacement: LabelPlacement.onTicks),
+              primaryYAxis: NumericAxis(
+                  minimum: 23000000,
+                  maximum: 0,
+                  axisLine: const AxisLine(width: 0),
+                  edgeLabelPlacement: EdgeLabelPlacement.shift,
+                  labelFormat: '{value}',
+                  majorTickLines: const MajorTickLines(size: 0)),
+              series: <SplineSeries<ChartSampleData, String>>[
+                SplineSeries<ChartSampleData, String>(
+                  dataSource: chartData,
+                  xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+                  yValueMapper: (ChartSampleData sales, _) => sales.y,
+                  markerSettings: const MarkerSettings(isVisible: true),
+                  name: 'Final Amount',
+                ),
+                SplineSeries<ChartSampleData, String>(
+                  dataSource: chartData,
+                  name: 'Quoted Amount',
+                  markerSettings: const MarkerSettings(isVisible: true),
+                  xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+                  yValueMapper: (ChartSampleData sales, _) =>
+                      sales.secondSeriesYValue,
+                )
+              ],
+              tooltipBehavior: TooltipBehavior(enable: true),
+            );
+          }
+
+          Doubleline.add(
+            Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15)),
+                elevation: 10,
+                color: Colors.grey[200],
+                child: Padding(
+                    padding: EdgeInsets.all(12),
+                    child: Row(
+                      children: [
+                        doubleline(key),
+                        // Tooltips(
+                        //   chartkey: '$key',
+                        //   screenshotController:
+                        //       LinesScreeshotcontrollerlist[Spline.length],
+                        //   ChartName: dataa['$key']['chartTitle'],
+                        //   color: () {
+                        //     void changeColor(Color color) {
+                        //       pickerColor = color;
+                        //     }
+
+                        //     showDialog(
+                        //       context: context,
+                        //       builder: (context) => AlertDialog(
+                        //         title: const Text('Pick a color!'),
+                        //         content: SingleChildScrollView(
+                        //           child: ColorPicker(
+                        //             pickerColor: pickerColor,
+                        //             onColorChanged: changeColor,
+                        //           ),
+                        //         ),
+                        //         actions: <Widget>[
+                        //           ElevatedButton(
+                        //             child: const Text('Got it'),
+                        //             onPressed: () {
+                        //               setState(() {
+                        //                 Linescolor[Linescount.indexOf(key)] =
+                        //                     pickerColor;
+                        //               });
+
+                        //               print(pickerColor);
+                        //               Navigator.of(context).pop();
+                        //             },
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     );
+                        //   },
+                        // )
+                      ],
+                    ))),
+          );
+        }
         Map sortlistt = <dynamic, dynamic>{};
         Linescount.add(key);
         Lineschart(String Lineschart) {
@@ -919,6 +1045,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     children: [
                       Lineschart(key),
                       Tooltips(
+                        chartkey: '$key',
                         screenshotController:
                             LinesScreeshotcontrollerlist[Spline.length],
                         ChartName: dataa['$key']['chartTitle'],
@@ -978,9 +1105,10 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ['X']
                 .toString());
 
-            data.add(dataa['$Radachartdata']['chartLevelsAndValueObj'][i]['Y']);
-            length
-                .add(dataa['$Radachartdata']['chartLevelsAndValueObj'][i]['Y']);
+            data.add(dataa['$Radachartdata']['chartLevelsAndValueObj'][i]['Y']
+                .toInt());
+            length.add(dataa['$Radachartdata']['chartLevelsAndValueObj'][i]['Y']
+                .toInt());
           }
           // print(features.toList());
           // print(data.toList());
@@ -1070,6 +1198,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       ...Scatterdata,
       ...Spline,
       ...Radardata,
+      ...Doubleline
     ];
     return LayoutBuilder(
         builder: (BuildContext ctx, BoxConstraints constraints) {
@@ -1155,6 +1284,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                 ...Scatterdata,
                 ...Spline,
                 ...Radardata,
+                ...Doubleline
               ],
             ));
       }
