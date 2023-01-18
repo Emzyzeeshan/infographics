@@ -8,12 +8,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:integraphics/Screens/Infographics.dart';
+
+import 'package:integraphics/main.dart';
+import 'package:integraphics/widgets/unauthaccess.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 import '../Screens/DropdownScreens/HR_Dashboard.dart';
 
+import 'lg.dart';
 import 'widget/loginContainer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,27 +39,14 @@ class _LoginPageState extends State<LoginPage> {
   SharedPreferences? logindata;
   bool? newuser;
   var userDetails;
-  late bool authenticated;
+  // late bool authenticated;
   void check_if_already_login() async {
     logindata = await SharedPreferences.getInstance();
     newuser = (logindata!.getBool('login') ?? true);
-
     print(newuser);
     if (newuser == false) {
-      await _authenticate();
-      authenticated == true
-          ? Navigator.pushReplacement(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => InfoGraphics(logindata)))
-          : showDialog(
-              context: context,
-              builder: ((context) {
-                return AlertDialog(
-                  content: Text('errroe'),
-                );
-              }));
-      ;
+      Navigator.pushReplacement(context,
+          new MaterialPageRoute(builder: (context) => InfoGraphics(logindata)));
     }
   }
 
@@ -64,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
   initState() {
     userNameText.text = 'sasi_mgr';
     passWordText.text = 'P@ssw0rd';
+
     check_if_already_login();
     super.initState();
     // auth.isDeviceSupported().then(
@@ -78,43 +70,46 @@ class _LoginPageState extends State<LoginPage> {
     final height = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        body: SizedBox(
-          height: height,
-          child: Stack(
-            children: [
-              Positioned(height: height * 0.43, child: const LoginContainer()),
-              SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: authenticated == false
+          ? MyWidget()
+          : Scaffold(
+              body: SizedBox(
+                height: height,
+                child: Stack(
+                  children: [
+                    Positioned(
+                        height: height * 0.43, child: const LoginContainer()),
+                    SingleChildScrollView(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: height * .55),
-                          _usernameWidget(),
-                          const SizedBox(height: 20),
-                          _passwordwidget(),
+                        children: <Widget>[
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(height: height * .55),
+                                _usernameWidget(),
+                                const SizedBox(height: 20),
+                                _passwordwidget(),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _submitButton(),
+                            ],
+                          ),
+                          SizedBox(height: height * .035),
                         ],
                       ),
                     ),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _submitButton(),
-                      ],
-                    ),
-                    SizedBox(height: height * .035),
                   ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 

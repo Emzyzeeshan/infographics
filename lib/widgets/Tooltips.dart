@@ -41,6 +41,7 @@ class _TooltipsState extends State<Tooltips> {
   @override
   Widget build(BuildContext context) {
     String? localkey = widget.chartkey;
+    List<Widget> allpage = [];
     return Container(
       color: Colors.transparent,
       height: 300,
@@ -119,6 +120,7 @@ class _TooltipsState extends State<Tooltips> {
                                           IconButton(
                                               onPressed: () {
                                                 showCupertinoModalBottomSheet(
+                                                  enableDrag: false,
                                                   context: context,
                                                   builder: (context) =>
                                                       Container(
@@ -126,7 +128,11 @@ class _TooltipsState extends State<Tooltips> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height *
-                                                            0.5,
+                                                            0.7,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -149,7 +155,8 @@ class _TooltipsState extends State<Tooltips> {
                                                                   .grey[200],
                                                               child:
                                                                   PiechartConvert(
-                                                                      localkey!)),
+                                                                      localkey!,
+                                                                      context)),
                                                         ),
                                                         Container(
                                                           width: 120,
@@ -176,7 +183,7 @@ class _TooltipsState extends State<Tooltips> {
                                                                               100,
                                                                           value!,
                                                                           name:
-                                                                              'graph_${''}_${DateTime.now()}');
+                                                                              'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
                                                                   print(result);
                                                                   // screenshotController
                                                                   //     .captureAndSave(appDocDir.path);
@@ -227,6 +234,7 @@ class _TooltipsState extends State<Tooltips> {
                                                     screenshotControllerDoughnut =
                                                     ScreenshotController();
                                                 showCupertinoModalBottomSheet(
+                                                  enableDrag: false,
                                                   context: context,
                                                   builder: (context) =>
                                                       Container(
@@ -234,7 +242,11 @@ class _TooltipsState extends State<Tooltips> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height *
-                                                            0.5,
+                                                            0.7,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -257,7 +269,8 @@ class _TooltipsState extends State<Tooltips> {
                                                                   .grey[200],
                                                               child:
                                                                   DoughnutConvert(
-                                                                      localkey!)),
+                                                                      localkey!,
+                                                                      context)),
                                                         ),
                                                         Container(
                                                           width: 120,
@@ -284,7 +297,7 @@ class _TooltipsState extends State<Tooltips> {
                                                                               100,
                                                                           value!,
                                                                           name:
-                                                                              'graph_${''}_${DateTime.now()}');
+                                                                              'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
                                                                   print(result);
                                                                   // screenshotController
                                                                   //     .captureAndSave(appDocDir.path);
@@ -342,7 +355,11 @@ class _TooltipsState extends State<Tooltips> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height *
-                                                            0.5,
+                                                            0.7,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -365,7 +382,8 @@ class _TooltipsState extends State<Tooltips> {
                                                                   .grey[200],
                                                               child:
                                                                   ColumnConvert(
-                                                                      localkey!)),
+                                                                      localkey!,
+                                                                      context)),
                                                         ),
                                                         Container(
                                                           width: 120,
@@ -392,7 +410,7 @@ class _TooltipsState extends State<Tooltips> {
                                                                               100,
                                                                           value!,
                                                                           name:
-                                                                              'graph_${''}_${DateTime.now()}');
+                                                                              'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
                                                                   print(result);
                                                                   // screenshotController
                                                                   //     .captureAndSave(appDocDir.path);
@@ -450,7 +468,11 @@ class _TooltipsState extends State<Tooltips> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height *
-                                                            0.5,
+                                                            0.7,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -473,7 +495,8 @@ class _TooltipsState extends State<Tooltips> {
                                                                   .grey[200],
                                                               child:
                                                                   Funnelchartconvert(
-                                                                      localkey!)),
+                                                                      localkey!,
+                                                                      context)),
                                                         ),
                                                         Container(
                                                           width: 120,
@@ -500,7 +523,7 @@ class _TooltipsState extends State<Tooltips> {
                                                                               100,
                                                                           value!,
                                                                           name:
-                                                                              'graph_${''}_${DateTime.now()}');
+                                                                              'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
                                                                   print(result);
                                                                   // screenshotController
                                                                   //     .captureAndSave(appDocDir.path);
@@ -558,7 +581,11 @@ class _TooltipsState extends State<Tooltips> {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height *
-                                                            0.5,
+                                                            0.7,
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
                                                     child: Column(
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
@@ -581,7 +608,8 @@ class _TooltipsState extends State<Tooltips> {
                                                                   .grey[200],
                                                               child:
                                                                   BarSeiesConvert(
-                                                                      localkey!)),
+                                                                      localkey!,
+                                                                      context)),
                                                         ),
                                                         Container(
                                                           width: 120,
@@ -608,7 +636,7 @@ class _TooltipsState extends State<Tooltips> {
                                                                               100,
                                                                           value!,
                                                                           name:
-                                                                              'graph_${''}_${DateTime.now()}');
+                                                                              'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
                                                                   print(result);
                                                                   // screenshotController
                                                                   //     .captureAndSave(appDocDir.path);
@@ -654,108 +682,228 @@ class _TooltipsState extends State<Tooltips> {
                                                 color: Color(0xff6d96fa),
                                               )),
                                         ]),
-                                    IconButton(
-                                        onPressed: () {
-                                          ScreenshotController
-                                              screenshotControllerBar =
-                                              ScreenshotController();
-                                          showCupertinoModalBottomSheet(
-                                            context: context,
-                                            builder: (context) => Container(
-                                              height: MediaQuery.of(context)
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                            onPressed: () {
+                                              ScreenshotController
+                                                  screenshotControllerRadar =
+                                                  ScreenshotController();
+                                              showCupertinoModalBottomSheet(
+                                                context: context,
+                                                builder: (context) => Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.7,
+                                                  width: MediaQuery.of(context)
                                                       .size
-                                                      .height *
-                                                  0.5,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                children: [
-                                                  Screenshot(
-                                                    controller:
-                                                        screenshotControllerBar,
-                                                    child: Card(
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        15)),
-                                                        elevation: 10,
-                                                        color: Colors.grey[200],
-                                                        child:
-                                                            RadarCharttconvert(
-                                                                localkey!,
-                                                                context)),
-                                                  ),
-                                                  Container(
-                                                    width: 120,
-                                                    child: MaterialButton(
-                                                      color: Color(0xff6d96fa),
-                                                      onPressed: () async {
-                                                        screenshotControllerBar
-                                                            .capture()
-                                                            .then(
-                                                                (value) async {
-                                                          // Uint8List capturedImage;
-                                                          var status =
-                                                              await Permission
-                                                                  .storage
-                                                                  .request();
-                                                          if (status
-                                                              .isGranted) {
-                                                            // String savePath = appDocDir.path+'/temp';
-                                                            final result =
-                                                                await ImageGallerySaver
-                                                                    .saveImage(
+                                                      .width,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Screenshot(
+                                                        controller:
+                                                            screenshotControllerRadar,
+                                                        child: Card(
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15)),
+                                                            elevation: 10,
+                                                            color: Colors
+                                                                .grey[200],
+                                                            child:
+                                                                RadarCharttconvert(
+                                                                    localkey!,
+                                                                    context)),
+                                                      ),
+                                                      Container(
+                                                        width: 120,
+                                                        child: MaterialButton(
+                                                          color:
+                                                              Color(0xff6d96fa),
+                                                          onPressed: () async {
+                                                            screenshotControllerRadar
+                                                                .capture()
+                                                                .then(
+                                                                    (value) async {
+                                                              // Uint8List capturedImage;
+                                                              var status =
+                                                                  await Permission
+                                                                      .storage
+                                                                      .request();
+                                                              if (status
+                                                                  .isGranted) {
+                                                                // String savePath = appDocDir.path+'/temp';
+                                                                final result =
+                                                                    await ImageGallerySaver.saveImage(
                                                                         quality:
                                                                             100,
                                                                         value!,
                                                                         name:
-                                                                            'graph_${''}_${DateTime.now()}');
-                                                            print(result);
-                                                            // screenshotController
-                                                            //     .captureAndSave(appDocDir.path);
-                                                          }
-                                                        });
-                                                      },
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Text(
-                                                            'Save',
-                                                            style: TextStyle(
+                                                                            'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
+                                                                print(result);
+                                                                // screenshotController
+                                                                //     .captureAndSave(appDocDir.path);
+                                                              }
+                                                            });
+                                                          },
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                'Save',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 5,
+                                                              ),
+                                                              Icon(
+                                                                Icons
+                                                                    .download_for_offline,
                                                                 color: Colors
-                                                                    .white),
+                                                                    .white,
+                                                              ),
+                                                            ],
                                                           ),
-                                                          SizedBox(
-                                                            width: 5,
-                                                          ),
-                                                          Icon(
-                                                            Icons
-                                                                .download_for_offline,
-                                                            color: Colors.white,
-                                                          ),
-                                                        ],
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ).then((value) =>
+                                                  Navigator.pop(context));
+                                            },
+                                            icon: Icon(
+                                              Icons.webhook_outlined,
+                                              size: 40,
+                                              color: Color(0xff6d96fa),
+                                            )),
+                                        IconButton(
+                                            onPressed: () {
+                                              ScreenshotController
+                                                  screenshotControllerLines =
+                                                  ScreenshotController();
+                                              showCupertinoModalBottomSheet(
+                                                context: context,
+                                                builder: (context) => Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.7,
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Screenshot(
+                                                        controller:
+                                                            screenshotControllerLines,
+                                                        child: Card(
+                                                            shape: RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15)),
+                                                            elevation: 10,
+                                                            color: Colors
+                                                                .grey[200],
+                                                            child:
+                                                                Lineschartconvert(
+                                                                    localkey!,
+                                                                    context)),
                                                       ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ).then((value) =>
-                                              Navigator.pop(context));
-                                        },
-                                        icon: Icon(
-                                          Icons.webhook_outlined,
-                                          size: 40,
-                                          color: Color(0xff6d96fa),
-                                        )),
+                                                      Container(
+                                                        width: 120,
+                                                        child: MaterialButton(
+                                                          color:
+                                                              Color(0xff6d96fa),
+                                                          onPressed: () async {
+                                                            screenshotControllerLines
+                                                                .capture()
+                                                                .then(
+                                                                    (value) async {
+                                                              // Uint8List capturedImage;
+                                                              var status =
+                                                                  await Permission
+                                                                      .storage
+                                                                      .request();
+                                                              if (status
+                                                                  .isGranted) {
+                                                                // String savePath = appDocDir.path+'/temp';
+                                                                final result =
+                                                                    await ImageGallerySaver.saveImage(
+                                                                        quality:
+                                                                            100,
+                                                                        value!,
+                                                                        name:
+                                                                            'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
+                                                                print(result);
+                                                                // screenshotController
+                                                                //     .captureAndSave(appDocDir.path);
+                                                              }
+                                                            });
+                                                          },
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Text(
+                                                                'Save',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 5,
+                                                              ),
+                                                              Icon(
+                                                                Icons
+                                                                    .download_for_offline,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ).then((value) =>
+                                                  Navigator.pop(context));
+                                            },
+                                            icon: Icon(
+                                              Icons.line_axis_rounded,
+                                              size: 40,
+                                              color: Color(0xff6d96fa),
+                                            )),
+                                      ],
+                                    ),
                                   ],
                                 ),
                               ),

@@ -1172,6 +1172,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                             screenshotController:
                                 RadarScreeshotcontrollerlist[Radardata.length],
                             ChartName: dataa['$key']['chartTitle'],
+                            chartkey: '$key',
                           )
                         ],
                       )),
