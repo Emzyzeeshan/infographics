@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
@@ -40,11 +41,12 @@ class _FlipCardWidetState extends State<FlipCardWidet> {
                     ),
                   ),
                   Expanded(
-                    child: Text(
-                      widget.Frontext,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                      child: AutoSizeText(
+                    softWrap: true,
+                    widget.Frontext,
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    maxLines: 2,
+                  )),
                   Expanded(
                     child: Image.asset(
                       'assets/barimg.png',
@@ -73,12 +75,12 @@ class _FlipCardWidetState extends State<FlipCardWidet> {
             borderRadius: BorderRadius.circular(15)),
         child: Center(
             child: Padding(
-          padding: const EdgeInsets.only(left: 10.0),
-          child: Text(
-            widget.Backtext,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-        )),
+                padding: const EdgeInsets.only(left: 10.0),
+                child: AutoSizeText(
+                  widget.Backtext,
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  maxLines: 2,
+                ))),
       ),
     );
   }

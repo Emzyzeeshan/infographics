@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:flip_card/flip_card.dart';
+import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -123,6 +125,8 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       // singlekey = key;
 
       if (dataa['$key']['chartType'] == 'pie') {
+        FlipCardController flipCardController1 = FlipCardController();
+        final orientation = MediaQuery.of(context).orientation;
         piecount.add(key);
         Piechart(String chartname) {
           List<ChartSampleData> Piechart = [];
@@ -140,39 +144,74 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           }
           return Expanded(
             child: Screenshot(
-              controller: PieScreeshotcontrollerlist[piedata.length],
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)),
-                child: SfCircularChart(
-                  palette: Allpiecolorlist[piecount.indexOf(key)],
-                  title:
-                      ChartTitle(text: '${dataa['$chartname']['chartTitle']}'),
-                  legend: Legend(
-                    isVisible: true,
-                    overflowMode: LegendItemOverflowMode.wrap,
-                    position: LegendPosition.bottom,
-                  ),
-                  series: <PieSeries<ChartSampleData, String>>[
-                    PieSeries<ChartSampleData, String>(
-                        enableTooltip: true,
-                        explode: true,
-                        explodeIndex: 0,
-                        explodeOffset: '10%',
-                        dataSource: Piechart,
-                        xValueMapper: (ChartSampleData dataa, _) =>
-                            dataa.x as String,
-                        yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                        dataLabelMapper: (ChartSampleData dataa, _) =>
-                            dataa.text,
-                        startAngle: 0,
-                        endAngle: 0,
-                        dataLabelSettings:
-                            const DataLabelSettings(isVisible: true)),
-                  ],
-                ),
-              ),
-            ),
+                controller: PieScreeshotcontrollerlist[piedata.length],
+                child: FlipCard(
+                    front: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15)),
+                      child: SfCircularChart(
+                        palette: Allpiecolorlist[piecount.indexOf(key)],
+                        title: ChartTitle(
+                            text: '${dataa['$chartname']['chartTitle']}'),
+                        legend: Legend(
+                          isVisible: true,
+                          overflowMode: LegendItemOverflowMode.wrap,
+                          position: LegendPosition.bottom,
+                        ),
+                        series: <PieSeries<ChartSampleData, String>>[
+                          PieSeries<ChartSampleData, String>(
+                              enableTooltip: true,
+                              explode: true,
+                              explodeIndex: 0,
+                              explodeOffset: '10%',
+                              dataSource: Piechart,
+                              xValueMapper: (ChartSampleData dataa, _) =>
+                                  dataa.x as String,
+                              yValueMapper: (ChartSampleData dataa, _) =>
+                                  dataa.y,
+                              dataLabelMapper: (ChartSampleData dataa, _) =>
+                                  dataa.text,
+                              startAngle: 0,
+                              endAngle: 0,
+                              dataLabelSettings:
+                                  const DataLabelSettings(isVisible: true)),
+                        ],
+                      ),
+                    ),
+                    back: Card(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15)),
+                        child: GridView.builder(
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    mainAxisExtent: 70,
+                                    mainAxisSpacing: 3,
+                                    crossAxisSpacing: 3,
+                                    crossAxisCount:
+                                        (orientation == Orientation.portrait)
+                                            ? 2
+                                            : 3),
+                            itemCount: dataa['$chartname']
+                                    ['chartLevelsAndValueObj']
+                                .length,
+                            itemBuilder: ((context, index) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                    color: Color(0xffAED6F1),
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                          '${dataa['$chartname']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                      Text(
+                                          '${dataa['$chartname']['chartLevelsAndValueObj'][index]['Y']}'),
+                                    ]),
+                              );
+                            }))))),
           );
         }
 
@@ -244,6 +283,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                   ))),
         );
       } else if (dataa['$key']['chartType'] == 'donut') {
+        final orientation = MediaQuery.of(context).orientation;
         doughnutcount.add(key);
         Doughnut(String donutchart) {
           List<ChartSampleData> EmployeesCountByWorkExperience = [];
@@ -263,33 +303,65 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           return Expanded(
             child: Screenshot(
               controller: DonutScreeshotcontrollerlist[Doughnutt.length],
-              child: Card(
-                child: SfCircularChart(
-                  palette: Allcolorpalette[doughnutcount.indexOf(key)],
-                  legend: Legend(
-                      isVisible: true,
-                      position: LegendPosition.bottom,
-                      overflowMode: LegendItemOverflowMode.wrap),
-                  title: ChartTitle(
-                      text: '${dataa['$donutchart']['chartTitle']}',
-                      textStyle: TextStyle(fontWeight: FontWeight.bold)),
-                  series: <DoughnutSeries<ChartSampleData, String>>[
-                    DoughnutSeries<ChartSampleData, String>(
-                        explode: true,
-                        explodeIndex: 0,
-                        explodeOffset: '10%',
-                        dataSource: EmployeesCountByWorkExperience,
-                        xValueMapper: (ChartSampleData dataa, _) =>
-                            dataa.x as String,
-                        yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                        dataLabelMapper: (ChartSampleData dataa, _) =>
-                            dataa.text,
-                        startAngle: 90,
-                        endAngle: 90,
-                        dataLabelSettings:
-                            const DataLabelSettings(isVisible: true)),
-                  ],
+              child: FlipCard(
+                front: Card(
+                  child: SfCircularChart(
+                    palette: Allcolorpalette[doughnutcount.indexOf(key)],
+                    legend: Legend(
+                        isVisible: true,
+                        position: LegendPosition.bottom,
+                        overflowMode: LegendItemOverflowMode.wrap),
+                    title: ChartTitle(
+                        text: '${dataa['$donutchart']['chartTitle']}',
+                        textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    series: <DoughnutSeries<ChartSampleData, String>>[
+                      DoughnutSeries<ChartSampleData, String>(
+                          explode: true,
+                          explodeIndex: 0,
+                          explodeOffset: '10%',
+                          dataSource: EmployeesCountByWorkExperience,
+                          xValueMapper: (ChartSampleData dataa, _) =>
+                              dataa.x as String,
+                          yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                          dataLabelMapper: (ChartSampleData dataa, _) =>
+                              dataa.text,
+                          startAngle: 90,
+                          endAngle: 90,
+                          dataLabelSettings:
+                              const DataLabelSettings(isVisible: true)),
+                    ],
+                  ),
                 ),
+                back: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 70,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            crossAxisCount:
+                                (orientation == Orientation.portrait) ? 2 : 3),
+                        itemCount: dataa['$donutchart']
+                                ['chartLevelsAndValueObj']
+                            .length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffAED6F1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      '${dataa['$donutchart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                  Text(
+                                      '${dataa['$donutchart']['chartLevelsAndValueObj'][index]['Y']}'),
+                                ]),
+                          );
+                        }))),
               ),
             ),
           );
@@ -364,9 +436,9 @@ class _HR_DashboardState extends State<HR_Dashboard> {
         );
       } else if (dataa['$key']['chartType'] == 'column') {
         columncount.add(key);
-
+        final orientation = MediaQuery.of(context).orientation;
         int i;
-        Column(String Coloumnchart) {
+        Columnn(String Coloumnchart) {
           List<ChartSampleData> EmployeesCountByAge = [];
           for (i = 0;
               i < dataa['$Coloumnchart']['chartLevelsAndValueObj'].length;
@@ -384,41 +456,74 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           return Expanded(
             child: Screenshot(
               controller: ColumnScreeshotcontrollerlist[Columndata.length],
-              child: Card(
-                child: SfCartesianChart(
-                  zoomPanBehavior: ZoomPanBehavior(
-                      enableDoubleTapZooming: true,
-                      enableSelectionZooming: true,
-                      enablePanning: true,
-                      enablePinching: true),
-                  tooltipBehavior: EmployeesCountByAge_tooltipBehavior,
-                  palette: <Color>[allcolor[Columndata.length]],
-                  plotAreaBorderWidth: 0,
-                  title: ChartTitle(
-                      text: '${dataa['$Coloumnchart']['chartTitle']}',
-                      textStyle: TextStyle(fontWeight: FontWeight.bold)),
-                  primaryXAxis: CategoryAxis(
-                    isVisible: true,
-                    majorGridLines: const MajorGridLines(width: 1),
+              child: FlipCard(
+                front: Card(
+                  child: SfCartesianChart(
+                    zoomPanBehavior: ZoomPanBehavior(
+                        enableDoubleTapZooming: true,
+                        enableSelectionZooming: true,
+                        enablePanning: true,
+                        enablePinching: true),
+                    tooltipBehavior: EmployeesCountByAge_tooltipBehavior,
+                    palette: <Color>[allcolor[Columndata.length]],
+                    plotAreaBorderWidth: 0,
+                    title: ChartTitle(
+                        text: '${dataa['$Coloumnchart']['chartTitle']}',
+                        textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    primaryXAxis: CategoryAxis(
+                      isVisible: true,
+                      majorGridLines: const MajorGridLines(width: 1),
+                    ),
+                    primaryYAxis: NumericAxis(
+                        isVisible: true,
+                        axisLine: const AxisLine(width: 1),
+                        labelFormat: '{value}',
+                        majorTickLines: const MajorTickLines(size: 0)),
+                    series: <ColumnSeries<ChartSampleData, String>>[
+                      ColumnSeries<ChartSampleData, String>(
+                        color: allcolor[columncount.indexOf(key)],
+                        isVisible: true,
+                        dataSource: EmployeesCountByAge,
+                        xValueMapper: (ChartSampleData sales, _) =>
+                            sales.x as String,
+                        yValueMapper: (ChartSampleData sales, _) => sales.y,
+                        dataLabelSettings: const DataLabelSettings(
+                            isVisible: true,
+                            textStyle: TextStyle(fontSize: 10)),
+                      )
+                    ],
                   ),
-                  primaryYAxis: NumericAxis(
-                      isVisible: true,
-                      axisLine: const AxisLine(width: 1),
-                      labelFormat: '{value}',
-                      majorTickLines: const MajorTickLines(size: 0)),
-                  series: <ColumnSeries<ChartSampleData, String>>[
-                    ColumnSeries<ChartSampleData, String>(
-                      color: allcolor[columncount.indexOf(key)],
-                      isVisible: true,
-                      dataSource: EmployeesCountByAge,
-                      xValueMapper: (ChartSampleData sales, _) =>
-                          sales.x as String,
-                      yValueMapper: (ChartSampleData sales, _) => sales.y,
-                      dataLabelSettings: const DataLabelSettings(
-                          isVisible: true, textStyle: TextStyle(fontSize: 10)),
-                    )
-                  ],
                 ),
+                back: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 70,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            crossAxisCount:
+                                (orientation == Orientation.portrait) ? 2 : 3),
+                        itemCount: dataa['$Coloumnchart']
+                                ['chartLevelsAndValueObj']
+                            .length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffAED6F1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      '${dataa['$Coloumnchart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                  Text(
+                                      '${dataa['$Coloumnchart']['chartLevelsAndValueObj'][index]['Y']}'),
+                                ]),
+                          );
+                        }))),
               ),
             ),
           );
@@ -434,7 +539,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                   padding: EdgeInsets.all(12),
                   child: Row(
                     children: [
-                      Column(key),
+                      Columnn(key),
                       Tooltips(
                         color: () {
                           void changeColor(Color color) {
@@ -477,6 +582,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                   ))),
         );
       } else if (dataa['$key']['chartType'] == 'bar') {
+        final orientation = MediaQuery.of(context).orientation;
         Barcount.add(key);
         BarSeies(String Bar) {
           List<ChartSampleData> PositionsCountbyLocation = [];
@@ -496,39 +602,70 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           return Expanded(
             child: Screenshot(
               controller: BarScreeshotcontrollerlist[Bardata.length],
-              child: Card(
-                child: SfCartesianChart(
-                  tooltipBehavior: PositionsCountbyLocation_tooltipBehavior,
-                  palette: AllBarcolorlist[Barcount.indexOf(key)],
-                  title: ChartTitle(
-                      text: '${dataa['$Bar']['chartTitle']}',
-                      textStyle: TextStyle(fontWeight: FontWeight.bold)),
-                  primaryXAxis: CategoryAxis(
-                    majorGridLines: const MajorGridLines(width: 1),
-                  ),
-                  primaryYAxis: NumericAxis(
-                      minimum: 0,
-                      maximum: dataa['$Bar']['chartTitle'] ==
-                              'Employees Count by Department'
-                          ? 2
-                          : 90,
-                      interval: dataa['$Bar']['chartTitle'] ==
-                              'Employees Count by Department'
-                          ? 1
-                          : 20,
+              child: FlipCard(
+                front: Card(
+                  child: SfCartesianChart(
+                    tooltipBehavior: PositionsCountbyLocation_tooltipBehavior,
+                    palette: AllBarcolorlist[Barcount.indexOf(key)],
+                    title: ChartTitle(
+                        text: '${dataa['$Bar']['chartTitle']}',
+                        textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    primaryXAxis: CategoryAxis(
                       majorGridLines: const MajorGridLines(width: 1),
-                      majorTickLines: const MajorTickLines(size: 0)),
-                  series: <ChartSeries<ChartSampleData, String>>[
-                    BarSeries<ChartSampleData, String>(
-                      dataLabelSettings:
-                          const DataLabelSettings(isVisible: true),
-                      dataSource: PositionsCountbyLocation,
-                      xValueMapper: (ChartSampleData sales, _) =>
-                          sales.x as String,
-                      yValueMapper: (ChartSampleData sales, _) => sales.y,
-                    )
-                  ],
+                    ),
+                    primaryYAxis: NumericAxis(
+                        minimum: 0,
+                        maximum: dataa['$Bar']['chartTitle'] ==
+                                'Employees Count by Department'
+                            ? 2
+                            : 90,
+                        interval: dataa['$Bar']['chartTitle'] ==
+                                'Employees Count by Department'
+                            ? 1
+                            : 20,
+                        majorGridLines: const MajorGridLines(width: 1),
+                        majorTickLines: const MajorTickLines(size: 0)),
+                    series: <ChartSeries<ChartSampleData, String>>[
+                      BarSeries<ChartSampleData, String>(
+                        dataLabelSettings:
+                            const DataLabelSettings(isVisible: true),
+                        dataSource: PositionsCountbyLocation,
+                        xValueMapper: (ChartSampleData sales, _) =>
+                            sales.x as String,
+                        yValueMapper: (ChartSampleData sales, _) => sales.y,
+                      )
+                    ],
+                  ),
                 ),
+                back: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 70,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            crossAxisCount:
+                                (orientation == Orientation.portrait) ? 2 : 3),
+                        itemCount:
+                            dataa['$Bar']['chartLevelsAndValueObj'].length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffAED6F1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      '${dataa['$Bar']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                  Text(
+                                      '${dataa['$Bar']['chartLevelsAndValueObj'][index]['Y']}'),
+                                ]),
+                          );
+                        }))),
               ),
             ),
           );
@@ -602,6 +739,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
         );
         print('bar');
       } else if (dataa['$key']['chartType'] == 'funnel') {
+        final orientation = MediaQuery.of(context).orientation;
         funnelcount.add(key);
         Funnelchart(String Funneldata) {
           List<ChartSampleData> Funnelchart = [];
@@ -621,29 +759,62 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           return Expanded(
             child: Screenshot(
               controller: FunnelScreeshotcontrollerlist[FunnelData.length],
-              child: Card(
-                child: SfFunnelChart(
-                  palette: AllFunnelcolorlist[funnelcount.indexOf(key)],
-                  //   smartLabelMode: SmartLabelMode.none,
-                  title:
-                      ChartTitle(text: '${dataa['$Funneldata']['chartTitle']}'),
-                  tooltipBehavior: Funneltooltip,
+              child: FlipCard(
+                front: Card(
+                  child: SfFunnelChart(
+                    palette: AllFunnelcolorlist[funnelcount.indexOf(key)],
+                    //   smartLabelMode: SmartLabelMode.none,
+                    title: ChartTitle(
+                        text: '${dataa['$Funneldata']['chartTitle']}'),
+                    tooltipBehavior: Funneltooltip,
 
-                  /// To enable the legend for funnel chart.
-                  // legend: Legend(
-                  //     isVisible: true,
-                  //     overflowMode: LegendItemOverflowMode.wrap),
+                    /// To enable the legend for funnel chart.
+                    // legend: Legend(
+                    //     isVisible: true,
+                    //     overflowMode: LegendItemOverflowMode.wrap),
 
-                  series: FunnelSeries<ChartSampleData, String>(
-                      dataSource: Funnelchart,
-                      textFieldMapper: (ChartSampleData dataa, _) => dataa.text,
-                      xValueMapper: (ChartSampleData dataa, _) =>
-                          dataa.x as String,
-                      yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                      dataLabelSettings: DataLabelSettings(
-                          isVisible: true,
-                          labelPosition: ChartDataLabelPosition.inside)),
+                    series: FunnelSeries<ChartSampleData, String>(
+                        dataSource: Funnelchart,
+                        textFieldMapper: (ChartSampleData dataa, _) =>
+                            dataa.text,
+                        xValueMapper: (ChartSampleData dataa, _) =>
+                            dataa.x as String,
+                        yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                        dataLabelSettings: DataLabelSettings(
+                            isVisible: true,
+                            labelPosition: ChartDataLabelPosition.inside)),
+                  ),
                 ),
+                back: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 70,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            crossAxisCount:
+                                (orientation == Orientation.portrait) ? 2 : 3),
+                        itemCount: dataa['$Funneldata']
+                                ['chartLevelsAndValueObj']
+                            .length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffAED6F1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      '${dataa['$Funneldata']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                  Text(
+                                      '${dataa['$Funneldata']['chartLevelsAndValueObj'][index]['Y']}'),
+                                ]),
+                          );
+                        }))),
               ),
             ),
           );
@@ -717,6 +888,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                   ))),
         );
       } else if (dataa['$key']['chartType'] == 'scatter') {
+        final orientation = MediaQuery.of(context).orientation;
         scattercount.add(key);
         Scatterchart(String Scatterdataa) {
           List<ChartSampleData> Scatterchart = [];
@@ -735,48 +907,80 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           return Expanded(
             child: Screenshot(
               controller: ScatterScreeshotcontrollerlist[Scatterdata.length],
-              child: Card(
-                child: SfCartesianChart(
-                  palette: [
-                    Color.fromRGBO(248, 177, 149, 1),
-                    Color.fromRGBO(116, 180, 155, 1),
-                    Color.fromRGBO(0, 168, 181, 1),
-                    Color.fromRGBO(73, 76, 162, 1),
-                    Color.fromRGBO(255, 205, 96, 1),
-                    Color.fromRGBO(255, 240, 219, 1),
-                    Color.fromRGBO(238, 238, 238, 1)
-                  ],
-                  // tooltipBehavior: DemandBySubCategory_tooltipBehavior,
-                  title: ChartTitle(
-                      text: '${dataa['$Scatterdataa']['chartTitle']}'),
-                  plotAreaBorderWidth: 0,
-                  primaryXAxis: CategoryAxis(
-                      majorGridLines: const MajorGridLines(width: 0),
-                      labelIntersectAction: AxisLabelIntersectAction.trim),
-                  primaryYAxis: NumericAxis(
-                      axisLine: const AxisLine(width: 0),
-                      minimum: 0,
-                      maximum: 600000,
-                      rangePadding: ChartRangePadding.additional,
-                      majorTickLines: const MajorTickLines(size: 0)),
-                  series: <BubbleSeries<ChartSampleData, String>>[
-                    BubbleSeries<ChartSampleData, String>(
-                      dataSource: Scatterchart,
-                      opacity: 0.8,
-                      xValueMapper: (ChartSampleData sales, _) =>
-                          sales.x as String,
-                      yValueMapper: (ChartSampleData sales, _) => sales.y,
-                      maximumRadius: 2,
+              child: FlipCard(
+                front: Card(
+                  child: SfCartesianChart(
+                    palette: [
+                      Color.fromRGBO(248, 177, 149, 1),
+                      Color.fromRGBO(116, 180, 155, 1),
+                      Color.fromRGBO(0, 168, 181, 1),
+                      Color.fromRGBO(73, 76, 162, 1),
+                      Color.fromRGBO(255, 205, 96, 1),
+                      Color.fromRGBO(255, 240, 219, 1),
+                      Color.fromRGBO(238, 238, 238, 1)
+                    ],
+                    // tooltipBehavior: DemandBySubCategory_tooltipBehavior,
+                    title: ChartTitle(
+                        text: '${dataa['$Scatterdataa']['chartTitle']}'),
+                    plotAreaBorderWidth: 0,
+                    primaryXAxis: CategoryAxis(
+                        majorGridLines: const MajorGridLines(width: 0),
+                        labelIntersectAction: AxisLabelIntersectAction.trim),
+                    primaryYAxis: NumericAxis(
+                        axisLine: const AxisLine(width: 0),
+                        minimum: 0,
+                        maximum: 600000,
+                        rangePadding: ChartRangePadding.additional,
+                        majorTickLines: const MajorTickLines(size: 0)),
+                    series: <BubbleSeries<ChartSampleData, String>>[
+                      BubbleSeries<ChartSampleData, String>(
+                        dataSource: Scatterchart,
+                        opacity: 0.8,
+                        xValueMapper: (ChartSampleData sales, _) =>
+                            sales.x as String,
+                        yValueMapper: (ChartSampleData sales, _) => sales.y,
+                        maximumRadius: 2,
 
-                      /// It helps to render a bubble series as various colors,
-                      /// which is given by user from dataa soruce.
-                      pointColorMapper: (ChartSampleData sales, _) =>
-                          sales.pointColor,
-                      sizeValueMapper: (ChartSampleData sales, _) => 2,
-                    )
-                  ],
-                  // tooltipBehavior: _tooltipBehavior,
+                        /// It helps to render a bubble series as various colors,
+                        /// which is given by user from dataa soruce.
+                        pointColorMapper: (ChartSampleData sales, _) =>
+                            sales.pointColor,
+                        sizeValueMapper: (ChartSampleData sales, _) => 2,
+                      )
+                    ],
+                    // tooltipBehavior: _tooltipBehavior,
+                  ),
                 ),
+                back: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 70,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            crossAxisCount:
+                                (orientation == Orientation.portrait) ? 2 : 3),
+                        itemCount: dataa['$Scatterdataa']
+                                ['chartLevelsAndValueObj']
+                            .length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffAED6F1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      '${dataa['$Scatterdataa']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                  Text(
+                                      '${dataa['$Scatterdataa']['chartLevelsAndValueObj'][index]['Y']}'),
+                                ]),
+                          );
+                        }))),
               ),
             ),
           );
@@ -958,7 +1162,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
         Linescount.add(key);
         Lineschart(String Lineschart) {
           List<ChartSampleData> Linescharts = [];
-
+          final orientation = MediaQuery.of(context).orientation;
           for (int i = 0;
               i < dataa['$Lineschart']['chartLevelsAndValueObj'].length;
               i++) {
@@ -990,44 +1194,76 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           return Expanded(
             child: Screenshot(
               controller: LinesScreeshotcontrollerlist[Spline.length],
-              child: Card(
-                child: SfCartesianChart(
-                  palette: <Color>[Linescolor[Linescount.indexOf(key)]],
-                  zoomPanBehavior: ZoomPanBehavior(
-                      enableDoubleTapZooming: true,
-                      enableSelectionZooming: true,
-                      enablePanning: true,
-                      enablePinching: true),
-                  plotAreaBorderWidth: 0,
-                  title:
-                      ChartTitle(text: '${dataa['$Lineschart']['chartTitle']}'),
-                  primaryXAxis: CategoryAxis(
-                      labelRotation: 20,
-                      labelsExtent: 50,
-                      majorGridLines: const MajorGridLines(width: 0),
-                      labelPlacement: LabelPlacement.onTicks),
-                  primaryYAxis: NumericAxis(
-                      minimum: sortlist.reduce(
-                              (curr, next) => curr < next ? curr : next) +
-                          .0,
-                      maximum: sortlist.reduce(
-                              (curr, next) => curr > next ? curr : next) +
-                          .0,
-                      axisLine: const AxisLine(width: 0),
-                      edgeLabelPlacement: EdgeLabelPlacement.shift,
-                      labelFormat: '{value}',
-                      majorTickLines: const MajorTickLines(size: 0)),
-                  series: <SplineSeries<ChartSampleData, String>>[
-                    SplineSeries<ChartSampleData, String>(
-                      dataSource: Linescharts,
-                      xValueMapper: (ChartSampleData sales, _) =>
-                          sales.x as String,
-                      yValueMapper: (ChartSampleData sales, _) => sales.y,
-                      markerSettings: const MarkerSettings(isVisible: true),
-                    ),
-                  ],
-                  tooltipBehavior: TooltipBehavior(enable: true),
+              child: FlipCard(
+                front: Card(
+                  child: SfCartesianChart(
+                    palette: <Color>[Linescolor[Linescount.indexOf(key)]],
+                    zoomPanBehavior: ZoomPanBehavior(
+                        enableDoubleTapZooming: true,
+                        enableSelectionZooming: true,
+                        enablePanning: true,
+                        enablePinching: true),
+                    plotAreaBorderWidth: 0,
+                    title: ChartTitle(
+                        text: '${dataa['$Lineschart']['chartTitle']}'),
+                    primaryXAxis: CategoryAxis(
+                        labelRotation: 20,
+                        labelsExtent: 50,
+                        majorGridLines: const MajorGridLines(width: 0),
+                        labelPlacement: LabelPlacement.onTicks),
+                    primaryYAxis: NumericAxis(
+                        minimum: sortlist.reduce(
+                                (curr, next) => curr < next ? curr : next) +
+                            .0,
+                        maximum: sortlist.reduce(
+                                (curr, next) => curr > next ? curr : next) +
+                            .0,
+                        axisLine: const AxisLine(width: 0),
+                        edgeLabelPlacement: EdgeLabelPlacement.shift,
+                        labelFormat: '{value}',
+                        majorTickLines: const MajorTickLines(size: 0)),
+                    series: <SplineSeries<ChartSampleData, String>>[
+                      SplineSeries<ChartSampleData, String>(
+                        dataSource: Linescharts,
+                        xValueMapper: (ChartSampleData sales, _) =>
+                            sales.x as String,
+                        yValueMapper: (ChartSampleData sales, _) => sales.y,
+                        markerSettings: const MarkerSettings(isVisible: true),
+                      ),
+                    ],
+                    tooltipBehavior: TooltipBehavior(enable: true),
+                  ),
                 ),
+                back: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 70,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            crossAxisCount:
+                                (orientation == Orientation.portrait) ? 2 : 3),
+                        itemCount: dataa['$Lineschart']
+                                ['chartLevelsAndValueObj']
+                            .length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffAED6F1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      '${dataa['$Lineschart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                  Text(
+                                      '${dataa['$Lineschart']['chartLevelsAndValueObj'][index]['Y']}'),
+                                ]),
+                          );
+                        }))),
               ),
             ),
           );
@@ -1086,8 +1322,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                   ))),
         );
       } else if (dataa['$key']['chartType'] == 'scatterpolar') {
-        bool useSides = false;
-        const ticks = [0, 100, 20, 30, 40, 50, 60];
+        final orientation = MediaQuery.of(context).orientation;
         List<int> tickss = [];
         List<int> initial = [];
         Radarcount.add(key);
@@ -1131,18 +1366,50 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                 : MediaQuery.of(context).size.width * 0.76,
             child: Screenshot(
               controller: RadarScreeshotcontrollerlist[Radardata.length],
-              child: Card(
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 50.0),
-                  child: Radar.light(
-                    ticks: tickss,
-                    features: features,
-                    data: finaldata,
-                    reverseAxis: false,
-                    // useSides: useSides,
+              child: FlipCard(
+                front: Card(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 50.0),
+                    child: Radar.light(
+                      ticks: tickss,
+                      features: features,
+                      data: finaldata,
+                      reverseAxis: false,
+                      // useSides: useSides,
+                    ),
                   ),
                 ),
+                back: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 70,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            crossAxisCount:
+                                (orientation == Orientation.portrait) ? 2 : 3),
+                        itemCount: dataa['$Radachartdata']
+                                ['chartLevelsAndValueObj']
+                            .length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffAED6F1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      '${dataa['$Radachartdata']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                  Text(
+                                      '${dataa['$Radachartdata']['chartLevelsAndValueObj'][index]['Y']}'),
+                                ]),
+                          );
+                        }))),
               ),
             ),
           );
@@ -1220,58 +1487,44 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       } else {
         return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
-            child:
-                // Column(
-                //   children: [
-                //     Expanded(
-                //       child:
-                //        ListView.builder(
-                //           itemCount: Doughnutt.length,
-                //           itemBuilder: ((context, index) {
-                //             return Doughnutt[index];
-                //           })),
-                //     ),
-                //   ],
-                // )
-
-                ListView(
+            child: ListView(
               children: [
                 Selectedinput == 'CRM'
                     ? SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            // FlipCardWidet(
-                            //   dataa['cardData0']['result'][1].toString(),
-                            //   dataa['cardData0']['result'][0].toString(),
-                            // ),
-                            // SizedBox(
-                            //   width: 10,
-                            // ),
-                            // FlipCardWidet(
-                            //   dataa['cardData6']['result'][1].toString(),
-                            //   dataa['cardData6']['result'][0].toString(),
-                            // ),
-                            // SizedBox(
-                            //   width: 10,
-                            // ),
                             FlipCardWidet(
-                              dataa['cardData5']['result'][1].toString(),
+                              dataa['cardData2']['result'][2].toString(),
+                              dataa['cardData2']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData5']['result'][2].toString(),
                               dataa['cardData5']['result'][0].toString(),
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             FlipCardWidet(
-                              dataa['cardData12']['result'][1].toString(),
-                              dataa['cardData12']['result'][0].toString(),
+                              dataa['cardData6']['result'][2].toString(),
+                              dataa['cardData6']['result'][0].toString(),
                             ),
                             SizedBox(
                               width: 10,
                             ),
                             FlipCardWidet(
-                              dataa['cardData24']['result'][1].toString(),
-                              dataa['cardData24']['result'][0].toString(),
+                              dataa['cardData15']['result'][2].toString(),
+                              dataa['cardData15']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData16']['result'][2].toString(),
+                              dataa['cardData16']['result'][0].toString(),
                             ),
                           ],
                         ),

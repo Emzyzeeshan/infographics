@@ -62,6 +62,7 @@ dependencies:
   path_provider_android: ^2.0.22
   permission_handler: ^10.2.0
   photo_view: ^0.14.0
+
   pin_code_fields: ^7.4.0
   pinch_zoom: ^1.0.0
   pinput: ^2.2.21
