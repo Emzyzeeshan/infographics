@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -35,6 +37,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    Future<bool> canAuthenticateWithBiometrics = auth.canCheckBiometrics;
+    // print(canAuthenticateWithBiometrics);
     _authenticate();
     super.initState();
     getCurrentAppTheme();
@@ -72,6 +76,11 @@ class _MyAppState extends State<MyApp> {
     setState(
         () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
     if (!mounted) {}
+    if (_authorized == 'Not Authorized') {
+      setState(() {
+        exit(0);
+      });
+    }
     // if (authenticated == false) {
     //   showDialog(
     //       barrierDismissible: false,

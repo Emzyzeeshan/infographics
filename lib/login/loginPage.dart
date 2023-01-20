@@ -55,7 +55,6 @@ class _LoginPageState extends State<LoginPage> {
   initState() {
     userNameText.text = 'sasi_mgr';
     passWordText.text = 'P@ssw0rd';
-
     check_if_already_login();
     super.initState();
     // auth.isDeviceSupported().then(
@@ -70,46 +69,43 @@ class _LoginPageState extends State<LoginPage> {
     final height = MediaQuery.of(context).size.height;
     return WillPopScope(
       onWillPop: () async => false,
-      child: authenticated == false
-          ? MyWidget()
-          : Scaffold(
-              body: SizedBox(
-                height: height,
-                child: Stack(
-                  children: [
-                    Positioned(
-                        height: height * 0.43, child: const LoginContainer()),
-                    SingleChildScrollView(
+      child: Scaffold(
+        body: SizedBox(
+          height: height,
+          child: Stack(
+            children: [
+              Positioned(height: height * 0.43, child: const LoginContainer()),
+              SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
-                        children: <Widget>[
-                          Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(height: height * .55),
-                                _usernameWidget(),
-                                const SizedBox(height: 20),
-                                _passwordwidget(),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              _submitButton(),
-                            ],
-                          ),
-                          SizedBox(height: height * .035),
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(height: height * .55),
+                          _usernameWidget(),
+                          const SizedBox(height: 20),
+                          _passwordwidget(),
                         ],
                       ),
                     ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        _submitButton(),
+                      ],
+                    ),
+                    SizedBox(height: height * .035),
                   ],
                 ),
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
