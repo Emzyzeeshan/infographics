@@ -9,6 +9,7 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/Constants/colorpalette.dart';
 import 'package:integraphics/Services/DropdownAPIService.dart';
@@ -86,6 +87,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             if (snapshot.hasError) {
               return const Text('Error');
             } else if (snapshot.hasData) {
+              print(dataa);
               return Body();
             } else {
               return const Text('Empty data');
@@ -118,6 +120,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
     List<Widget> Radardata = [];
     List Radarcount = [];
     List<Widget> Doubleline = [];
+
     print('----------');
     print('Get keys:');
     // Get all keys
@@ -247,6 +250,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = bluepalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.blue.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontapGreen: () {
                                           setState(() {
@@ -255,6 +267,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                           });
 
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.green.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontapred: () {
                                           setState(() {
@@ -262,6 +283,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = redpalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.red.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontappink: () {
                                           setState(() {
@@ -269,6 +299,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = pinkpalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.pink.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                       ),
                                     ),
@@ -399,6 +438,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = bluepalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.blue.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontapGreen: () {
                                           setState(() {
@@ -407,6 +455,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                           });
 
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.green.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontapred: () {
                                           setState(() {
@@ -414,6 +471,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = redpalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.red.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontappink: () {
                                           setState(() {
@@ -421,6 +487,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = pinkpalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.pink.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                       ),
                                     ),
@@ -567,6 +642,14 @@ class _HR_DashboardState extends State<HR_Dashboard> {
 
                                     print(pickerColor);
                                     Navigator.of(context).pop();
+                                    Fluttertoast.showToast(
+                                        msg: "Sucessfully Updated",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.SNACKBAR,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: pickerColor,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
                                   },
                                 ),
                               ],
@@ -707,6 +790,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                               bluepalett;
                                         });
                                         Navigator.pop(context);
+                                        Fluttertoast.showToast(
+                                            msg: "Sucessfully Updated",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.SNACKBAR,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                Colors.blue.shade500,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
                                       }, ontapGreen: () {
                                         setState(() {
                                           AllBarcolorlist[
@@ -715,6 +807,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                         });
 
                                         Navigator.pop(context);
+                                        Fluttertoast.showToast(
+                                            msg: "Sucessfully Updated",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.SNACKBAR,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                Colors.green.shade500,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
                                       }, ontapred: () {
                                         setState(() {
                                           AllBarcolorlist[
@@ -722,6 +823,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                               redpalett;
                                         });
                                         Navigator.pop(context);
+                                        Fluttertoast.showToast(
+                                            msg: "Sucessfully Updated",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.SNACKBAR,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                Colors.red.shade500,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
                                       }, ontappink: () {
                                         setState(() {
                                           AllBarcolorlist[
@@ -729,6 +839,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                               pinkpalett;
                                         });
                                         Navigator.pop(context);
+                                        Fluttertoast.showToast(
+                                            msg: "Sucessfully Updated",
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            gravity: ToastGravity.SNACKBAR,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor:
+                                                Colors.pink.shade500,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0);
                                       }),
                                     ),
                                   )));
@@ -856,6 +975,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = bluepalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.blue.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontapGreen: () {
                                           setState(() {
@@ -864,6 +992,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                           });
 
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.green.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontapred: () {
                                           setState(() {
@@ -871,6 +1008,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = redpalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.red.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                         ontappink: () {
                                           setState(() {
@@ -878,6 +1024,15 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                                 .indexOf(key)] = pinkpalett;
                                           });
                                           Navigator.pop(context);
+                                          Fluttertoast.showToast(
+                                              msg: "Sucessfully Updated",
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.SNACKBAR,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor:
+                                                  Colors.pink.shade500,
+                                              textColor: Colors.white,
+                                              fontSize: 16.0);
                                         },
                                       ),
                                     ),
@@ -1028,6 +1183,14 @@ class _HR_DashboardState extends State<HR_Dashboard> {
 
                                     print(pickerColor);
                                     Navigator.of(context).pop();
+                                    Fluttertoast.showToast(
+                                        msg: "Sucessfully Updated",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.SNACKBAR,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: pickerColor,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
                                   },
                                 ),
                               ],
@@ -1311,6 +1474,14 @@ class _HR_DashboardState extends State<HR_Dashboard> {
 
                                     print(pickerColor);
                                     Navigator.of(context).pop();
+                                    Fluttertoast.showToast(
+                                        msg: "Sucessfully Updated",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.SNACKBAR,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: pickerColor,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
                                   },
                                 ),
                               ],
