@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:integraphics/Screens/Datatable.dart';
 import 'package:integraphics/main.dart';
@@ -56,7 +57,9 @@ class _TooltipsState extends State<Tooltips> {
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: ((context) {
-                    return Sampledatagrid(chartkey: widget.chartkey,);
+                    return Sampledatagrid(
+                      chartkey: widget.chartkey,
+                    );
                   })));
                 },
                 icon: Icon(
@@ -222,6 +225,17 @@ class _TooltipsState extends State<Tooltips> {
                                                   ),
                                                 ).then((value) =>
                                                     Navigator.pop(context));
+                                                Fluttertoast.showToast(
+                                                    msg: "Converted to Pie",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.SNACKBAR,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Color(0xff6d96fa),
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
                                               },
                                               icon: Icon(
                                                 Icons.pie_chart_sharp,
@@ -336,6 +350,18 @@ class _TooltipsState extends State<Tooltips> {
                                                   ),
                                                 ).then((value) =>
                                                     Navigator.pop(context));
+                                                Fluttertoast.showToast(
+                                                    msg:
+                                                        "Converted to Doughnut",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.SNACKBAR,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Color(0xff6d96fa),
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
                                               },
                                               icon: Icon(
                                                 Icons.donut_large_sharp,
@@ -449,6 +475,17 @@ class _TooltipsState extends State<Tooltips> {
                                                   ),
                                                 ).then((value) =>
                                                     Navigator.pop(context));
+                                                Fluttertoast.showToast(
+                                                    msg: "Converted to Column",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.SNACKBAR,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Color(0xff6d96fa),
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
                                               },
                                               icon: Icon(
                                                 Icons.bar_chart,
@@ -562,6 +599,17 @@ class _TooltipsState extends State<Tooltips> {
                                                   ),
                                                 ).then((value) =>
                                                     Navigator.pop(context));
+                                                Fluttertoast.showToast(
+                                                    msg: "Converted to Funnel",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.SNACKBAR,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Color(0xff6d96fa),
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
                                               },
                                               icon: Icon(
                                                 Icons.filter_alt_sharp,
@@ -675,11 +723,26 @@ class _TooltipsState extends State<Tooltips> {
                                                   ),
                                                 ).then((value) =>
                                                     Navigator.pop(context));
+                                                Fluttertoast.showToast(
+                                                    msg: "Converted to Bar",
+                                                    toastLength:
+                                                        Toast.LENGTH_SHORT,
+                                                    gravity:
+                                                        ToastGravity.SNACKBAR,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor:
+                                                        Color(0xff6d96fa),
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0);
                                               },
-                                              icon: Icon(
-                                                Icons.view_column,
-                                                size: 40,
-                                                color: Color(0xff6d96fa),
+                                              icon: RotationTransition(
+                                                turns: AlwaysStoppedAnimation(
+                                                    90 / 360),
+                                                child: Icon(
+                                                  Icons.view_column,
+                                                  size: 40,
+                                                  color: Color(0xff6d96fa),
+                                                ),
                                               )),
                                         ]),
                                     Row(
@@ -787,6 +850,17 @@ class _TooltipsState extends State<Tooltips> {
                                                 ),
                                               ).then((value) =>
                                                   Navigator.pop(context));
+                                              Fluttertoast.showToast(
+                                                  msg: "Converted to Radar",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity:
+                                                      ToastGravity.SNACKBAR,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor:
+                                                      Color(0xff6d96fa),
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
                                             },
                                             icon: Icon(
                                               Icons.webhook_outlined,
@@ -896,6 +970,17 @@ class _TooltipsState extends State<Tooltips> {
                                                 ),
                                               ).then((value) =>
                                                   Navigator.pop(context));
+                                              Fluttertoast.showToast(
+                                                  msg: "Converted to Lines",
+                                                  toastLength:
+                                                      Toast.LENGTH_SHORT,
+                                                  gravity:
+                                                      ToastGravity.SNACKBAR,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor:
+                                                      Color(0xff6d96fa),
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0);
                                             },
                                             icon: Icon(
                                               Icons.line_axis_rounded,
@@ -944,17 +1029,58 @@ class _TooltipsState extends State<Tooltips> {
               message: 'Full Screen',
               child: IconButton(
                 onPressed: () {
-                  widget.screenshotController!
-                      .capture(delay: Duration(milliseconds: 10))
-                      .then((capturedImage) async {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) =>
-                                Zoomwidegt(capturedImage, widget.ChartName))));
-                  }).catchError((onError) {
-                    print(onError);
-                  });
+                  Keyidentify() {
+                    if (dataa['${widget.chartkey}']['chartType'] == 'pie') {
+                      return PiechartConvert(widget.chartkey!, context);
+                    } else if (dataa['${widget.chartkey}']['chartType'] ==
+                        'donut') {
+                      return DoughnutConvert(widget.chartkey!, context);
+                    } else if (dataa['${widget.chartkey}']['chartType'] ==
+                        'column') {
+                      return ColumnConvert(widget.chartkey!, context);
+                    } else if (dataa['${widget.chartkey}']['chartType'] ==
+                        'funnel') {
+                      return Funnelchartconvert(widget.chartkey!, context);
+                    } else if (dataa['${widget.chartkey}']['chartType'] ==
+                        'bar') {
+                      return BarSeiesConvert(widget.chartkey!, context);
+                    } else if (dataa['${widget.chartkey}']['chartType'] ==
+                        'scatterpolar') {
+                      return RadarCharttconvert(widget.chartkey!, context);
+                    } else if (dataa['${widget.chartkey}']['chartType'] ==
+                        'lines') {
+                      return Lineschartconvert(widget.chartkey!, context);
+                    }
+                  }
+
+                  showDialog(
+                      context: context,
+                      builder: ((context) {
+                        return Scaffold(
+                            appBar: AppBar(
+                              backgroundColor: Color(0xff6d96fa),
+                            ),
+                            body: Container(
+                                height: MediaQuery.of(context).size.height,
+                                width: MediaQuery.of(context).size.width,
+                                child: Column(
+                                  children: [
+                                    Expanded(
+                                        child: Center(child: Keyidentify())),
+                                  ],
+                                )));
+                      }));
+                  // widget.screenshotController!
+                  //     .capture(delay: Duration(milliseconds: 10))
+                  //     .then((capturedImage) async {
+                  //   Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(
+                  //           builder: ((context) =>
+                  //               Zoomwidegt(capturedImage, widget.ChartName))));
+                  // }).catchError((onError) {
+                  //   print(onError);
+                  // });
                 },
                 icon: Icon(
                   Icons.fullscreen,

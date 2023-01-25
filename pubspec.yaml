@@ -29,8 +29,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  another_flutter_splash_screen: ^1.1.4
   auto_size_text: ^3.0.0
   clippy_flutter: ^1.1.1
+  cool_alert: ^1.1.0
   cupertino_icons: ^1.0.2
   data_table_2: ^2.3.10
   drag_and_drop_gridview: ^1.0.8

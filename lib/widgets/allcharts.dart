@@ -30,46 +30,30 @@ PiechartConvert(String chartname, BuildContext context) {
     height: MediaQuery.of(context).size.height * 0.47,
     width: MediaQuery.of(context).size.width,
     child: FlipCard(
-        controller: flipCardController1,
+        // controller: flipCardController1,
         front: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          child: Row(
-            children: [
-              SfCircularChart(
-                title: ChartTitle(text: '${dataa['$chartname']['chartTitle']}'),
-                legend: Legend(
-                  isVisible: true,
-                  overflowMode: LegendItemOverflowMode.wrap,
-                  position: LegendPosition.bottom,
-                ),
-                series: <PieSeries<ChartSampleData, String>>[
-                  PieSeries<ChartSampleData, String>(
-                      enableTooltip: true,
-                      explode: true,
-                      explodeIndex: 0,
-                      explodeOffset: '10%',
-                      dataSource: Piechart,
-                      xValueMapper: (ChartSampleData dataa, _) =>
-                          dataa.x as String,
-                      yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                      dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
-                      startAngle: 0,
-                      endAngle: 0,
-                      dataLabelSettings:
-                          const DataLabelSettings(isVisible: true)),
-                ],
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {
-                  flipCardController1.toggleCard();
-                },
-                icon: Icon(
-                  Icons.arrow_circle_right_sharp,
-                  size: 40,
-                ),
-              )
+          child: SfCircularChart(
+            title: ChartTitle(text: '${dataa['$chartname']['chartTitle']}'),
+            legend: Legend(
+              isVisible: true,
+              overflowMode: LegendItemOverflowMode.wrap,
+              position: LegendPosition.bottom,
+            ),
+            series: <PieSeries<ChartSampleData, String>>[
+              PieSeries<ChartSampleData, String>(
+                  enableTooltip: true,
+                  explode: true,
+                  explodeIndex: 0,
+                  explodeOffset: '10%',
+                  dataSource: Piechart,
+                  xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+                  yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                  dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
+                  startAngle: 0,
+                  endAngle: 0,
+                  dataLabelSettings: const DataLabelSettings(isVisible: true)),
             ],
           ),
         ),
@@ -132,42 +116,26 @@ DoughnutConvert(String donutchart, BuildContext context) {
     child: FlipCard(
         controller: flipCardController2,
         front: Card(
-          child: Row(
-            children: [
-              SfCircularChart(
-                legend: Legend(
-                    isVisible: true,
-                    position: LegendPosition.bottom,
-                    overflowMode: LegendItemOverflowMode.wrap),
-                title: ChartTitle(
-                    text: '${dataa['$donutchart']['chartTitle']}',
-                    textStyle: TextStyle(fontWeight: FontWeight.bold)),
-                series: <DoughnutSeries<ChartSampleData, String>>[
-                  DoughnutSeries<ChartSampleData, String>(
-                      explode: true,
-                      explodeIndex: 0,
-                      explodeOffset: '10%',
-                      dataSource: EmployeesCountByWorkExperience,
-                      xValueMapper: (ChartSampleData dataa, _) =>
-                          dataa.x as String,
-                      yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                      dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
-                      startAngle: 90,
-                      endAngle: 90,
-                      dataLabelSettings:
-                          const DataLabelSettings(isVisible: true)),
-                ],
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {
-                  flipCardController2.toggleCard();
-                },
-                icon: Icon(
-                  Icons.arrow_circle_right_sharp,
-                  size: 40,
-                ),
-              )
+          child: SfCircularChart(
+            legend: Legend(
+                isVisible: true,
+                position: LegendPosition.bottom,
+                overflowMode: LegendItemOverflowMode.wrap),
+            title: ChartTitle(
+                text: '${dataa['$donutchart']['chartTitle']}',
+                textStyle: TextStyle(fontWeight: FontWeight.bold)),
+            series: <DoughnutSeries<ChartSampleData, String>>[
+              DoughnutSeries<ChartSampleData, String>(
+                  explode: true,
+                  explodeIndex: 0,
+                  explodeOffset: '10%',
+                  dataSource: EmployeesCountByWorkExperience,
+                  xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+                  yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                  dataLabelMapper: (ChartSampleData dataa, _) => dataa.text,
+                  startAngle: 90,
+                  endAngle: 90,
+                  dataLabelSettings: const DataLabelSettings(isVisible: true)),
             ],
           ),
         ),
@@ -232,50 +200,35 @@ ColumnConvert(String Coloumnchart, BuildContext context) {
     child: FlipCard(
         controller: flipCardController3,
         front: Card(
-          child: Row(
-            children: [
-              SfCartesianChart(
-                zoomPanBehavior: ZoomPanBehavior(
-                    enableDoubleTapZooming: true,
-                    enableSelectionZooming: true,
-                    enablePanning: true,
-                    enablePinching: true),
-                tooltipBehavior: ColumnConvert_tooltipBehavior,
-                // palette: <Color>[allcolor[Columndata.length]],
-                plotAreaBorderWidth: 0,
-                title: ChartTitle(
-                    text: '${dataa['$Coloumnchart']['chartTitle']}',
-                    textStyle: TextStyle(fontWeight: FontWeight.bold)),
-                primaryXAxis: CategoryAxis(
-                  isVisible: true,
-                  majorGridLines: const MajorGridLines(width: 1),
-                ),
-                primaryYAxis: NumericAxis(
-                    isVisible: true,
-                    axisLine: const AxisLine(width: 1),
-                    labelFormat: '{value}',
-                    majorTickLines: const MajorTickLines(size: 0)),
-                series: <ColumnSeries<ChartSampleData, String>>[
-                  ColumnSeries<ChartSampleData, String>(
-                    isVisible: true,
-                    dataSource: EmployeesCountByAge,
-                    xValueMapper: (ChartSampleData sales, _) =>
-                        sales.x as String,
-                    yValueMapper: (ChartSampleData sales, _) => sales.y,
-                    dataLabelSettings: const DataLabelSettings(
-                        isVisible: true, textStyle: TextStyle(fontSize: 10)),
-                  )
-                ],
-              ),
-              Spacer(),
-              IconButton(
-                onPressed: () {
-                  flipCardController3.toggleCard();
-                },
-                icon: Icon(
-                  Icons.arrow_circle_right_sharp,
-                  size: 40,
-                ),
+          child: SfCartesianChart(
+            zoomPanBehavior: ZoomPanBehavior(
+                enableDoubleTapZooming: true,
+                enableSelectionZooming: true,
+                enablePanning: true,
+                enablePinching: true),
+            tooltipBehavior: ColumnConvert_tooltipBehavior,
+            // palette: <Color>[allcolor[Columndata.length]],
+            plotAreaBorderWidth: 0,
+            title: ChartTitle(
+                text: '${dataa['$Coloumnchart']['chartTitle']}',
+                textStyle: TextStyle(fontWeight: FontWeight.bold)),
+            primaryXAxis: CategoryAxis(
+              isVisible: true,
+              majorGridLines: const MajorGridLines(width: 1),
+            ),
+            primaryYAxis: NumericAxis(
+                isVisible: true,
+                axisLine: const AxisLine(width: 1),
+                labelFormat: '{value}',
+                majorTickLines: const MajorTickLines(size: 0)),
+            series: <ColumnSeries<ChartSampleData, String>>[
+              ColumnSeries<ChartSampleData, String>(
+                isVisible: true,
+                dataSource: EmployeesCountByAge,
+                xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+                yValueMapper: (ChartSampleData sales, _) => sales.y,
+                dataLabelSettings: const DataLabelSettings(
+                    isVisible: true, textStyle: TextStyle(fontSize: 10)),
               )
             ],
           ),
@@ -343,41 +296,27 @@ BarSeiesConvert(String Bar, BuildContext context) {
     child: FlipCard(
       controller: flipCardController4,
       front: Card(
-        child: Row(
-          children: [
-            SfCartesianChart(
-              tooltipBehavior: BarSeiesConvert_tooltipBehavior,
-              // palette: AllBarcolorlist[Barcount.indexOf(key)],
-              title: ChartTitle(
-                  text: '${dataa['$Bar']['chartTitle']}',
-                  textStyle: TextStyle(fontWeight: FontWeight.bold)),
-              primaryXAxis: CategoryAxis(
-                majorGridLines: const MajorGridLines(width: 1),
-              ),
-              primaryYAxis: NumericAxis(
-                  minimum: 10,
-                  maximum: max,
-                  interval: max - min,
-                  majorGridLines: const MajorGridLines(width: 1),
-                  majorTickLines: const MajorTickLines(size: 0)),
-              series: <ChartSeries<ChartSampleData, String>>[
-                BarSeries<ChartSampleData, String>(
-                  dataLabelSettings: const DataLabelSettings(isVisible: true),
-                  dataSource: PositionsCountbyLocation,
-                  xValueMapper: (ChartSampleData sales, _) => sales.x as String,
-                  yValueMapper: (ChartSampleData sales, _) => sales.y!,
-                )
-              ],
-            ),
-            Spacer(),
-            IconButton(
-              onPressed: () {
-                flipCardController4.toggleCard();
-              },
-              icon: Icon(
-                Icons.arrow_circle_right_sharp,
-                size: 40,
-              ),
+        child: SfCartesianChart(
+          tooltipBehavior: BarSeiesConvert_tooltipBehavior,
+          // palette: AllBarcolorlist[Barcount.indexOf(key)],
+          title: ChartTitle(
+              text: '${dataa['$Bar']['chartTitle']}',
+              textStyle: TextStyle(fontWeight: FontWeight.bold)),
+          primaryXAxis: CategoryAxis(
+            majorGridLines: const MajorGridLines(width: 1),
+          ),
+          primaryYAxis: NumericAxis(
+              minimum: 10,
+              maximum: max,
+              interval: max - min,
+              majorGridLines: const MajorGridLines(width: 1),
+              majorTickLines: const MajorTickLines(size: 0)),
+          series: <ChartSeries<ChartSampleData, String>>[
+            BarSeries<ChartSampleData, String>(
+              dataLabelSettings: const DataLabelSettings(isVisible: true),
+              dataSource: PositionsCountbyLocation,
+              xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+              yValueMapper: (ChartSampleData sales, _) => sales.y!,
             )
           ],
         ),
@@ -437,38 +376,23 @@ Funnelchartconvert(String Funneldata, BuildContext context) {
   return FlipCard(
     controller: flipCardController5,
     front: Card(
-      child: Row(
-        children: [
-          SfFunnelChart(
-            //   smartLabelMode: SmartLabelMode.none,
-            title: ChartTitle(text: '${dataa['$Funneldata']['chartTitle']}'),
-            // tooltipBehavior: Funneltooltip,
+      child: SfFunnelChart(
+        //   smartLabelMode: SmartLabelMode.none,
+        title: ChartTitle(text: '${dataa['$Funneldata']['chartTitle']}'),
+        // tooltipBehavior: Funneltooltip,
 
-            /// To enable the legend for funnel chart.
-            // legend: Legend(
-            //     isVisible: true,
-            //     overflowMode: LegendItemOverflowMode.wrap),
+        /// To enable the legend for funnel chart.
+        // legend: Legend(
+        //     isVisible: true,
+        //     overflowMode: LegendItemOverflowMode.wrap),
 
-            series: FunnelSeries<ChartSampleData, String>(
-                dataSource: Funnelchart,
-                textFieldMapper: (ChartSampleData dataa, _) => dataa.text,
-                xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
-                yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                dataLabelSettings: DataLabelSettings(
-                    isVisible: true,
-                    labelPosition: ChartDataLabelPosition.inside)),
-          ),
-          Spacer(),
-          IconButton(
-            onPressed: () {
-              flipCardController5.toggleCard();
-            },
-            icon: Icon(
-              Icons.arrow_circle_right_sharp,
-              size: 40,
-            ),
-          )
-        ],
+        series: FunnelSeries<ChartSampleData, String>(
+            dataSource: Funnelchart,
+            textFieldMapper: (ChartSampleData dataa, _) => dataa.text,
+            xValueMapper: (ChartSampleData dataa, _) => dataa.x as String,
+            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+            dataLabelSettings: DataLabelSettings(
+                isVisible: true, labelPosition: ChartDataLabelPosition.inside)),
       ),
     ),
     back: Container(
@@ -543,40 +467,26 @@ RadarCharttconvert(String Radachartdata, BuildContext context) {
   print(tickss.toList());
   return FlipCard(
     controller: flipCardController6,
-    front: Row(
-      children: [
-        Container(
-          height: MediaQuery.of(context).orientation == Orientation.landscape
-              ? 335
-              : 300,
-          width: MediaQuery.of(context).orientation == Orientation.landscape
-              ? MediaQuery.of(context).size.width * 0.4
-              : MediaQuery.of(context).size.width * 0.76,
-          child: Card(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 50.0),
-              child: Radar.light(
-                ticks: tickss,
-                features: features,
-                data: finaldata,
-                reverseAxis: false,
-                // useSides: useSides,
-              ),
-            ),
+    front: Container(
+      height: MediaQuery.of(context).orientation == Orientation.landscape
+          ? 335
+          : 300,
+      width: MediaQuery.of(context).orientation == Orientation.landscape
+          ? MediaQuery.of(context).size.width * 0.4
+          : MediaQuery.of(context).size.width * 0.76,
+      child: Card(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.only(right: 50.0),
+          child: Radar.light(
+            ticks: tickss,
+            features: features,
+            data: finaldata,
+            reverseAxis: false,
+            // useSides: useSides,
           ),
         ),
-        Spacer(),
-        IconButton(
-          onPressed: () {
-            flipCardController6.toggleCard();
-          },
-          icon: Icon(
-            Icons.arrow_circle_right_sharp,
-            size: 40,
-          ),
-        )
-      ],
+      ),
     ),
     back: Container(
         height: MediaQuery.of(context).size.height * 0.47,
@@ -643,54 +553,38 @@ Lineschartconvert(String Lineschart, BuildContext context) {
   return FlipCard(
     controller: flipCardController7,
     front: Card(
-      child: Row(
-        children: [
-          SfCartesianChart(
-            // palette: <Color>[Linescolor[Linescount.indexOf(key)]],
-            zoomPanBehavior: ZoomPanBehavior(
-                enableDoubleTapZooming: true,
-                enableSelectionZooming: true,
-                enablePanning: true,
-                enablePinching: true),
-            plotAreaBorderWidth: 0,
-            title: ChartTitle(text: '${dataa['$Lineschart']['chartTitle']}'),
-            primaryXAxis: CategoryAxis(
-                labelRotation: 20,
-                labelsExtent: 50,
-                majorGridLines: const MajorGridLines(width: 0),
-                labelPlacement: LabelPlacement.onTicks),
-            primaryYAxis: NumericAxis(
-                minimum:
-                    sortlist.reduce((curr, next) => curr < next ? curr : next) +
-                        .0,
-                maximum:
-                    sortlist.reduce((curr, next) => curr > next ? curr : next) +
-                        .0,
-                axisLine: const AxisLine(width: 0),
-                edgeLabelPlacement: EdgeLabelPlacement.shift,
-                labelFormat: '{value}',
-                majorTickLines: const MajorTickLines(size: 0)),
-            series: <SplineSeries<ChartSampleData, String>>[
-              SplineSeries<ChartSampleData, String>(
-                dataSource: Linescharts,
-                xValueMapper: (ChartSampleData sales, _) => sales.x as String,
-                yValueMapper: (ChartSampleData sales, _) => sales.y,
-                markerSettings: const MarkerSettings(isVisible: true),
-              ),
-            ],
-            tooltipBehavior: TooltipBehavior(enable: true),
+      child: SfCartesianChart(
+        // palette: <Color>[Linescolor[Linescount.indexOf(key)]],
+        zoomPanBehavior: ZoomPanBehavior(
+            enableDoubleTapZooming: true,
+            enableSelectionZooming: true,
+            enablePanning: true,
+            enablePinching: true),
+        plotAreaBorderWidth: 0,
+        title: ChartTitle(text: '${dataa['$Lineschart']['chartTitle']}'),
+        primaryXAxis: CategoryAxis(
+            labelRotation: 20,
+            labelsExtent: 50,
+            majorGridLines: const MajorGridLines(width: 0),
+            labelPlacement: LabelPlacement.onTicks),
+        primaryYAxis: NumericAxis(
+            minimum:
+                sortlist.reduce((curr, next) => curr < next ? curr : next) + .0,
+            maximum:
+                sortlist.reduce((curr, next) => curr > next ? curr : next) + .0,
+            axisLine: const AxisLine(width: 0),
+            edgeLabelPlacement: EdgeLabelPlacement.shift,
+            labelFormat: '{value}',
+            majorTickLines: const MajorTickLines(size: 0)),
+        series: <SplineSeries<ChartSampleData, String>>[
+          SplineSeries<ChartSampleData, String>(
+            dataSource: Linescharts,
+            xValueMapper: (ChartSampleData sales, _) => sales.x as String,
+            yValueMapper: (ChartSampleData sales, _) => sales.y,
+            markerSettings: const MarkerSettings(isVisible: true),
           ),
-          Spacer(),
-          IconButton(
-            onPressed: () {
-              flipCardController7.toggleCard();
-            },
-            icon: Icon(
-              Icons.arrow_circle_right_sharp,
-              size: 40,
-            ),
-          )
         ],
+        tooltipBehavior: TooltipBehavior(enable: true),
       ),
     ),
     back: Container(

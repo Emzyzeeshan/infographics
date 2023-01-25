@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,7 +26,15 @@ class _LogoutState extends State<Logout> {
     return IconButton(
       icon: Icon(Icons.power_settings_new_outlined),
       onPressed: () {
-        LogoutAPI(logindata.getString('username').toString());
+        CoolAlert.show(
+          backgroundColor: Color(0xff6d96fa),
+          onConfirmBtnTap: () {
+            LogoutAPI(logindata.getString('username').toString());
+          },
+          context: context,
+          type: CoolAlertType.confirm,
+          text: "Are You Sure",
+        );
       },
     );
   }
