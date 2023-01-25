@@ -56,7 +56,7 @@ class _TooltipsState extends State<Tooltips> {
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: ((context) {
-                    return Sampledatagrid();
+                    return Sampledatagrid(chartkey: widget.chartkey,);
                   })));
                 },
                 icon: Icon(

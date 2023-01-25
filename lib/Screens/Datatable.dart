@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:integraphics/main.dart';
 import 'package:pluto_grid/pluto_grid.dart';
 import 'package:pluto_grid_export/pluto_grid_export.dart' as pluto_grid_export;
 
 class Sampledatagrid extends StatefulWidget {
-  const Sampledatagrid({Key? key}) : super(key: key);
+  String? chartkey;
+  Sampledatagrid({@required this.chartkey});
 
   @override
   State<Sampledatagrid> createState() => _SampledatagridState();
@@ -15,6 +17,87 @@ class Sampledatagrid extends StatefulWidget {
 
 class _SampledatagridState extends State<Sampledatagrid> {
   late PlutoGridStateManager stateManager;
+  @override
+  final rows = <PlutoRow>[];
+  final column = <PlutoColumn>[];
+  void initState() {
+    print('${widget.chartkey}');
+    print(dataa['${widget.chartkey}']['chartLevelsAndValueObj'][0]['Y']);
+    // TODO: implement initState
+
+    for (int i = 0;
+        i < dataa['${widget.chartkey}']['chartLevelsAndValueObj'].length;
+        i++) {
+      rows.add(
+        PlutoRow(
+          cells: {
+            'column_1': PlutoCell(
+                value: dataa['${widget.chartkey}']['chartLevelsAndValueObj'][i]
+                        ['X']
+                    .toString()),
+            'column_2': PlutoCell(
+                value: dataa['${widget.chartkey}']['chartLevelsAndValueObj'][i]
+                        ['Y']
+                    .toString()),
+            // 'column_3': PlutoCell(
+            //     value: dataa['${widget.chartkey}']['chartLevelsAndValueObj'][i]
+            //             ['Y']
+            //         .toString()),
+          },
+        ),
+      );
+    }
+
+    for (int i = 0;
+        i < dataa['${widget.chartkey}']['chartLevelsAndValueObj'].length;
+        i++) {
+      column.add(
+        PlutoColumn(
+          title:
+              '${dataa['${widget.chartkey}']['chartLevelsAndValueObj'][i]['X'].toString()}',
+          field:
+              '${dataa['${widget.chartkey}']['chartLevelsAndValueObj'][i]['X'].toString()}',
+          type: PlutoColumnType.text(),
+        ),
+
+        // PlutoRow(
+        //   cells: {
+        //     'column_1': PlutoCell(
+        //         value: dataa['${widget.chartkey}']['chartLevelsAndValueObj'][i]
+        //                 ['Y']
+        //             .toString()),
+        //     'column_2': PlutoCell(
+        //         value: dataa['${widget.chartkey}']['chartLevelsAndValueObj'][i]
+        //                 ['Y']
+        //             .toString()),
+        //     'column_3': PlutoCell(
+        //         value: dataa['${widget.chartkey}']['chartLevelsAndValueObj'][i]
+        //                 ['Y']
+        //             .toString()),
+        //   },
+        // ),
+      );
+    }
+    // rows = dataa
+    //     .map((line) => PlutoRow(
+    //           cells: {
+    //             'column_1': PlutoCell(
+    //                 value: line['${widget.chartkey}']['chartLevelsAndValueObj']
+    //                         [0]['Y'] ??
+    //                     ''),
+    //             'column_2': PlutoCell(
+    //                 value: line['${widget.chartkey}']['chartLevelsAndValueObj']
+    //                         [0]['Y'] ??
+    //                     ''),
+    //             'column_3': PlutoCell(
+    //                 value: line['${widget.chartkey}']['chartLevelsAndValueObj']
+    //                         [0]['Y'] ??
+    //                     ''),
+    //           },
+    //         ))
+    //     .toList();
+    super.initState();
+  }
 
   final List<PlutoColumn> columns = [
     PlutoColumn(
@@ -22,41 +105,41 @@ class _SampledatagridState extends State<Sampledatagrid> {
       field: 'column_1',
       type: PlutoColumnType.text(),
     ),
-    PlutoColumn(
-      title: 'Column2',
-      field: 'column_2',
-      type: PlutoColumnType.text(),
-    ),
-    PlutoColumn(
-      title: 'Column3',
-      field: 'column_3',
-      type: PlutoColumnType.text(),
-    ),
+    // PlutoColumn(
+    //   title: 'Column2',
+    //   field: 'column_2',
+    //   type: PlutoColumnType.text(),
+    // ),
+    // PlutoColumn(
+    //   title: 'Column3',
+    //   field: 'column_3',
+    //   type: PlutoColumnType.text(),
+    // ),
   ];
 
-  final List<PlutoRow> rows = [
-    PlutoRow(
-      cells: {
-        'column_1': PlutoCell(value: 'cell 1-1'),
-        'column_2': PlutoCell(value: 'cell 1-2'),
-        'column_3': PlutoCell(value: 'cell 1-3'),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'column_1': PlutoCell(value: 'cell 2-1'),
-        'column_2': PlutoCell(value: 'cell 2-2'),
-        'column_3': PlutoCell(value: 'cell 2-3'),
-      },
-    ),
-    PlutoRow(
-      cells: {
-        'column_1': PlutoCell(value: 'cell 3-1'),
-        'column_2': PlutoCell(value: 'cell 3-2'),
-        'column_3': PlutoCell(value: 'cell 3-3'),
-      },
-    ),
-  ];
+  // final List<PlutoRow> rows = [
+  //   PlutoRow(
+  //     cells: {
+  //       'column_1': PlutoCell(value: 'cell 1-1'),
+  //       'column_2': PlutoCell(value: 'cell 1-2'),
+  //       'column_3': PlutoCell(value: 'cell 1-3'),
+  //     },
+  //   ),
+  //   PlutoRow(
+  //     cells: {
+  //       'column_1': PlutoCell(value: 'cell 2-1'),
+  //       'column_2': PlutoCell(value: 'cell 2-2'),
+  //       'column_3': PlutoCell(value: 'cell 2-3'),
+  //     },
+  //   ),
+  //   PlutoRow(
+  //     cells: {
+  //       'column_1': PlutoCell(value: 'cell 3-1'),
+  //       'column_2': PlutoCell(value: 'cell 3-2'),
+  //       'column_3': PlutoCell(value: 'cell 3-3'),
+  //     },
+  //   ),
+  // ];
 
   void exportToPdf() async {
     final themeData = pluto_grid_export.ThemeData.withFont(
@@ -77,9 +160,7 @@ class _SampledatagridState extends State<Sampledatagrid> {
       themeData: themeData,
     );
 
-    await pluto_grid_export.
-
-    Printing.sharePdf(
+    await pluto_grid_export.Printing.sharePdf(
       bytes: await plutoGridPdfExport.export(stateManager),
       filename: plutoGridPdfExport.getFilename(),
     );
@@ -137,4 +218,7 @@ class _SampledatagridState extends State<Sampledatagrid> {
       ),
     );
   }
+
+  // var rows;
+  // Tablerow() {}
 }
