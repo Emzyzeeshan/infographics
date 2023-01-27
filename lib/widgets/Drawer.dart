@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:integraphics/Screens/settings.dart';
 import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,14 +13,11 @@ class drawer extends StatefulWidget {
   State<drawer> createState() => _drawerState();
 }
 
-SharedPreferences? logindata;
-
 class _drawerState extends State<drawer> {
   bool toggleval = false;
 
   @override
   Widget build(BuildContext context) {
-    final themeChange = Provider.of<DarkThemeProvider>(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -68,17 +66,17 @@ class _drawerState extends State<drawer> {
                 },
               ),
               ListTile(
-                  leading: themeChange.darkTheme == true
-                      ? Text('Light Mode')
-                      : Text('Dark Mode'),
-                  title: Switch(
-                    onChanged: (val) {
-                      setState(() {
-                        themeChange.darkTheme = val;
-                      });
-                    },
-                    value: themeChange.darkTheme,
-                  )),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: ((context) => Settings(
+                                con: context,
+                              ))));
+                },
+                leading: Icon(Icons.settings),
+                title: Text('Settings'),
+              )
             ]),
           )
         ],

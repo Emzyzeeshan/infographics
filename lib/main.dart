@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:integraphics/login/lg.dart';
 import 'package:integraphics/widgets/unauthaccess.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Screens/Infographics.dart';
 import 'Services/themesetup/DarkThemeProvider.dart';
@@ -16,8 +15,6 @@ import 'login/loginPage.dart';
 import 'login/newphonescreen.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -26,6 +23,7 @@ bool authenticated = false;
 var Selectedinput;
 var dataa;
 List<Widget> allgraph = [];
+late SharedPreferences logindata;
 
 class MyApp extends StatefulWidget {
   @override
@@ -37,11 +35,20 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    Future<bool> canAuthenticateWithBiometrics = auth.canCheckBiometrics;
-    // print(canAuthenticateWithBiometrics);
-    _authenticate();
+    dataa;
+    authb();
     super.initState();
     getCurrentAppTheme();
+  }
+
+  authb() async {
+    logindata = await SharedPreferences.getInstance();
+    if (logindata.getBool('auth') == true) {
+      print('ok');
+      _authenticate();
+    } else {
+      logindata.setBool('auth', false);
+    }
   }
 
   final LocalAuthentication auth = LocalAuthentication();

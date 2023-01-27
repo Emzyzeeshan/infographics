@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 
 //piecontrollers
-var pieScreeshotcontroller11 = ScreenshotController();
-var pieScreeshotcontroller22 = ScreenshotController();
-var pieScreeshotcontroller33 = ScreenshotController();
-var pieScreeshotcontroller44 = ScreenshotController();
-var pieScreeshotcontroller55 = ScreenshotController();
-var pieScreeshotcontroller66 = ScreenshotController();
-var pieScreeshotcontroller77 = ScreenshotController();
-var pieScreeshotcontroller88 = ScreenshotController();
-var pieScreeshotcontroller99 = ScreenshotController();
-var pieScreeshotcontroller100 = ScreenshotController();
-List<ScreenshotController> PieScreeshotcontrollerlist = [
-  pieScreeshotcontroller11,
-  pieScreeshotcontroller22,
-  pieScreeshotcontroller33,
-  pieScreeshotcontroller44,
-  pieScreeshotcontroller55,
-  pieScreeshotcontroller66,
-  pieScreeshotcontroller77,
-  pieScreeshotcontroller88,
-  pieScreeshotcontroller99,
-  pieScreeshotcontroller100
+var pieScreeshotcontroller1 = ScreenshotController();
+var pieScreeshotcontroller2 = ScreenshotController();
+var pieScreeshotcontroller3 = ScreenshotController();
+var pieScreeshotcontroller4 = ScreenshotController();
+var pieScreeshotcontroller5 = ScreenshotController();
+var pieScreeshotcontroller6 = ScreenshotController();
+var pieScreeshotcontroller7 = ScreenshotController();
+var pieScreeshotcontroller8 = ScreenshotController();
+var pieScreeshotcontroller9 = ScreenshotController();
+var pieScreeshotcontroller10 = ScreenshotController();
+List PieScreeshotcontrollerlist = [
+  pieScreeshotcontroller1,
+  pieScreeshotcontroller2,
+  pieScreeshotcontroller3,
+  pieScreeshotcontroller4,
+  pieScreeshotcontroller5,
+  pieScreeshotcontroller6,
+  pieScreeshotcontroller7,
+  pieScreeshotcontroller8,
+  pieScreeshotcontroller9,
+  pieScreeshotcontroller10
 ];
 
 //donut controllers

@@ -36,13 +36,13 @@ class _LoginPageState extends State<LoginPage> {
   bool userError = false, showPasswordField = false, passError = false;
   bool _visible = true;
   bool islogin = false;
-  SharedPreferences? logindata;
+
   bool? newuser;
   var userDetails;
   // late bool authenticated;
   void check_if_already_login() async {
     logindata = await SharedPreferences.getInstance();
-    newuser = (logindata!.getBool('login') ?? true);
+    newuser = (logindata.getBool('login') ?? true);
     print(newuser);
     if (newuser == false) {
       Navigator.pushReplacement(context,
@@ -200,9 +200,7 @@ class _LoginPageState extends State<LoginPage> {
                   //   userName = userNameText.text;
                   //   passWord = passWordText.text;
                   // });
-                  Verify().then((value) {
-                    setState(() {});
-                  });
+                  Verify();
                 },
                 style: ElevatedButton.styleFrom(
                   padding:
@@ -221,145 +219,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
       ),
     );
-  }
-
-  Route _createRoute() {
-    return PageRouteBuilder(
-      transitionDuration: Duration(milliseconds: 2000),
-      reverseTransitionDuration: Duration(milliseconds: 2000),
-      opaque: false,
-      barrierDismissible: false,
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          InfoGraphics(logindata),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        var screenSize = MediaQuery.of(context).size;
-        Offset center = Offset(screenSize.width - 40, screenSize.height - 40);
-        double beginRadius = 0.0;
-        double endRadius = screenSize.height * 1.2;
-
-        var tween = Tween(begin: beginRadius, end: endRadius);
-        var radiusTweenAnimation = animation.drive(tween);
-
-        return ClipPath(
-          clipper:
-              CircleRevealClipper(radius: radiusTweenAnimation, center: center),
-          child: child,
-        );
-      },
-    );
-  }
-
-  final LocalAuthentication auth = LocalAuthentication();
-
-  bool? _canCheckBiometrics;
-  List<BiometricType>? _availableBiometrics;
-  String _authorized = 'Not Authorized';
-  bool _isAuthenticating = false;
-  Future<void> _checkBiometrics() async {
-    late bool canCheckBiometrics;
-    try {
-      canCheckBiometrics = await auth.canCheckBiometrics;
-    } on PlatformException catch (e) {
-      canCheckBiometrics = false;
-      print(e);
-    }
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _canCheckBiometrics = canCheckBiometrics;
-    });
-  }
-
-  Future<void> _getAvailableBiometrics() async {
-    late List<BiometricType> availableBiometrics;
-    try {
-      availableBiometrics = await auth.getAvailableBiometrics();
-    } on PlatformException catch (e) {
-      availableBiometrics = <BiometricType>[];
-      print(e);
-    }
-    if (!mounted) {
-      return;
-    }
-
-    setState(() {
-      _availableBiometrics = availableBiometrics;
-    });
-  }
-
-  Future<bool> _authenticate() async {
-    try {
-      setState(() {
-        _isAuthenticating = true;
-        _authorized = 'Authenticating';
-      });
-      authenticated = await auth.authenticate(
-        localizedReason: 'Let OS determine authentication method',
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-        ),
-      );
-
-      setState(() {
-        _isAuthenticating = false;
-      });
-      print('auth');
-    } on PlatformException catch (e) {
-      print(e);
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Error - ${e.message}';
-      });
-    }
-    if (!mounted) {}
-
-    setState(
-        () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
-    return authenticated;
-  }
-
-  Future<void> _authenticateWithBiometrics() async {
-    bool authenticated = false;
-    try {
-      setState(() {
-        _isAuthenticating = true;
-        _authorized = 'Authenticating';
-      });
-      authenticated = await auth.authenticate(
-        localizedReason:
-            'Scan your fingerprint (or face or whatever) to authenticate',
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-          biometricOnly: true,
-        ),
-      );
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Authenticating';
-      });
-    } on PlatformException catch (e) {
-      print(e);
-      setState(() {
-        _isAuthenticating = false;
-        _authorized = 'Error - ${e.message}';
-      });
-      return;
-    }
-    if (!mounted) {
-      return;
-    }
-
-    final String message = authenticated ? 'Authorized' : 'Not Authorized';
-    setState(() {
-      _authorized = message;
-    });
-  }
-
-  Future<void> _cancelAuthentication() async {
-    await auth.stopAuthentication();
-    setState(() => _isAuthenticating = false);
   }
 
   Future<dynamic> Verify() async {
@@ -389,30 +248,10 @@ class _LoginPageState extends State<LoginPage> {
             final snackBar = SnackBar(
               content: const Text('Password Incorrect'),
               backgroundColor: (Colors.redAccent),
-              // action: SnackBarAction(
-              //   label: 'dismiss',
-              //   onPressed: () {},
-              // ),
             );
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
             islogin = false;
           });
-        // else if (response['ERROR_MESG'] ==
-        //     "Oops Login Failed, Username or Password is wrong.")
-        //   setState(() {
-        //     final snackBar = SnackBar(
-        //       content: const Text(
-        //           'Oops Login Failed, Username or Password is wrong.'),
-        //       backgroundColor: (Colors.redAccent),
-        //       // action: SnackBarAction(
-        //       //   label: 'dismiss',
-        //       //   onPressed: () {},
-        //       // ),
-        //     );
-        //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-        //     passError = true;
-        //     islogin = false;
-        //   });
         else {
           var login = response['rsUsername'] ?? '';
           if (userNameText.text.toUpperCase() == login) {
@@ -422,26 +261,15 @@ class _LoginPageState extends State<LoginPage> {
             };
 
             print(response);
-            //print(userDetails);
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) =>
-            //             HomePageScreen(
-            //                 //userDetails,
-            //                 )));
+
             String username = userNameText.text;
             String password = passWordText.text;
             if (username != '' && password != '') {
               print('Successfull');
-              logindata!.setBool('login', false);
-              logindata!.setString('username', username.toUpperCase());
-              logindata!.setString('password', password);
-              // logindata!.setString('role', response['ssRole']);
-              // logindata!.setString('ssLocale', response['ssLocale']);
-              // logindata!.setString('ssRegion', response['ssRegion']);
-              // logindata!.setString('ssOrgname', response['ssOrgname']);
-              // await showLoaderDialog(context);
+              logindata.setBool('login', false);
+              logindata.setString('username', username.toUpperCase());
+              logindata.setString('password', password);
+
               await Fluttertoast.showToast(
                   msg: "Welcome",
                   toastLength: Toast.LENGTH_SHORT,
@@ -483,22 +311,5 @@ class _LoginPageState extends State<LoginPage> {
         confirmBtnColor: Color(0xff5163da),
       );
     }
-  }
-}
-
-class CircleRevealClipper extends CustomClipper<Path> {
-  final center;
-  final radius;
-
-  CircleRevealClipper({this.center, this.radius});
-
-  @override
-  Path getClip(Size size) {
-    return Path()..addOval(Rect.fromCircle(radius: radius, center: center));
-  }
-
-  @override
-  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

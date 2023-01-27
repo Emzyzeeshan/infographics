@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/Constants/ResponsiveSize.dart';
 import 'package:integraphics/Screens/DropdownScreens/HT_Dashboard.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product%20_and_service_spend.dart';
@@ -82,12 +83,12 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                               Image.asset('assets/images/IntegralGifLogo.gif'),
                         ),
                       ),
-                      actions: [
-                        Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Logout(widget.logindata),
-                        ),
-                      ],
+                      // actions: [
+                      //   Padding(
+                      //     padding: const EdgeInsets.only(right: 8.0),
+                      //     child: Logout(widget.logindata),
+                      //   ),
+                      // ],
                     )
                   ];
                 },
@@ -208,55 +209,55 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                     ),
                   ),
                   Container(
-                    child: Expanded(
+                    child: Flexible(
                       child: HR_Dashboard(),
                     ),
                   ),
                 ]))));
   }
 
-  Widget custompage() {
-    var customwid;
+  // Widget custompage() {
+  //   var customwid;
 
-    switch (Selectedinput) {
-      case 'CRM':
-        setState(() {
-          customwid = HR_Dashboard();
-        });
+  //   switch (Selectedinput) {
+  //     case 'CRM':
+  //       setState(() {
+  //         customwid = HR_Dashboard();
+  //       });
 
-        break;
-      case 'HT':
-        customwid = HR_Dashboard();
+  //       break;
+  //     case 'HT':
+  //       customwid = HR_Dashboard();
 
-        break;
-      case 'Products':
-        setState(() {
-          customwid = HR_Dashboard();
-        });
+  //       break;
+  //     case 'Products':
+  //       setState(() {
+  //         customwid = HR_Dashboard();
+  //       });
 
-        break;
-      case 'Demand & Supply':
-        setState(() {
-          customwid = HR_Dashboard();
-        });
+  //       break;
+  //     case 'Demand & Supply':
+  //       setState(() {
+  //         customwid = HR_Dashboard();
+  //       });
 
-        break;
-      case 'HR Dashboard':
-        setState(() {
-          customwid = HR_Dashboard();
-        });
-        break;
-      case 'Product and Service Spend':
-        setState(() {
-          customwid = HR_Dashboard();
-        });
-        break;
-      default:
-        setState(() => customwid = Container());
-    }
+  //       break;
+  //     case 'HR Dashboard':
+  //       setState(() {
+  //         customwid = HR_Dashboard();
+  //       });
+  //       break;
+  //     case 'Product and Service Spend':
+  //       setState(() {
+  //         customwid = HR_Dashboard();
+  //       });
+  //       break;
+  //     default:
+  //       setState(() => customwid = Container());
+  //   }
 
-    return customwid;
-  }
+  //   return customwid;
+  // }
 //note: Api call for Dropdown element of infographics
 
   Future<dynamic> DropdownApi() async {

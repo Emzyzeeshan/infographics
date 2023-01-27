@@ -54,12 +54,33 @@ class _HR_DashboardState extends State<HR_Dashboard> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    pieScreeshotcontroller1;
+    pieScreeshotcontroller2;
+    pieScreeshotcontroller3;
+    pieScreeshotcontroller4;
+    pieScreeshotcontroller5;
+    pieScreeshotcontroller6;
+    pieScreeshotcontroller7;
+    pieScreeshotcontroller8;
+    pieScreeshotcontroller9;
+    pieScreeshotcontroller10;
+    super.dispose();
+  }
+
   Color pickerColor = Color(0xff443a49);
   TooltipBehavior PositionsStatus_tooltipBehavior = TooltipBehavior();
   TooltipBehavior Funneltooltip = TooltipBehavior();
   TooltipBehavior PositionsCountbyLocation_tooltipBehavior = TooltipBehavior();
   TooltipBehavior EmployeesCountByAge_tooltipBehavior = TooltipBehavior();
   List<Function> Cardlist = [];
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    // TODO: implement shouldRebuild
+    throw UnimplementedError();
+  }
+
   @override
   Widget build(BuildContext context) {
     late Future<dynamic> _value = AllChartdataAPi(context, Selectedinput);
@@ -145,76 +166,75 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                       ' ${(dataa['$chartname']['chartLevelsAndValueObj'][i]['X']).toString()}\n${(dataa['$chartname']['chartLevelsAndValueObj'][i]['Y']).toString()}'),
             );
           }
-          return Expanded(
+          return Flexible(
             child: Screenshot(
-                controller: PieScreeshotcontrollerlist[piedata.length],
-                child: FlipCard(
-                    front: Card(
+              controller: PieScreeshotcontrollerlist[piedata.length],
+              child: FlipCard(
+                  front: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    child: SfCircularChart(
+                      palette: Allpiecolorlist[piecount.indexOf(key)],
+                      title: ChartTitle(
+                          text: '${dataa['$chartname']['chartTitle']}'),
+                      legend: Legend(
+                        isVisible: true,
+                        overflowMode: LegendItemOverflowMode.wrap,
+                        position: LegendPosition.bottom,
+                      ),
+                      series: <PieSeries<ChartSampleData, String>>[
+                        PieSeries<ChartSampleData, String>(
+                            enableTooltip: true,
+                            explode: true,
+                            explodeIndex: 0,
+                            explodeOffset: '10%',
+                            dataSource: Piechart,
+                            xValueMapper: (ChartSampleData dataa, _) =>
+                                dataa.x as String,
+                            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                            dataLabelMapper: (ChartSampleData dataa, _) =>
+                                dataa.text,
+                            startAngle: 0,
+                            endAngle: 0,
+                            dataLabelSettings:
+                                const DataLabelSettings(isVisible: true)),
+                      ],
+                    ),
+                  ),
+                  back: Card(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)),
-                      child: SfCircularChart(
-                        palette: Allpiecolorlist[piecount.indexOf(key)],
-                        title: ChartTitle(
-                            text: '${dataa['$chartname']['chartTitle']}'),
-                        legend: Legend(
-                          isVisible: true,
-                          overflowMode: LegendItemOverflowMode.wrap,
-                          position: LegendPosition.bottom,
-                        ),
-                        series: <PieSeries<ChartSampleData, String>>[
-                          PieSeries<ChartSampleData, String>(
-                              enableTooltip: true,
-                              explode: true,
-                              explodeIndex: 0,
-                              explodeOffset: '10%',
-                              dataSource: Piechart,
-                              xValueMapper: (ChartSampleData dataa, _) =>
-                                  dataa.x as String,
-                              yValueMapper: (ChartSampleData dataa, _) =>
-                                  dataa.y,
-                              dataLabelMapper: (ChartSampleData dataa, _) =>
-                                  dataa.text,
-                              startAngle: 0,
-                              endAngle: 0,
-                              dataLabelSettings:
-                                  const DataLabelSettings(isVisible: true)),
-                        ],
-                      ),
-                    ),
-                    back: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15)),
-                        child: GridView.builder(
-                            shrinkWrap: true,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    mainAxisExtent: 70,
-                                    mainAxisSpacing: 3,
-                                    crossAxisSpacing: 3,
-                                    crossAxisCount:
-                                        (orientation == Orientation.portrait)
-                                            ? 2
-                                            : 3),
-                            itemCount: dataa['$chartname']
-                                    ['chartLevelsAndValueObj']
-                                .length,
-                            itemBuilder: ((context, index) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                    color: Color(0xffAED6F1),
-                                    borderRadius: BorderRadius.circular(15)),
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                          '${dataa['$chartname']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                      Text(
-                                          '${dataa['$chartname']['chartLevelsAndValueObj'][index]['Y']}'),
-                                    ]),
-                              );
-                            }))))),
+                      child: GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 70,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount: dataa['$chartname']
+                                  ['chartLevelsAndValueObj']
+                              .length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        '${dataa['$chartname']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    Text(
+                                        '${dataa['$chartname']['chartLevelsAndValueObj'][index]['Y']}'),
+                                  ]),
+                            );
+                          })))),
+            ),
           );
         }
 
@@ -339,7 +359,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               ),
             );
           }
-          return Expanded(
+          return Flexible(
             child: Screenshot(
               controller: DonutScreeshotcontrollerlist[Doughnutt.length],
               child: FlipCard(
@@ -528,7 +548,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               ),
             );
           }
-          return Expanded(
+          return Flexible(
             child: Screenshot(
               controller: ColumnScreeshotcontrollerlist[Columndata.length],
               child: FlipCard(
@@ -682,7 +702,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             );
           }
 
-          return Expanded(
+          return Flexible(
             child: Screenshot(
               controller: BarScreeshotcontrollerlist[Bardata.length],
               child: FlipCard(
@@ -875,7 +895,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               ),
             );
           }
-          return Expanded(
+          return Flexible(
             child: Screenshot(
               controller: FunnelScreeshotcontrollerlist[FunnelData.length],
               child: FlipCard(
@@ -1059,7 +1079,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                   pointColor: Scattercolor[scattercount.indexOf(key)]),
             );
           }
-          return Expanded(
+          return Flexible(
             child: Screenshot(
               controller: ScatterScreeshotcontrollerlist[Scatterdata.length],
               child: FlipCard(
@@ -1354,7 +1374,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
           // print(sortlist.toList());
           // print(sortlist.reduce((curr, next) => curr > next ? curr : next));
           // print(sortlist.reduce((curr, next) => curr < next ? curr : next));
-          return Expanded(
+          return Flexible(
             child: Screenshot(
               controller: LinesScreeshotcontrollerlist[Spline.length],
               child: FlipCard(
@@ -1639,80 +1659,84 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       ...Radardata,
       ...Doubleline
     ];
-    return LayoutBuilder(
-        builder: (BuildContext ctx, BoxConstraints constraints) {
-      if (constraints.maxWidth >= 480) {
-        return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2),
-                itemCount: all.length,
-                itemBuilder: ((context, index) {
-                  return Column(
-                    children: [
-                      Flexible(child: all[index]),
-                    ],
-                  );
-                })));
-      } else {
-        return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: ListView(
-              children: [
-                Selectedinput == 'CRM'
-                    ? SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            FlipCardWidet(
-                              dataa['cardData2']['result'][2].toString(),
-                              dataa['cardData2']['result'][0].toString(),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            FlipCardWidet(
-                              dataa['cardData5']['result'][2].toString(),
-                              dataa['cardData5']['result'][0].toString(),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            FlipCardWidet(
-                              dataa['cardData6']['result'][2].toString(),
-                              dataa['cardData6']['result'][0].toString(),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            FlipCardWidet(
-                              dataa['cardData15']['result'][2].toString(),
-                              dataa['cardData15']['result'][0].toString(),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            FlipCardWidet(
-                              dataa['cardData16']['result'][2].toString(),
-                              dataa['cardData16']['result'][0].toString(),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Container(),
-                ...piedata,
-                ...Doughnutt,
-                ...Columndata,
-                ...Bardata,
-                ...FunnelData,
-                ...Scatterdata,
-                ...Spline,
-                ...Radardata,
-                ...Doubleline
-              ],
-            ));
-      }
-    });
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: LayoutBuilder(
+          builder: (BuildContext ctx, BoxConstraints constraints) {
+        if (constraints.maxWidth >= 480) {
+          return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2),
+                  itemCount: all.length,
+                  itemBuilder: ((context, index) {
+                    return Column(
+                      children: [
+                        Flexible(child: all[index]),
+                      ],
+                    );
+                  })));
+        } else {
+          return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: ListView(
+                children: [
+                  Selectedinput == 'CRM'
+                      ? SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              FlipCardWidet(
+                                dataa['cardData2']['result'][2].toString(),
+                                dataa['cardData2']['result'][0].toString(),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              FlipCardWidet(
+                                dataa['cardData5']['result'][2].toString(),
+                                dataa['cardData5']['result'][0].toString(),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              FlipCardWidet(
+                                dataa['cardData6']['result'][2].toString(),
+                                dataa['cardData6']['result'][0].toString(),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              FlipCardWidet(
+                                dataa['cardData15']['result'][2].toString(),
+                                dataa['cardData15']['result'][0].toString(),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              FlipCardWidet(
+                                dataa['cardData16']['result'][2].toString(),
+                                dataa['cardData16']['result'][0].toString(),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  ...piedata,
+                  ...Doughnutt,
+                  ...Columndata,
+                  ...Bardata,
+                  ...FunnelData,
+                  ...Scatterdata,
+                  ...Spline,
+                  ...Radardata,
+                  ...Doubleline
+                ],
+              ));
+        }
+      }),
+    );
   }
 }

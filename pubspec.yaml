@@ -39,8 +39,6 @@ dependencies:
   dropdown_button2: ^1.9.1
   extended_phone_number_input: ^1.0.2
   file_saver: ^0.1.1
-  firebase_auth: ^4.2.5
-  firebase_core: ^2.4.1
   flip_card: ^0.6.0
   flutter:
     sdk: flutter
@@ -75,11 +73,13 @@ dependencies:
   reorderable_grid: ^1.0.5
   reorderable_grid_view: ^2.2.5
   screenshot: ^1.2.3
+  settings_ui: ^2.0.2
   shared_preferences: ^2.0.15
   sleek_circular_slider: ^2.0.1
   syncfusion_flutter_charts: ^20.3.58
   syncfusion_flutter_datagrid_export: ^20.4.42-beta
   syncfusion_flutter_treemap: ^20.3.61-beta
+  url_launcher: ^6.1.8
   zoom_widget: ^2.0.0
 
 dev_dependencies:
@@ -108,6 +108,11 @@ flutter:
     - assets/database.png
     - assets/barimg.png
     - assets/error.gif
+    - assets/fb.png
+    - assets/insta.png
+    - assets/linkedIn.png
+    - assets/twitter.png
+    - assets/yt.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see
