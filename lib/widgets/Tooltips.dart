@@ -1,14 +1,21 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:integraphics/Screens/Datatable.dart';
+import 'package:integraphics/Screens/settings.dart';
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/showimagecapture.dart';
+import 'package:integraphics/widgets/test.dart';
 import 'package:integraphics/widgets/zoomwidget.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 
@@ -36,6 +43,13 @@ class Tooltips extends StatefulWidget {
 
 class _TooltipsState extends State<Tooltips> {
   void initstate() {
+    final android = AndroidInitializationSettings('mipmap/ic_launcher');
+
+    final initSettings = InitializationSettings(android: android);
+
+    flutterLocalNotificationsPlugin.initialize(initSettings,
+        onDidReceiveBackgroundNotificationResponse: _onSelectNotification);
+
     super.initState();
   }
 
@@ -1241,6 +1255,121 @@ class _TooltipsState extends State<Tooltips> {
           //   ),
           // ),
         ],
+      ),
+    );
+  }
+
+  Future<void> _onSelectNotification(
+      NotificationResponse notificationResponse) async {
+    final String? payload = notificationResponse.payload;
+    if (notificationResponse.payload != null) {
+      debugPrint('notification payload: $payload');
+    }
+    await Navigator.push(
+      context,
+      MaterialPageRoute<void>(builder: (context) => Test1(payload)),
+    );
+    // final obj = jsonDecode(json.toString());
+
+    // if (jsonn == true) {
+    //   AndroidNotificationAction(),
+    //   OpenFilex.open(result['filePath']);
+    // } else {
+    //   showDialog(
+    //     context: context,
+    //     builder: (_) => AlertDialog(
+    //       title: Text('Error'),
+    //       content: Text('${result['errorMessage']}'),
+    //     ),
+    //   );
+    // }
+  }
+
+  Future<void> _showNotification(bool downloadStatus) async {
+    final android = AndroidNotificationDetails('channel id', 'channel name',
+        icon: 'fb', priority: Priority.high, importance: Importance.max);
+
+    final platform = NotificationDetails(android: android);
+    final json = jsonEncode(downloadStatus);
+    final isSuccess = downloadStatus;
+
+    await flutterLocalNotificationsPlugin.show(
+        0, // notification id
+        isSuccess ? 'Success' : 'Failure',
+        isSuccess
+            ? 'File has been downloaded successfully!'
+            : 'There was an error while downloading the file.',
+        platform,
+        payload: json);
+  }
+
+  var result;
+  Future<dynamic> ShowCapturedWidget(
+      BuildContext context, Uint8List capturedImage, chartname) {
+    return showDialog(
+      useSafeArea: false,
+      context: context,
+      builder: (context) => Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color(0xff6d96fa),
+          title: Text("$chartname"),
+        ),
+        body: Center(
+            child: capturedImage != null
+                ? SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Image.memory(capturedImage),
+                          SizedBox(height: 20),
+                          Container(
+                            width: 120,
+                            child: MaterialButton(
+                              onPressed: () async {
+                                // Uint8List capturedImage;
+                                var status = await Permission.storage.request();
+                                if (status.isGranted) {
+                                  // String savePath = appDocDir.path+'/temp';
+                                  result = await ImageGallerySaver.saveImage(
+                                      quality: 100,
+                                      capturedImage,
+                                      name:
+                                          'graph_${chartname}_${DateTime.now()}');
+                                  print(result);
+                                  if (result['isSuccess'] == true) {
+                                    await _showNotification(
+                                        result['isSuccess']);
+                                  }
+                                  // screenshotController
+                                  //     .captureAndSave(appDocDir.path);
+                                }
+                              },
+                              color: Color(0xff6d96fa),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Save',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Icon(
+                                    Icons.download_for_offline,
+                                    color: Colors.white,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  )
+                : Container()),
       ),
     );
   }

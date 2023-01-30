@@ -13,7 +13,7 @@ var pieScreeshotcontroller7 = ScreenshotController();
 var pieScreeshotcontroller8 = ScreenshotController();
 var pieScreeshotcontroller9 = ScreenshotController();
 var pieScreeshotcontroller10 = ScreenshotController();
-List PieScreeshotcontrollerlist = [
+List<ScreenshotController> PieScreeshotcontrollerlistt = [
   pieScreeshotcontroller1,
   pieScreeshotcontroller2,
   pieScreeshotcontroller3,

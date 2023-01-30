@@ -3,7 +3,7 @@ import 'package:flip_card/flip_card_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/radarchart.dart';
-import 'package:screenshot/screenshot.dart';
+
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_treemap/treemap.dart';
 
@@ -30,7 +30,7 @@ PiechartConvert(String chartname, BuildContext context) {
     height: MediaQuery.of(context).size.height * 0.47,
     width: MediaQuery.of(context).size.width,
     child: FlipCard(
-        // controller: flipCardController1,
+        controller: flipCardController1,
         front: Card(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),

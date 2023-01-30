@@ -178,52 +178,57 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  final ValueNotifier<bool> popup = ValueNotifier<bool>(false);
   bool isloading = false;
   Widget _submitButton() {
     return Padding(
       padding: const EdgeInsets.only(right: 20.0),
       child: Align(
         alignment: Alignment.centerRight,
-        child: isloading == true
-            ? SpinKitSpinningLines(
-                lineWidth: 5,
-                size: 50,
-                color: Color(0xff6d96fa),
-              )
-            : ElevatedButton(
-                onPressed: () async {
-                  setState(() {
-                    isloading = true;
-                  });
-                  await Future.delayed(Duration(seconds: 2));
-                  // setState(() {
-                  //   userName = userNameText.text;
-                  //   passWord = passWordText.text;
-                  // });
-                  Verify();
-                },
-                style: ElevatedButton.styleFrom(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-                  backgroundColor: Color(0xFF2661FA),
-                  shape: StadiumBorder(),
-                ),
-                /*shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
+        child: ValueListenableBuilder<bool>(
+            valueListenable: popup,
+            builder: (context, value, _) {
+              return popup.value
+                  ? SpinKitSpinningLines(
+                      lineWidth: 5,
+                      size: 50,
+                      color: Color(0xff6d96fa),
+                    )
+                  : ElevatedButton(
+                      onPressed: () async {
+                        setState(() {
+                          popup.value = true;
+                        });
+                        await Future.delayed(Duration(seconds: 2));
+                        // setState(() {
+                        //   userName = userNameText.text;
+                        //   passWord = passWordText.text;
+                        // });
+                        Verify();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 40.0, vertical: 20.0),
+                        backgroundColor: Color(0xFF2661FA),
+                        shape: StadiumBorder(),
+                      ),
+                      /*shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
                 textColor: Colors.white,
                 padding: const EdgeInsets.all(0),*/
-                child: Text(
-                  "LOGIN",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
+                      child: Text(
+                        "LOGIN",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    );
+            }),
       ),
     );
   }
 
   Future<dynamic> Verify() async {
     try {
-      final result = await InternetAddress.lookup('example.com');
+      final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         var res = await post(Uri.parse('http://192.169.1.211:8082/user/login'),
             body: jsonEncode({
@@ -302,14 +307,24 @@ class _LoginPageState extends State<LoginPage> {
       print('not connected');
 
       return await QuickAlert.show(
-        animType: QuickAlertAnimType.slideInUp,
-        backgroundColor: Colors.white,
-        context: context,
-        type: QuickAlertType.error,
-        title: 'Oops...',
-        text: 'Please Check Your Internet!!',
-        confirmBtnColor: Color(0xff5163da),
-      );
+          animType: QuickAlertAnimType.slideInUp,
+          backgroundColor: Colors.white,
+          context: context,
+          type: QuickAlertType.error,
+          title: 'Oops...',
+          text: 'Please Check Your Internet!!',
+          confirmBtnColor: Color(0xff5163da),
+          onConfirmBtnTap: () {
+            setState(() {
+              popup.value = false;
+              // isloading == false;
+              // this.isloading;
+
+              // Navigator.pushReplacement(context,
+              //     MaterialPageRoute(builder: ((context) => LoginPage())));
+            });
+            Navigator.pop(context);
+          });
     }
   }
 }

@@ -56,16 +56,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
 
   @override
   void dispose() {
-    pieScreeshotcontroller1;
-    pieScreeshotcontroller2;
-    pieScreeshotcontroller3;
-    pieScreeshotcontroller4;
-    pieScreeshotcontroller5;
-    pieScreeshotcontroller6;
-    pieScreeshotcontroller7;
-    pieScreeshotcontroller8;
-    pieScreeshotcontroller9;
-    pieScreeshotcontroller10;
     super.dispose();
   }
 
@@ -146,8 +136,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
     print('Get keys:');
     // Get all keys
     dataa.keys.forEach((key) {
-      // singlekey = key;
-
       if (dataa['$key']['chartType'] == 'pie') {
         FlipCardController flipCardController1 = FlipCardController();
         final orientation = MediaQuery.of(context).orientation;
@@ -167,74 +155,67 @@ class _HR_DashboardState extends State<HR_Dashboard> {
             );
           }
           return Flexible(
-            child: Screenshot(
-              controller: PieScreeshotcontrollerlist[piedata.length],
-              child: FlipCard(
-                  front: Card(
+            child: FlipCard(
+                front: Card(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  child: SfCircularChart(
+                    palette: Allpiecolorlist[piecount.indexOf(key)],
+                    title: ChartTitle(
+                        text: '${dataa['$chartname']['chartTitle']}'),
+                    legend: Legend(
+                      isVisible: true,
+                      overflowMode: LegendItemOverflowMode.wrap,
+                      position: LegendPosition.bottom,
+                    ),
+                    series: <PieSeries<ChartSampleData, String>>[
+                      PieSeries<ChartSampleData, String>(
+                          enableTooltip: true,
+                          explode: true,
+                          explodeIndex: 0,
+                          explodeOffset: '10%',
+                          dataSource: Piechart,
+                          xValueMapper: (ChartSampleData dataa, _) =>
+                              dataa.x as String,
+                          yValueMapper: (ChartSampleData dataa, _) => dataa.y,
+                          dataLabelMapper: (ChartSampleData dataa, _) =>
+                              dataa.text,
+                          startAngle: 0,
+                          endAngle: 0,
+                          dataLabelSettings:
+                              const DataLabelSettings(isVisible: true)),
+                    ],
+                  ),
+                ),
+                back: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15)),
-                    child: SfCircularChart(
-                      palette: Allpiecolorlist[piecount.indexOf(key)],
-                      title: ChartTitle(
-                          text: '${dataa['$chartname']['chartTitle']}'),
-                      legend: Legend(
-                        isVisible: true,
-                        overflowMode: LegendItemOverflowMode.wrap,
-                        position: LegendPosition.bottom,
-                      ),
-                      series: <PieSeries<ChartSampleData, String>>[
-                        PieSeries<ChartSampleData, String>(
-                            enableTooltip: true,
-                            explode: true,
-                            explodeIndex: 0,
-                            explodeOffset: '10%',
-                            dataSource: Piechart,
-                            xValueMapper: (ChartSampleData dataa, _) =>
-                                dataa.x as String,
-                            yValueMapper: (ChartSampleData dataa, _) => dataa.y,
-                            dataLabelMapper: (ChartSampleData dataa, _) =>
-                                dataa.text,
-                            startAngle: 0,
-                            endAngle: 0,
-                            dataLabelSettings:
-                                const DataLabelSettings(isVisible: true)),
-                      ],
-                    ),
-                  ),
-                  back: Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15)),
-                      child: GridView.builder(
-                          shrinkWrap: true,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisExtent: 70,
-                                  mainAxisSpacing: 3,
-                                  crossAxisSpacing: 3,
-                                  crossAxisCount:
-                                      (orientation == Orientation.portrait)
-                                          ? 2
-                                          : 3),
-                          itemCount: dataa['$chartname']
-                                  ['chartLevelsAndValueObj']
-                              .length,
-                          itemBuilder: ((context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                  color: Color(0xffAED6F1),
-                                  borderRadius: BorderRadius.circular(15)),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                        '${dataa['$chartname']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                    Text(
-                                        '${dataa['$chartname']['chartLevelsAndValueObj'][index]['Y']}'),
-                                  ]),
-                            );
-                          })))),
-            ),
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisExtent: 70,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                            crossAxisCount:
+                                (orientation == Orientation.portrait) ? 2 : 3),
+                        itemCount: dataa['$chartname']['chartLevelsAndValueObj']
+                            .length,
+                        itemBuilder: ((context, index) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                color: Color(0xffAED6F1),
+                                borderRadius: BorderRadius.circular(15)),
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      '${dataa['$chartname']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                  Text(
+                                      '${dataa['$chartname']['chartLevelsAndValueObj'][index]['Y']}'),
+                                ]),
+                          );
+                        })))),
           );
         }
 
@@ -334,7 +315,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                                   )));
                         },
                         screenshotController:
-                            PieScreeshotcontrollerlist[piedata.length],
+                            PieScreeshotcontrollerlistt[piedata.length],
                         ChartName: dataa['$key']['chartTitle'],
                         chartkey: '$key',
                       )

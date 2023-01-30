@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
+import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/Logout/logout.dart';
 import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/login/loginPage.dart';
@@ -23,6 +25,22 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  @override
+  void dispose() {
+    Selectedinput;
+    pieScreeshotcontroller1;
+    pieScreeshotcontroller2;
+    pieScreeshotcontroller3;
+    pieScreeshotcontroller4;
+    pieScreeshotcontroller5;
+    pieScreeshotcontroller6;
+    pieScreeshotcontroller7;
+    pieScreeshotcontroller8;
+    pieScreeshotcontroller9;
+    pieScreeshotcontroller10;
+    super.dispose();
+  }
+
   bool isSwitched = false;
   List<bool> isSelected = [];
   @override
@@ -94,9 +112,13 @@ class _SettingsState extends State<Settings> {
                         title: Text('Logout'),
                         trailing: Icon(Icons.logout),
                         onPressed: (context) async {
-                          await LogoutAPI(
-                              logindata.getString('username').toString(),
-                              widget.con!);
+                          await CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.confirm,
+                            onConfirmBtnTap: () => LogoutAPI(
+                                logindata.getString('username').toString(),
+                                widget.con!),
+                          );
                         },
                       ),
                       SettingsTile.navigation(
@@ -207,7 +229,6 @@ class _SettingsState extends State<Settings> {
       headers: headers,
       body: body,
     );
-
     if (response.body == 'Success') {
       print(response.body);
       logindata.setBool('login', true);
