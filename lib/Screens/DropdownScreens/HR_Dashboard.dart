@@ -35,6 +35,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
   List<Map> Pielist = [];
   // Map pichart;
   int count = 0;
+  List<ScreenshotController> alldonut = [];
   var singlekey;
   int colorindex = 0;
   @override
@@ -352,9 +353,9 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         position: LegendPosition.bottom,
                         overflowMode: LegendItemOverflowMode.wrap),
                     title: ChartTitle(
-                        text: '${dataa['$donutchart']['chartTitle']}',
-                        textStyle: TextStyle(fontWeight: FontWeight.bold)),
-                    series: <DoughnutSeries<ChartSampleData, String>>[
+        text: '${dataa['$donutchart']['chartTitle']}',
+                        textStyle: TextStyle(fontWeight: FontWeight.bold)),                
+                        series: <DoughnutSeries<ChartSampleData, String>>[
                       DoughnutSeries<ChartSampleData, String>(
                           explode: true,
                           explodeIndex: 0,

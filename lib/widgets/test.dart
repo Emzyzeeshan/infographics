@@ -16,6 +16,9 @@ class _Test1State extends State<Test1> {
         color: Colors.red,
         height: 100,
         width: 100,
+        child: Column(children: [
+          widget.load,
+        ]),
       ),
     );
   }

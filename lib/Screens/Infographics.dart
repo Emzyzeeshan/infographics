@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:animated_floating_buttons/widgets/animated_floating_action_button.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:floating_bottom_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
@@ -7,12 +9,14 @@ import 'package:integraphics/Constants/ResponsiveSize.dart';
 import 'package:integraphics/Screens/DropdownScreens/HT_Dashboard.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product%20_and_service_spend.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product_Dashboard.dart';
+import 'package:integraphics/Screens/Social%20Media%20&News/SocialMedia.dart';
 import 'package:integraphics/Screens/testpage.dart';
 import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/widgets/CircularLoader.dart';
 import 'package:integraphics/widgets/Drawer.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_speed_dial/simple_speed_dial.dart';
 
 import '../Logout/logout.dart';
 import '../main.dart';
@@ -48,28 +52,54 @@ class _InfoGraphicsState extends State<InfoGraphics> {
   Widget build(BuildContext context) {
     DeviceSizeConfig().init(context);
     bool toogle = false;
+    final GlobalKey<AnimatedFloatingActionButtonState> key =
+        GlobalKey<AnimatedFloatingActionButtonState>();
+
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
+            floatingActionButton: SpeedDial(
+              child: Icon(Icons.restore_page),
+              // closedForegroundColor: Color(0xff6d96fa),
+              openForegroundColor: Colors.white,
+              closedBackgroundColor: Color(0xff6d96fa),
+              openBackgroundColor: Colors.black,
+              // labelsStyle: /* Your label TextStyle goes here */
+              labelsBackgroundColor: Colors.white,
+              // controller: /* Your custom animation controller goes here */,
+              speedDialChildren: <SpeedDialChild>[
+                SpeedDialChild(
+                  child: Icon(Icons.pie_chart),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Color(0xff6d96fa),
+                  label: 'InfoGraphics',
+                  onPressed: () {
+                    setState(() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => InfoGraphics(logindata))));
+                    });
+                  },
+                  closeSpeedDialOnPressed: false,
+                ),
+                SpeedDialChild(
+                  child: Icon(Icons.newspaper_rounded),
+                  foregroundColor: Colors.black,
+                  backgroundColor: Color(0xff6d96fa),
+                  label: 'Social Media & News Analysis',
+                  onPressed: () {
+                    setState(() {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => SociaMediaNews())));
+                    });
+                  },
+                ),
+              ],
+            ),
             drawer: drawer(),
-            // appBar: AppBar(
-            //   actions: [
-            //     Padding(
-            //       padding: const EdgeInsets.only(right: 8.0),
-            //       child: Logout(widget.logindata),
-            //     ),
-            //   ],
-            //   backgroundColor: Color(0xff6d96fa),
-            //   title: Text(
-            //     'Info Graphics',
-            //     style: TextStyle(
-            //         fontWeight: FontWeight.bold,
-            //         color: Colors.white,
-            //         fontSize: 15),
-            //   ),
-            //   centerTitle: true,
-            //   elevation: 0,
-            // ),
             body: NestedScrollView(
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
@@ -85,9 +115,20 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                       ),
                       // actions: [
                       //   Padding(
-                      //     padding: const EdgeInsets.only(right: 8.0),
-                      //     child: Logout(widget.logindata),
-                      //   ),
+                      //       padding: const EdgeInsets.only(right: 8.0),
+                      //       child: PopupMenuButton(
+                      //         icon: Icon(Icons.change_circle_outlined),
+                      //         itemBuilder: (context) {
+                      //           return [
+                      //             PopupMenuItem(
+                      //               child: Text('Social Media & News Analysis'),
+                      //             ),
+                      //             PopupMenuItem(
+                      //               child: Text('InfoGraphics'),
+                      //             ),
+                      //           ];
+                      //         },
+                      //       )),
                       // ],
                     )
                   ];

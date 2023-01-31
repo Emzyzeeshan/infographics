@@ -11,6 +11,9 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:integraphics/Screens/Datatable.dart';
 import 'package:integraphics/Screens/settings.dart';
 import 'package:integraphics/main.dart';
+import 'package:integraphics/main.dart';
+import 'package:integraphics/main.dart';
+
 import 'package:integraphics/widgets/showimagecapture.dart';
 import 'package:integraphics/widgets/test.dart';
 import 'package:integraphics/widgets/zoomwidget.dart';
@@ -19,17 +22,20 @@ import 'package:open_filex/open_filex.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 
+import '../main.dart';
 import 'allcharts.dart';
 
 class Tooltips extends StatefulWidget {
   ScreenshotController? screenshotController = ScreenshotController();
   final VoidCallback? color;
   final VoidCallback? delete;
+  final VoidCallback? filter;
   String? ChartName;
   String? chartkey;
   Card? Zoomcard;
   Tooltips(
       {this.ChartName,
+      this.filter,
       this.Zoomcard,
       this.color,
       this.delete,
@@ -88,7 +94,7 @@ class _TooltipsState extends State<Tooltips> {
             child: Tooltip(
               message: 'Filter',
               child: IconButton(
-                onPressed: () {},
+                onPressed: widget.filter,
                 icon: Icon(
                   Icons.filter_alt_rounded,
                   size: 26,
@@ -1265,10 +1271,16 @@ class _TooltipsState extends State<Tooltips> {
     if (notificationResponse.payload != null) {
       debugPrint('notification payload: $payload');
     }
-    await Navigator.push(
-      context,
-      MaterialPageRoute<void>(builder: (context) => Test1(payload)),
-    );
+    if (payload == true) {
+      navigatorKey.currentState!
+          .push(MaterialPageRoute(builder: ((context) => Test1(payload))));
+
+      // await Navigator.push(
+      //   context,
+      //   MaterialPageRoute<void>(builder: (context) => ),
+      // );
+    }
+
     // final obj = jsonDecode(json.toString());
 
     // if (jsonn == true) {

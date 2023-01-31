@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:integraphics/login/lg.dart';
 import 'package:integraphics/widgets/unauthaccess.dart';
 import 'package:local_auth/local_auth.dart';
@@ -24,7 +25,8 @@ void main() async {
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
-
+final GlobalKey<NavigatorState> navigatorKey =
+    GlobalKey(debugLabel: "Main Navigator");
 Color currentColor = Color(0xff443a49);
 bool authenticated = false;
 var Selectedinput;
@@ -42,6 +44,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    Future.delayed(Duration.zero, () async {
+      await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    });
     dataa;
     authb();
     super.initState();
@@ -95,16 +100,7 @@ class _MyAppState extends State<MyApp> {
         exit(0);
       });
     }
-    // if (authenticated == false) {
-    //   showDialog(
-    //       barrierDismissible: false,
-    //       context: context,
-    //       builder: ((context) {
-    //         return AlertDialog(
-    //           content: Text('$_authorized'),
-    //         );
-    //       }));
-    // }
+
     return authenticated;
   }
 
@@ -122,6 +118,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<DarkThemeProvider>(
         builder: (BuildContext context, value, Widget? child) {
           return MaterialApp(
+            navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),
             home: LoginPage(),
