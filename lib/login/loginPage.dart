@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:integraphics/Screens/Infographics.dart';
+import 'package:integraphics/Screens/Mainview.dart';
 
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/unauthaccess.dart';
@@ -45,8 +46,8 @@ class _LoginPageState extends State<LoginPage> {
     newuser = (logindata.getBool('login') ?? true);
     print(newuser);
     if (newuser == false) {
-      Navigator.pushReplacement(context,
-          new MaterialPageRoute(builder: (context) => InfoGraphics(logindata)));
+      Navigator.pushReplacement(
+          context, new MaterialPageRoute(builder: (context) => MainView()));
     }
   }
 
@@ -283,10 +284,8 @@ class _LoginPageState extends State<LoginPage> {
                   textColor: Colors.white,
                   fontSize: 16.0);
 
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: ((context) => InfoGraphics(logindata))));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => MainView())));
             }
 
             setState(() {

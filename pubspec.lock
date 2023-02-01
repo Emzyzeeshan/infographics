@@ -251,6 +251,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_card_swiper:
+    dependency: "direct main"
+    description:
+      name: flutter_card_swiper
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.0"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -472,7 +479,7 @@ packages:
     source: hosted
     version: "1.0.5"
   lottie:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: lottie
       url: "https://pub.dartlang.org"
@@ -709,6 +716,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.6.2"
+  preload_page_view:
+    dependency: "direct main"
+    description:
+      name: preload_page_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.6"
   printing:
     dependency: transitive
     description:
@@ -959,6 +973,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.9.1"
+  tutorial_coach_mark:
+    dependency: "direct main"
+    description:
+      name: tutorial_coach_mark
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.4"
   typed_data:
     dependency: transitive
     description:

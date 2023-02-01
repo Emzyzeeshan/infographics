@@ -58,47 +58,47 @@ class _InfoGraphicsState extends State<InfoGraphics> {
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            floatingActionButton: SpeedDial(
-              child: Icon(Icons.restore_page),
-              // closedForegroundColor: Color(0xff6d96fa),
-              openForegroundColor: Colors.white,
-              closedBackgroundColor: Color(0xff6d96fa),
-              openBackgroundColor: Colors.black,
-              // labelsStyle: /* Your label TextStyle goes here */
-              labelsBackgroundColor: Colors.white,
-              // controller: /* Your custom animation controller goes here */,
-              speedDialChildren: <SpeedDialChild>[
-                SpeedDialChild(
-                  child: Icon(Icons.pie_chart),
-                  foregroundColor: Colors.white,
-                  backgroundColor: Color(0xff6d96fa),
-                  label: 'InfoGraphics',
-                  onPressed: () {
-                    setState(() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => InfoGraphics(logindata))));
-                    });
-                  },
-                  closeSpeedDialOnPressed: false,
-                ),
-                SpeedDialChild(
-                  child: Icon(Icons.newspaper_rounded),
-                  foregroundColor: Colors.black,
-                  backgroundColor: Color(0xff6d96fa),
-                  label: 'Social Media & News Analysis',
-                  onPressed: () {
-                    setState(() {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: ((context) => SociaMediaNews())));
-                    });
-                  },
-                ),
-              ],
-            ),
+            // floatingActionButton: SpeedDial(
+            //   child: Icon(Icons.restore_page),
+            //   // closedForegroundColor: Color(0xff6d96fa),
+            //   openForegroundColor: Colors.white,
+            //   closedBackgroundColor: Color(0xff6d96fa),
+            //   openBackgroundColor: Colors.black,
+            //   // labelsStyle: /* Your label TextStyle goes here */
+            //   labelsBackgroundColor: Colors.white,
+            //   // controller: /* Your custom animation controller goes here */,
+            //   speedDialChildren: <SpeedDialChild>[
+            //     SpeedDialChild(
+            //       child: Icon(Icons.pie_chart),
+            //       foregroundColor: Colors.white,
+            //       backgroundColor: Color(0xff6d96fa),
+            //       label: 'InfoGraphics',
+            //       onPressed: () {
+            //         setState(() {
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: ((context) => InfoGraphics(logindata))));
+            //         });
+            //       },
+            //       closeSpeedDialOnPressed: false,
+            //     ),
+            //     SpeedDialChild(
+            //       child: Icon(Icons.newspaper_rounded),
+            //       foregroundColor: Colors.black,
+            //       backgroundColor: Color(0xff6d96fa),
+            //       label: 'Social Media & News Analysis',
+            //       onPressed: () {
+            //         setState(() {
+            //           Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: ((context) => SociaMediaNews())));
+            //         });
+            //       },
+            //     ),
+            //   ],
+            // ),
             drawer: drawer(),
             body: NestedScrollView(
                 headerSliverBuilder:
@@ -165,6 +165,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                                       padding: const EdgeInsets.all(12.0),
                                       child: DropdownButtonHideUnderline(
                                         child: DropdownButton2(
+                                          key: DashboardDropdownkey,
                                           hint: Text(
                                             'ok',
                                             style: TextStyle(

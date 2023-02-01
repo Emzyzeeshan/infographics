@@ -33,6 +33,8 @@ var Selectedinput;
 var dataa;
 List<Widget> allgraph = [];
 late SharedPreferences logindata;
+GlobalKey keyButton1 = GlobalKey();
+GlobalKey DashboardDropdownkey = GlobalKey();
 
 class MyApp extends StatefulWidget {
   @override

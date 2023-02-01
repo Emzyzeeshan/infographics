@@ -47,6 +47,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animated_dialog: ^2.0.1
+  flutter_card_swiper: ^1.2.0
   flutter_colorpicker: ^1.0.3
   flutter_draggable_gridview: ^0.0.7
   flutter_echarts: ^2.4.0
@@ -63,6 +64,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   intl_phone_field: ^3.1.0
   local_auth: ^2.1.3
+  lottie: ^1.0.1
   modal_bottom_sheet: ^2.1.2
   open_filex: ^4.3.2
   path_provider: ^2.0.11
@@ -74,6 +76,7 @@ dependencies:
   pinput: ^2.2.21
   pluto_grid: ^5.4.9
   pluto_grid_export: ^1.0.3
+  preload_page_view: ^0.1.6
   provider: ^6.0.5
   quickalert: ^1.0.0
   reorderable_grid: ^1.0.5
@@ -86,6 +89,7 @@ dependencies:
   syncfusion_flutter_charts: ^20.3.58
   syncfusion_flutter_datagrid_export: ^20.4.42-beta
   syncfusion_flutter_treemap: ^20.3.61-beta
+  tutorial_coach_mark: ^1.2.4
   url_launcher: ^6.1.8
   zoom_widget: ^2.0.0
 
@@ -120,6 +124,8 @@ flutter:
     - assets/linkedIn.png
     - assets/twitter.png
     - assets/yt.png
+    - assets/newsjson.json
+    - assets/dashboard.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

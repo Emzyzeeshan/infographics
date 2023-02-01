@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:integraphics/Screens/settings.dart';
 import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
+import 'package:integraphics/main.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
