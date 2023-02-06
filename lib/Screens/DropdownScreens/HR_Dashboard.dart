@@ -76,6 +76,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
   Widget build(BuildContext context) {
     late Future<dynamic> _value = AllChartdataAPi(context, Selectedinput);
     return Scaffold(
+      backgroundColor: Color(0xffd7e2fe),
       // floatingActionButton: FloatingActionButton(
       //     onPressed: (() {
       //       setState(() {});
@@ -353,9 +354,9 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                         position: LegendPosition.bottom,
                         overflowMode: LegendItemOverflowMode.wrap),
                     title: ChartTitle(
-        text: '${dataa['$donutchart']['chartTitle']}',
-                        textStyle: TextStyle(fontWeight: FontWeight.bold)),                
-                        series: <DoughnutSeries<ChartSampleData, String>>[
+                        text: '${dataa['$donutchart']['chartTitle']}',
+                        textStyle: TextStyle(fontWeight: FontWeight.bold)),
+                    series: <DoughnutSeries<ChartSampleData, String>>[
                       DoughnutSeries<ChartSampleData, String>(
                           explode: true,
                           explodeIndex: 0,

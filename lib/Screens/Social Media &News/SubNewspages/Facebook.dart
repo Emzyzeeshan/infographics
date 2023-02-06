@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-NewsChannnel(bool extended) {
+Facebook(bool extended) {
   return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -8,17 +8,17 @@ NewsChannnel(bool extended) {
         Row(
           children: [
             Flexible(
-              child: Icon(
-                Icons.newspaper,
-                size: 40,
-              ),
-            ),
+                child: Image.asset(
+              'assets/fb.png',
+              height: 40,
+              width: 40,
+            )),
             SizedBox(
               width: 10,
             ),
             Flexible(
               child: Text(
-                'News Channel',
+                'Facebook',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ),
@@ -39,7 +39,7 @@ NewsChannnel(bool extended) {
                     child: ListTile(
                       style: ListTileStyle.drawer,
                       tileColor: Colors.white,
-                      title: Text('Newschannel'),
+                      title: Text('Telangana CMO'),
                       subtitle: extended == false
                           ? Text(
                               'JP Nadda spends 12 days a month outside Delhi in run-up to state polls',

@@ -6,6 +6,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
+import 'package:integraphics/Constants/ResponsiveSize.dart';
 import 'package:integraphics/Logout/logout.dart';
 import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/login/loginPage.dart';
@@ -48,6 +49,19 @@ class _SettingsState extends State<Settings> {
     final themeChange = Provider.of<DarkThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [
+                  Color(0xff6d96fa),
+                  Color(0xffd7e2fe),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: [0.0, 1.0],
+                tileMode: TileMode.clamp),
+          ),
+        ),
         backgroundColor: Color(0xff6d96fa),
         title: Text('Settings'),
         centerTitle: true,

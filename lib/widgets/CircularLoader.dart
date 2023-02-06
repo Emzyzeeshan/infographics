@@ -8,7 +8,7 @@ Widget buildBody() {
       appearance: CircularSliderAppearance(
     size: 50,
     customColors: CustomSliderColors(
-        trackColor: Color(0xff6d96fa), progressBarColor: Colors.white),
+        trackColor:    Color(0xff6d96fa), progressBarColor: Colors.white),
     spinnerMode: true,
   ));
 }

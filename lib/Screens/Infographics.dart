@@ -15,7 +15,9 @@ import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/widgets/CircularLoader.dart';
 import 'package:integraphics/widgets/Drawer.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:provider/provider.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:simple_speed_dial/simple_speed_dial.dart';
 
 import '../Logout/logout.dart';
@@ -54,83 +56,31 @@ class _InfoGraphicsState extends State<InfoGraphics> {
     bool toogle = false;
     final GlobalKey<AnimatedFloatingActionButtonState> key =
         GlobalKey<AnimatedFloatingActionButtonState>();
-
+    ScrollController? scrollController = ScrollController();
     return WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
-            // floatingActionButton: SpeedDial(
-            //   child: Icon(Icons.restore_page),
-            //   // closedForegroundColor: Color(0xff6d96fa),
-            //   openForegroundColor: Colors.white,
-            //   closedBackgroundColor: Color(0xff6d96fa),
-            //   openBackgroundColor: Colors.black,
-            //   // labelsStyle: /* Your label TextStyle goes here */
-            //   labelsBackgroundColor: Colors.white,
-            //   // controller: /* Your custom animation controller goes here */,
-            //   speedDialChildren: <SpeedDialChild>[
-            //     SpeedDialChild(
-            //       child: Icon(Icons.pie_chart),
-            //       foregroundColor: Colors.white,
-            //       backgroundColor: Color(0xff6d96fa),
-            //       label: 'InfoGraphics',
-            //       onPressed: () {
-            //         setState(() {
-            //           Navigator.push(
-            //               context,
-            //               MaterialPageRoute(
-            //                   builder: ((context) => InfoGraphics(logindata))));
-            //         });
-            //       },
-            //       closeSpeedDialOnPressed: false,
-            //     ),
-            //     SpeedDialChild(
-            //       child: Icon(Icons.newspaper_rounded),
-            //       foregroundColor: Colors.black,
-            //       backgroundColor: Color(0xff6d96fa),
-            //       label: 'Social Media & News Analysis',
-            //       onPressed: () {
-            //         setState(() {
-            //           Navigator.push(
-            //               context,
-            //               MaterialPageRoute(
-            //                   builder: ((context) => SociaMediaNews())));
-            //         });
-            //       },
-            //     ),
-            //   ],
-            // ),
             drawer: drawer(),
             body: NestedScrollView(
+                controller: scrollController,
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
-                      backgroundColor: Color(0xff6d96fa),
-                      flexibleSpace: FlexibleSpaceBar(
-                        background: Padding(
-                          padding: const EdgeInsets.only(top: 28.0),
-                          child:
-                              Image.asset('assets/images/IntegralGifLogo.gif'),
-                        ),
-                      ),
-                      // actions: [
-                      //   Padding(
-                      //       padding: const EdgeInsets.only(right: 8.0),
-                      //       child: PopupMenuButton(
-                      //         icon: Icon(Icons.change_circle_outlined),
-                      //         itemBuilder: (context) {
-                      //           return [
-                      //             PopupMenuItem(
-                      //               child: Text('Social Media & News Analysis'),
-                      //             ),
-                      //             PopupMenuItem(
-                      //               child: Text('InfoGraphics'),
-                      //             ),
-                      //           ];
-                      //         },
-                      //       )),
-                      // ],
-                    )
+                        elevation: 0,
+                        backgroundColor: Color(0xff6d96fa),
+                        flexibleSpace: FlexibleSpaceBar(
+                          background: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 28.0),
+                              child: Image.asset(
+                                'assets/images/IntegralGifLogo.gif',
+                                height: 30,
+                                width: 100,
+                              ),
+                            ),
+                          ),
+                        ))
                   ];
                 },
                 body: Column(children: [
@@ -140,7 +90,15 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                         ? DeviceSizeConfig.screenHeight! * 0.2
                         : DeviceSizeConfig.screenHeight! * 0.14,
                     decoration: BoxDecoration(
-                      color: Color(0xff6d96fa),
+                      gradient: LinearGradient(
+                          colors: [
+                            Color(0xff6d96fa),
+                            Color(0xffd7e2fe),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          stops: [0.0, 1.0],
+                          tileMode: TileMode.clamp),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 22.0),

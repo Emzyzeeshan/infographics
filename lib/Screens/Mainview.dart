@@ -32,7 +32,7 @@ class _MainViewState extends State<MainView> {
           floatingActionButtonColor: Color(0xff6d96fa),
           showFloatingActionButton: true,
           view1: InfoGraphics(logindata),
-          view2: SociaMediaNews(),
+          view2: SidebarXExampleApp(),
           enabledSwipe: true,
         ));
   }
