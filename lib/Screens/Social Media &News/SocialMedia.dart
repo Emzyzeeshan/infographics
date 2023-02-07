@@ -523,7 +523,7 @@ class _ScreensExampleState extends State<_ScreensExample> {
         // final pageTitle = _getTitleByIndex(controller.selectedIndex);
         switch (widget.controller.selectedIndex) {
           case 0:
-            return NewsPaper(_controller.extended);
+            return NewsPaper(_controller.extended, context);
           case 1:
             return NewsChannnel(_controller.extended);
           case 2:

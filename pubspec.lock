@@ -64,6 +64,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  calendar_date_picker2:
+    dependency: "direct main"
+    description:
+      name: calendar_date_picker2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.7"
+  calender_picker:
+    dependency: "direct main"
+    description:
+      name: calender_picker
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.7"
   characters:
     dependency: transitive
     description:
@@ -155,6 +169,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.3.10"
+  datetime_picker_formfield_new:
+    dependency: "direct main"
+    description:
+      name: datetime_picker_formfield_new
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   dbus:
     dependency: transitive
     description:
@@ -430,7 +451,7 @@ packages:
     source: hosted
     version: "1.0.0+1"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
