@@ -5,6 +5,7 @@ import 'package:integraphics/Screens/Infographics.dart';
 import 'package:integraphics/Screens/Slidelistview.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SocialMedia.dart';
 import 'package:integraphics/main.dart';
+import 'package:is_first_run/is_first_run.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
@@ -21,8 +22,13 @@ class _MainViewState extends State<MainView> {
     // TODO: implement initState
     super.initState();
     _createTargets();
-    Future.delayed(Duration.zero, showTutorial);
+    print(logindata.getBool('login'));
+    logindata.getBool('login') == false
+        ? Future.delayed(Duration.zero, showTutorial)
+        : null;
   }
+
+  Future<bool> firstRun = IsFirstRun.isFirstRun();
 
   @override
   Widget build(BuildContext context) {

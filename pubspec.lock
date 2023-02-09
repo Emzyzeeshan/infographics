@@ -286,6 +286,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  flutter_awesome_select:
+    dependency: "direct main"
+    description:
+      name: flutter_awesome_select
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.5.0"
   flutter_card_swiper:
     dependency: "direct main"
     description:
@@ -464,6 +471,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  is_first_run:
+    dependency: "direct main"
+    description:
+      name: is_first_run
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   jiffy:
     dependency: transitive
     description:

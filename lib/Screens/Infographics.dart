@@ -3,6 +3,7 @@ import 'package:animated_floating_buttons/widgets/animated_floating_action_butto
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:floating_bottom_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_select/flutter_awesome_select.dart';
 import 'package:http/http.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/Constants/ResponsiveSize.dart';
@@ -50,6 +51,54 @@ class _InfoGraphicsState extends State<InfoGraphics> {
   var data1;
 
   PageController pageController = PageController();
+  List<String> _fruit = ['CANADA'];
+  List<String> _owner = [''];
+  List<String> _framework = ['Q1-2020'];
+  List<String> _Opp = [''];
+  List<String> _Industry = ['AUTOMOTIVE'];
+  List<String> _FiscalYear = [''];
+  List<S2Choice<String>> FiscalYear = [
+    S2Choice<String>(value: '2019', title: '2019'),
+    S2Choice<String>(value: '2020', title: '2020'),
+    S2Choice<String>(value: '2021', title: '2021'),
+    S2Choice<String>(value: '2022', title: '2022'),
+    S2Choice<String>(value: '2023', title: '2023'),
+  ];
+  List<S2Choice<String>> Industry = [
+    S2Choice<String>(value: 'ALUMINIUM', title: 'ALUMINIUM FOUNDRIES'),
+    S2Choice<String>(value: 'AUTOMOTIVE', title: 'AUTOMOTIVE'),
+    S2Choice<String>(value: 'AVIATION', title: 'AVIATION'),
+    S2Choice<String>(value: 'BANKING', title: 'BANKING'),
+    S2Choice<String>(value: 'CEMENT', title: 'CEMENT'),
+  ];
+  List<S2Choice<String>> opp = [
+    S2Choice<String>(value: 'BQ', title: 'BQ'),
+    S2Choice<String>(value: 'CANCELLED', title: 'CANCELLED'),
+    S2Choice<String>(value: 'DEALS LOST', title: 'DEALS LOST'),
+    S2Choice<String>(value: 'DEALS WON', title: 'DEALS WON'),
+    S2Choice<String>(value: 'DEMO', title: 'DEMO'),
+  ];
+  List<S2Choice<String>> Owner = [
+    S2Choice<String>(value: 'AFSAR', title: 'AFSAR HUSSAIN'),
+    S2Choice<String>(value: 'AISHA', title: 'AISHA MUBASHIRA'),
+    S2Choice<String>(value: 'ERIC', title: 'ERIC VAN CASPEL'),
+    S2Choice<String>(value: 'FOUAD', title: 'FOUAD AL-MAWLA'),
+    S2Choice<String>(value: 'HENNIE', title: 'HENNIE KILIAN'),
+  ];
+  List<S2Choice<String>> country = [
+    S2Choice<String>(value: 'BAHRAIN', title: 'BAHRAIN'),
+    S2Choice<String>(value: 'CANADA', title: 'CANADA'),
+    S2Choice<String>(value: 'CHILE', title: 'CHILE'),
+    S2Choice<String>(value: 'EGYPT', title: 'EGYPT'),
+    S2Choice<String>(value: 'INDIA', title: 'INDIA'),
+  ];
+  List<S2Choice<String>> FiscalPeriod = [
+    S2Choice<String>(value: 'Q1-2019', title: 'Q1-2019'),
+    S2Choice<String>(value: 'Q1-2020', title: 'Q1-2020'),
+    S2Choice<String>(value: 'Q1-2021', title: 'Q1-2021'),
+    S2Choice<String>(value: 'Q1-2022', title: 'Q1-2022'),
+    S2Choice<String>(value: 'Q1-2023', title: 'Q1-2023'),
+  ];
   @override
   Widget build(BuildContext context) {
     DeviceSizeConfig().init(context);
@@ -67,6 +116,242 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
+                        actions: [
+                          IconButton(
+                            icon: Icon(Icons.filter_alt),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: ((context) {
+                                    return Scaffold(
+                                      appBar: AppBar(
+                                        backgroundColor: Color(0xff6d96fa),
+                                        title: Text(
+                                          'Filter',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 22),
+                                        ),
+                                        centerTitle: true,
+                                      ),
+                                      body: Column(
+                                        children: <Widget>[
+                                          const SizedBox(height: 7),
+                                          SmartSelect<String>.multiple(
+                                            title: 'Country',
+                                            selectedValue: _fruit,
+                                            onChange: (selected) => setState(
+                                                () => _fruit = selected.value),
+                                            choiceItems: country,
+                                            modalType: S2ModalType.popupDialog,
+                                            tileBuilder: (context, state) {
+                                              return ListTile(
+                                                tileColor: Colors.grey[100],
+                                                title: Text(state.title ?? ''),
+                                                subtitle: Text(
+                                                  state.selected.toString(),
+                                                  style: const TextStyle(
+                                                      color: Colors.grey),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                                trailing: const Icon(
+                                                  Icons.keyboard_arrow_right,
+                                                  color: Colors.grey,
+                                                ),
+                                                onTap: state.showModal,
+                                              );
+                                            },
+                                          ),
+                                          const Divider(
+                                            indent: 20,
+                                          ),
+                                          SmartSelect<String>.multiple(
+                                            title: 'Fiscal Period',
+                                            selectedValue: _framework,
+                                            onChange: (selected) {
+                                              setState(() =>
+                                                  _framework = selected.value);
+                                            },
+                                            choiceItems: FiscalPeriod,
+                                            modalType: S2ModalType.popupDialog,
+                                            tileBuilder: (context, state) {
+                                              return ListTile(
+                                                tileColor: Colors.grey[100],
+                                                title: Text(state.title ?? ''),
+                                                subtitle: Text(
+                                                  state.selected.toString(),
+                                                  style: const TextStyle(
+                                                      color: Colors.grey),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                                trailing: const Icon(
+                                                  Icons.keyboard_arrow_right,
+                                                  color: Colors.grey,
+                                                ),
+                                                onTap: state.showModal,
+                                              );
+                                            },
+                                          ),
+                                          const SizedBox(height: 7),
+                                          SmartSelect<String>.multiple(
+                                            title: 'Owner Full Name',
+                                            selectedValue: _owner,
+                                            onChange: (selected) => setState(
+                                                () => _owner = selected.value),
+                                            choiceItems: Owner,
+                                            modalType: S2ModalType.popupDialog,
+                                            tileBuilder: (context, state) {
+                                              return ListTile(
+                                                tileColor: Colors.grey[100],
+                                                title: Text(state.title ?? ''),
+                                                subtitle: Text(
+                                                  state.selected.toString(),
+                                                  style: const TextStyle(
+                                                      color: Colors.grey),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                                trailing: const Icon(
+                                                  Icons.keyboard_arrow_right,
+                                                  color: Colors.grey,
+                                                ),
+                                                onTap: state.showModal,
+                                              );
+                                            },
+                                          ),
+                                          const Divider(
+                                            indent: 20,
+                                          ),
+                                          SmartSelect<String>.multiple(
+                                            title: 'Opp Stage Name',
+                                            selectedValue: _Opp,
+                                            onChange: (selected) {
+                                              setState(
+                                                  () => _Opp = selected.value);
+                                            },
+                                            choiceItems: opp,
+                                            modalType: S2ModalType.popupDialog,
+                                            tileBuilder: (context, state) {
+                                              return ListTile(
+                                                tileColor: Colors.grey[100],
+                                                title: Text(state.title ?? ''),
+                                                subtitle: Text(
+                                                  state.selected.toString(),
+                                                  style: const TextStyle(
+                                                      color: Colors.grey),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                                trailing: const Icon(
+                                                  Icons.keyboard_arrow_right,
+                                                  color: Colors.grey,
+                                                ),
+                                                onTap: state.showModal,
+                                              );
+                                            },
+                                          ),
+                                          const SizedBox(height: 7),
+                                          SmartSelect<String>.multiple(
+                                            title: 'Industry',
+                                            selectedValue: _Industry,
+                                            onChange: (selected) => setState(
+                                                () =>
+                                                    _Industry = selected.value),
+                                            choiceItems: Industry,
+                                            modalType: S2ModalType.popupDialog,
+                                            tileBuilder: (context, state) {
+                                              return ListTile(
+                                                tileColor: Colors.grey[100],
+                                                title: Text(state.title ?? ''),
+                                                subtitle: Text(
+                                                  state.selected.toString(),
+                                                  style: const TextStyle(
+                                                      color: Colors.grey),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                                trailing: const Icon(
+                                                  Icons.keyboard_arrow_right,
+                                                  color: Colors.grey,
+                                                ),
+                                                onTap: state.showModal,
+                                              );
+                                            },
+                                          ),
+                                          const SizedBox(height: 7),
+                                          SmartSelect<String>.multiple(
+                                            title: 'Fiscal Year',
+                                            selectedValue: _FiscalYear,
+                                            onChange: (selected) => setState(
+                                                () => _FiscalYear =
+                                                    selected.value),
+                                            choiceItems: FiscalYear,
+                                            modalType: S2ModalType.popupDialog,
+                                            tileBuilder: (context, state) {
+                                              return ListTile(
+                                                tileColor: Colors.grey[100],
+                                                title: Text(state.title ?? ''),
+                                                subtitle: Text(
+                                                  state.selected.toString(),
+                                                  style: const TextStyle(
+                                                      color: Colors.grey),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                ),
+                                                trailing: const Icon(
+                                                  Icons.keyboard_arrow_right,
+                                                  color: Colors.grey,
+                                                ),
+                                                onTap: state.showModal,
+                                              );
+                                            },
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.spaceEvenly,
+                                              children: [
+                                                MaterialButton(
+                                                  onPressed: () {},
+                                                  child: Text('Apply'),
+                                                  color: Color(0xff6d96fa),
+                                                ),
+                                                MaterialButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _FiscalYear.clear();
+                                                      _Industry.clear();
+                                                      _Opp.clear();
+                                                      _framework.clear();
+                                                      _fruit.clear();
+                                                      _owner.clear();
+                                                    });
+                                                  },
+                                                  child: Text('Reset'),
+                                                  color: Color(0xff6d96fa),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    );
+                                  }));
+                            },
+                          ),
+                        ],
                         elevation: 0,
                         backgroundColor: Color(0xff6d96fa),
                         flexibleSpace: FlexibleSpaceBar(
