@@ -1,28 +1,20 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_animated_dialog/flutter_animated_dialog.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:integraphics/Screens/Datatable.dart';
-import 'package:integraphics/Screens/settings.dart';
-import 'package:integraphics/main.dart';
-import 'package:integraphics/main.dart';
+
 import 'package:integraphics/main.dart';
 
-import 'package:integraphics/widgets/showimagecapture.dart';
 import 'package:integraphics/widgets/test.dart';
-import 'package:integraphics/widgets/zoomwidget.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:open_filex/open_filex.dart';
+
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart' as mymodel;
+
 import 'package:permission_handler/permission_handler.dart';
 import 'package:screenshot/screenshot.dart';
 
-import '../main.dart';
 import 'allcharts.dart';
 
 class Tooltips extends StatefulWidget {
@@ -142,109 +134,111 @@ class _TooltipsState extends State<Tooltips> {
                                         children: [
                                           IconButton(
                                               onPressed: () {
-                                                showCupertinoModalBottomSheet(
-                                                  enableDrag: false,
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      Container(
-                                                    height:
-                                                        MediaQuery.of(context)
+                                                mymodel
+                                                    .showCupertinoModalBottomSheet(
+                                                      enableDrag: false,
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          Container(
+                                                        height: MediaQuery.of(
+                                                                    context)
                                                                 .size
                                                                 .height *
                                                             0.7,
-                                                    width:
-                                                        MediaQuery.of(context)
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Screenshot(
-                                                          controller:
-                                                              screenshotControllerpie,
-                                                          child: Card(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Screenshot(
+                                                              controller:
+                                                                  screenshotControllerpie,
+                                                              child: Card(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
                                                                               15)),
-                                                              elevation: 10,
-                                                              color: Colors
-                                                                  .grey[200],
-                                                              child:
-                                                                  PiechartConvert(
+                                                                  elevation: 10,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      200],
+                                                                  child: PiechartConvert(
                                                                       localkey!,
                                                                       context)),
-                                                        ),
-                                                        Container(
-                                                          width: 120,
-                                                          child: MaterialButton(
-                                                            color: Color(
-                                                                0xff6d96fa),
-                                                            onPressed:
-                                                                () async {
-                                                              screenshotControllerpie
-                                                                  .capture()
-                                                                  .then(
-                                                                      (value) async {
-                                                                // Uint8List capturedImage;
-                                                                var status =
-                                                                    await Permission
-                                                                        .storage
-                                                                        .request();
-                                                                if (status
-                                                                    .isGranted) {
-                                                                  // String savePath = appDocDir.path+'/temp';
-                                                                  final result =
-                                                                      await ImageGallerySaver.saveImage(
+                                                            ),
+                                                            Container(
+                                                              width: 120,
+                                                              child:
+                                                                  MaterialButton(
+                                                                color: Color(
+                                                                    0xff6d96fa),
+                                                                onPressed:
+                                                                    () async {
+                                                                  screenshotControllerpie
+                                                                      .capture()
+                                                                      .then(
+                                                                          (value) async {
+                                                                    // Uint8List capturedImage;
+                                                                    var status =
+                                                                        await Permission
+                                                                            .storage
+                                                                            .request();
+                                                                    if (status
+                                                                        .isGranted) {
+                                                                      // String savePath = appDocDir.path+'/temp';
+                                                                      final result = await ImageGallerySaver.saveImage(
                                                                           quality:
                                                                               100,
                                                                           value!,
                                                                           name:
                                                                               'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
-                                                                  print(result);
-                                                                  // screenshotController
-                                                                  //     .captureAndSave(appDocDir.path);
-                                                                }
-                                                              });
-                                                            },
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  'Save',
-                                                                  style: TextStyle(
+                                                                      print(
+                                                                          result);
+                                                                      // screenshotController
+                                                                      //     .captureAndSave(appDocDir.path);
+                                                                    }
+                                                                  });
+                                                                },
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      'Save',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 5,
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons
+                                                                          .download_for_offline,
                                                                       color: Colors
-                                                                          .white),
+                                                                          .white,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .download_for_offline,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ).then((value) =>
-                                                    Navigator.pop(context));
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .then((value) =>
+                                                        Navigator.pop(context));
                                                 Fluttertoast.showToast(
                                                     msg: "Converted to Pie",
                                                     toastLength:
@@ -267,109 +261,111 @@ class _TooltipsState extends State<Tooltips> {
                                                 ScreenshotController
                                                     screenshotControllerDoughnut =
                                                     ScreenshotController();
-                                                showCupertinoModalBottomSheet(
-                                                  enableDrag: false,
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      Container(
-                                                    height:
-                                                        MediaQuery.of(context)
+                                                mymodel
+                                                    .showCupertinoModalBottomSheet(
+                                                      enableDrag: false,
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          Container(
+                                                        height: MediaQuery.of(
+                                                                    context)
                                                                 .size
                                                                 .height *
                                                             0.7,
-                                                    width:
-                                                        MediaQuery.of(context)
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Screenshot(
-                                                          controller:
-                                                              screenshotControllerDoughnut,
-                                                          child: Card(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Screenshot(
+                                                              controller:
+                                                                  screenshotControllerDoughnut,
+                                                              child: Card(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
                                                                               15)),
-                                                              elevation: 10,
-                                                              color: Colors
-                                                                  .grey[200],
-                                                              child:
-                                                                  DoughnutConvert(
+                                                                  elevation: 10,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      200],
+                                                                  child: DoughnutConvert(
                                                                       localkey!,
                                                                       context)),
-                                                        ),
-                                                        Container(
-                                                          width: 120,
-                                                          child: MaterialButton(
-                                                            color: Color(
-                                                                0xff6d96fa),
-                                                            onPressed:
-                                                                () async {
-                                                              screenshotControllerDoughnut
-                                                                  .capture()
-                                                                  .then(
-                                                                      (value) async {
-                                                                // Uint8List capturedImage;
-                                                                var status =
-                                                                    await Permission
-                                                                        .storage
-                                                                        .request();
-                                                                if (status
-                                                                    .isGranted) {
-                                                                  // String savePath = appDocDir.path+'/temp';
-                                                                  final result =
-                                                                      await ImageGallerySaver.saveImage(
+                                                            ),
+                                                            Container(
+                                                              width: 120,
+                                                              child:
+                                                                  MaterialButton(
+                                                                color: Color(
+                                                                    0xff6d96fa),
+                                                                onPressed:
+                                                                    () async {
+                                                                  screenshotControllerDoughnut
+                                                                      .capture()
+                                                                      .then(
+                                                                          (value) async {
+                                                                    // Uint8List capturedImage;
+                                                                    var status =
+                                                                        await Permission
+                                                                            .storage
+                                                                            .request();
+                                                                    if (status
+                                                                        .isGranted) {
+                                                                      // String savePath = appDocDir.path+'/temp';
+                                                                      final result = await ImageGallerySaver.saveImage(
                                                                           quality:
                                                                               100,
                                                                           value!,
                                                                           name:
                                                                               'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
-                                                                  print(result);
-                                                                  // screenshotController
-                                                                  //     .captureAndSave(appDocDir.path);
-                                                                }
-                                                              });
-                                                            },
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  'Save',
-                                                                  style: TextStyle(
+                                                                      print(
+                                                                          result);
+                                                                      // screenshotController
+                                                                      //     .captureAndSave(appDocDir.path);
+                                                                    }
+                                                                  });
+                                                                },
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      'Save',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 5,
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons
+                                                                          .download_for_offline,
                                                                       color: Colors
-                                                                          .white),
+                                                                          .white,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .download_for_offline,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ).then((value) =>
-                                                    Navigator.pop(context));
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .then((value) =>
+                                                        Navigator.pop(context));
                                                 Fluttertoast.showToast(
                                                     msg:
                                                         "Converted to Doughnut",
@@ -393,108 +389,110 @@ class _TooltipsState extends State<Tooltips> {
                                                 ScreenshotController
                                                     screenshotControllerColumn =
                                                     ScreenshotController();
-                                                showCupertinoModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      Container(
-                                                    height:
-                                                        MediaQuery.of(context)
+                                                mymodel
+                                                    .showCupertinoModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          Container(
+                                                        height: MediaQuery.of(
+                                                                    context)
                                                                 .size
                                                                 .height *
                                                             0.7,
-                                                    width:
-                                                        MediaQuery.of(context)
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Screenshot(
-                                                          controller:
-                                                              screenshotControllerColumn,
-                                                          child: Card(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Screenshot(
+                                                              controller:
+                                                                  screenshotControllerColumn,
+                                                              child: Card(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
                                                                               15)),
-                                                              elevation: 10,
-                                                              color: Colors
-                                                                  .grey[200],
-                                                              child:
-                                                                  ColumnConvert(
+                                                                  elevation: 10,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      200],
+                                                                  child: ColumnConvert(
                                                                       localkey!,
                                                                       context)),
-                                                        ),
-                                                        Container(
-                                                          width: 120,
-                                                          child: MaterialButton(
-                                                            color: Color(
-                                                                0xff6d96fa),
-                                                            onPressed:
-                                                                () async {
-                                                              screenshotControllerColumn
-                                                                  .capture()
-                                                                  .then(
-                                                                      (value) async {
-                                                                // Uint8List capturedImage;
-                                                                var status =
-                                                                    await Permission
-                                                                        .storage
-                                                                        .request();
-                                                                if (status
-                                                                    .isGranted) {
-                                                                  // String savePath = appDocDir.path+'/temp';
-                                                                  final result =
-                                                                      await ImageGallerySaver.saveImage(
+                                                            ),
+                                                            Container(
+                                                              width: 120,
+                                                              child:
+                                                                  MaterialButton(
+                                                                color: Color(
+                                                                    0xff6d96fa),
+                                                                onPressed:
+                                                                    () async {
+                                                                  screenshotControllerColumn
+                                                                      .capture()
+                                                                      .then(
+                                                                          (value) async {
+                                                                    // Uint8List capturedImage;
+                                                                    var status =
+                                                                        await Permission
+                                                                            .storage
+                                                                            .request();
+                                                                    if (status
+                                                                        .isGranted) {
+                                                                      // String savePath = appDocDir.path+'/temp';
+                                                                      final result = await ImageGallerySaver.saveImage(
                                                                           quality:
                                                                               100,
                                                                           value!,
                                                                           name:
                                                                               'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
-                                                                  print(result);
-                                                                  // screenshotController
-                                                                  //     .captureAndSave(appDocDir.path);
-                                                                }
-                                                              });
-                                                            },
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  'Save',
-                                                                  style: TextStyle(
+                                                                      print(
+                                                                          result);
+                                                                      // screenshotController
+                                                                      //     .captureAndSave(appDocDir.path);
+                                                                    }
+                                                                  });
+                                                                },
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      'Save',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 5,
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons
+                                                                          .download_for_offline,
                                                                       color: Colors
-                                                                          .white),
+                                                                          .white,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .download_for_offline,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ).then((value) =>
-                                                    Navigator.pop(context));
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .then((value) =>
+                                                        Navigator.pop(context));
                                                 Fluttertoast.showToast(
                                                     msg: "Converted to Column",
                                                     toastLength:
@@ -517,108 +515,110 @@ class _TooltipsState extends State<Tooltips> {
                                                 ScreenshotController
                                                     screenshotControllerFunnel =
                                                     ScreenshotController();
-                                                showCupertinoModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      Container(
-                                                    height:
-                                                        MediaQuery.of(context)
+                                                mymodel
+                                                    .showCupertinoModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          Container(
+                                                        height: MediaQuery.of(
+                                                                    context)
                                                                 .size
                                                                 .height *
                                                             0.7,
-                                                    width:
-                                                        MediaQuery.of(context)
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Screenshot(
-                                                          controller:
-                                                              screenshotControllerFunnel,
-                                                          child: Card(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Screenshot(
+                                                              controller:
+                                                                  screenshotControllerFunnel,
+                                                              child: Card(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
                                                                               15)),
-                                                              elevation: 10,
-                                                              color: Colors
-                                                                  .grey[200],
-                                                              child:
-                                                                  Funnelchartconvert(
+                                                                  elevation: 10,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      200],
+                                                                  child: Funnelchartconvert(
                                                                       localkey!,
                                                                       context)),
-                                                        ),
-                                                        Container(
-                                                          width: 120,
-                                                          child: MaterialButton(
-                                                            color: Color(
-                                                                0xff6d96fa),
-                                                            onPressed:
-                                                                () async {
-                                                              screenshotControllerFunnel
-                                                                  .capture()
-                                                                  .then(
-                                                                      (value) async {
-                                                                // Uint8List capturedImage;
-                                                                var status =
-                                                                    await Permission
-                                                                        .storage
-                                                                        .request();
-                                                                if (status
-                                                                    .isGranted) {
-                                                                  // String savePath = appDocDir.path+'/temp';
-                                                                  final result =
-                                                                      await ImageGallerySaver.saveImage(
+                                                            ),
+                                                            Container(
+                                                              width: 120,
+                                                              child:
+                                                                  MaterialButton(
+                                                                color: Color(
+                                                                    0xff6d96fa),
+                                                                onPressed:
+                                                                    () async {
+                                                                  screenshotControllerFunnel
+                                                                      .capture()
+                                                                      .then(
+                                                                          (value) async {
+                                                                    // Uint8List capturedImage;
+                                                                    var status =
+                                                                        await Permission
+                                                                            .storage
+                                                                            .request();
+                                                                    if (status
+                                                                        .isGranted) {
+                                                                      // String savePath = appDocDir.path+'/temp';
+                                                                      final result = await ImageGallerySaver.saveImage(
                                                                           quality:
                                                                               100,
                                                                           value!,
                                                                           name:
                                                                               'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
-                                                                  print(result);
-                                                                  // screenshotController
-                                                                  //     .captureAndSave(appDocDir.path);
-                                                                }
-                                                              });
-                                                            },
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  'Save',
-                                                                  style: TextStyle(
+                                                                      print(
+                                                                          result);
+                                                                      // screenshotController
+                                                                      //     .captureAndSave(appDocDir.path);
+                                                                    }
+                                                                  });
+                                                                },
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      'Save',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 5,
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons
+                                                                          .download_for_offline,
                                                                       color: Colors
-                                                                          .white),
+                                                                          .white,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .download_for_offline,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ).then((value) =>
-                                                    Navigator.pop(context));
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .then((value) =>
+                                                        Navigator.pop(context));
                                                 Fluttertoast.showToast(
                                                     msg: "Converted to Funnel",
                                                     toastLength:
@@ -641,108 +641,110 @@ class _TooltipsState extends State<Tooltips> {
                                                 ScreenshotController
                                                     screenshotControllerRadar =
                                                     ScreenshotController();
-                                                showCupertinoModalBottomSheet(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      Container(
-                                                    height:
-                                                        MediaQuery.of(context)
+                                                mymodel
+                                                    .showCupertinoModalBottomSheet(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          Container(
+                                                        height: MediaQuery.of(
+                                                                    context)
                                                                 .size
                                                                 .height *
                                                             0.7,
-                                                    width:
-                                                        MediaQuery.of(context)
+                                                        width: MediaQuery.of(
+                                                                context)
                                                             .size
                                                             .width,
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Screenshot(
-                                                          controller:
-                                                              screenshotControllerRadar,
-                                                          child: Card(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .center,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Screenshot(
+                                                              controller:
+                                                                  screenshotControllerRadar,
+                                                              child: Card(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
                                                                               15)),
-                                                              elevation: 10,
-                                                              color: Colors
-                                                                  .grey[200],
-                                                              child:
-                                                                  BarSeiesConvert(
+                                                                  elevation: 10,
+                                                                  color: Colors
+                                                                          .grey[
+                                                                      200],
+                                                                  child: BarSeiesConvert(
                                                                       localkey!,
                                                                       context)),
-                                                        ),
-                                                        Container(
-                                                          width: 120,
-                                                          child: MaterialButton(
-                                                            color: Color(
-                                                                0xff6d96fa),
-                                                            onPressed:
-                                                                () async {
-                                                              screenshotControllerRadar
-                                                                  .capture()
-                                                                  .then(
-                                                                      (value) async {
-                                                                // Uint8List capturedImage;
-                                                                var status =
-                                                                    await Permission
-                                                                        .storage
-                                                                        .request();
-                                                                if (status
-                                                                    .isGranted) {
-                                                                  // String savePath = appDocDir.path+'/temp';
-                                                                  final result =
-                                                                      await ImageGallerySaver.saveImage(
+                                                            ),
+                                                            Container(
+                                                              width: 120,
+                                                              child:
+                                                                  MaterialButton(
+                                                                color: Color(
+                                                                    0xff6d96fa),
+                                                                onPressed:
+                                                                    () async {
+                                                                  screenshotControllerRadar
+                                                                      .capture()
+                                                                      .then(
+                                                                          (value) async {
+                                                                    // Uint8List capturedImage;
+                                                                    var status =
+                                                                        await Permission
+                                                                            .storage
+                                                                            .request();
+                                                                    if (status
+                                                                        .isGranted) {
+                                                                      // String savePath = appDocDir.path+'/temp';
+                                                                      final result = await ImageGallerySaver.saveImage(
                                                                           quality:
                                                                               100,
                                                                           value!,
                                                                           name:
                                                                               'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
-                                                                  print(result);
-                                                                  // screenshotController
-                                                                  //     .captureAndSave(appDocDir.path);
-                                                                }
-                                                              });
-                                                            },
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Text(
-                                                                  'Save',
-                                                                  style: TextStyle(
+                                                                      print(
+                                                                          result);
+                                                                      // screenshotController
+                                                                      //     .captureAndSave(appDocDir.path);
+                                                                    }
+                                                                  });
+                                                                },
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Text(
+                                                                      'Save',
+                                                                      style: TextStyle(
+                                                                          color:
+                                                                              Colors.white),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      width: 5,
+                                                                    ),
+                                                                    Icon(
+                                                                      Icons
+                                                                          .download_for_offline,
                                                                       color: Colors
-                                                                          .white),
+                                                                          .white,
+                                                                    ),
+                                                                  ],
                                                                 ),
-                                                                SizedBox(
-                                                                  width: 5,
-                                                                ),
-                                                                Icon(
-                                                                  Icons
-                                                                      .download_for_offline,
-                                                                  color: Colors
-                                                                      .white,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ).then((value) =>
-                                                    Navigator.pop(context));
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )
+                                                    .then((value) =>
+                                                        Navigator.pop(context));
                                                 Fluttertoast.showToast(
                                                     msg: "Converted to Bar",
                                                     toastLength:
@@ -772,104 +774,109 @@ class _TooltipsState extends State<Tooltips> {
                                               ScreenshotController
                                                   screenshotControllerRadar =
                                                   ScreenshotController();
-                                              showCupertinoModalBottomSheet(
-                                                context: context,
-                                                builder: (context) => Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.7,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Screenshot(
-                                                        controller:
-                                                            screenshotControllerRadar,
-                                                        child: Card(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
+                                              mymodel
+                                                  .showCupertinoModalBottomSheet(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.7,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Screenshot(
+                                                            controller:
+                                                                screenshotControllerRadar,
+                                                            child: Card(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
                                                                             15)),
-                                                            elevation: 10,
-                                                            color: Colors
-                                                                .grey[200],
-                                                            child:
-                                                                RadarCharttconvert(
+                                                                elevation: 10,
+                                                                color: Colors
+                                                                    .grey[200],
+                                                                child: RadarCharttconvert(
                                                                     localkey!,
                                                                     context)),
-                                                      ),
-                                                      Container(
-                                                        width: 120,
-                                                        child: MaterialButton(
-                                                          color:
-                                                              Color(0xff6d96fa),
-                                                          onPressed: () async {
-                                                            screenshotControllerRadar
-                                                                .capture()
-                                                                .then(
-                                                                    (value) async {
-                                                              // Uint8List capturedImage;
-                                                              var status =
-                                                                  await Permission
-                                                                      .storage
-                                                                      .request();
-                                                              if (status
-                                                                  .isGranted) {
-                                                                // String savePath = appDocDir.path+'/temp';
-                                                                final result =
-                                                                    await ImageGallerySaver.saveImage(
+                                                          ),
+                                                          Container(
+                                                            width: 120,
+                                                            child:
+                                                                MaterialButton(
+                                                              color: Color(
+                                                                  0xff6d96fa),
+                                                              onPressed:
+                                                                  () async {
+                                                                screenshotControllerRadar
+                                                                    .capture()
+                                                                    .then(
+                                                                        (value) async {
+                                                                  // Uint8List capturedImage;
+                                                                  var status =
+                                                                      await Permission
+                                                                          .storage
+                                                                          .request();
+                                                                  if (status
+                                                                      .isGranted) {
+                                                                    // String savePath = appDocDir.path+'/temp';
+                                                                    final result = await ImageGallerySaver.saveImage(
                                                                         quality:
                                                                             100,
                                                                         value!,
                                                                         name:
                                                                             'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
-                                                                print(result);
-                                                                // screenshotController
-                                                                //     .captureAndSave(appDocDir.path);
-                                                              }
-                                                            });
-                                                          },
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                'Save',
-                                                                style: TextStyle(
+                                                                    print(
+                                                                        result);
+                                                                    // screenshotController
+                                                                    //     .captureAndSave(appDocDir.path);
+                                                                  }
+                                                                });
+                                                              },
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Text(
+                                                                    'Save',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  Icon(
+                                                                    Icons
+                                                                        .download_for_offline,
                                                                     color: Colors
-                                                                        .white),
+                                                                        .white,
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons
-                                                                    .download_for_offline,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ).then((value) =>
-                                                  Navigator.pop(context));
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .then((value) =>
+                                                      Navigator.pop(context));
                                               Fluttertoast.showToast(
                                                   msg: "Converted to Radar",
                                                   toastLength:
@@ -892,104 +899,109 @@ class _TooltipsState extends State<Tooltips> {
                                               ScreenshotController
                                                   screenshotControllerLines =
                                                   ScreenshotController();
-                                              showCupertinoModalBottomSheet(
-                                                context: context,
-                                                builder: (context) => Container(
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height *
-                                                      0.7,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Screenshot(
-                                                        controller:
-                                                            screenshotControllerLines,
-                                                        child: Card(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
+                                              mymodel
+                                                  .showCupertinoModalBottomSheet(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        Container(
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height *
+                                                              0.7,
+                                                      width:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .width,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Screenshot(
+                                                            controller:
+                                                                screenshotControllerLines,
+                                                            child: Card(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
                                                                             15)),
-                                                            elevation: 10,
-                                                            color: Colors
-                                                                .grey[200],
-                                                            child:
-                                                                Lineschartconvert(
+                                                                elevation: 10,
+                                                                color: Colors
+                                                                    .grey[200],
+                                                                child: Lineschartconvert(
                                                                     localkey!,
                                                                     context)),
-                                                      ),
-                                                      Container(
-                                                        width: 120,
-                                                        child: MaterialButton(
-                                                          color:
-                                                              Color(0xff6d96fa),
-                                                          onPressed: () async {
-                                                            screenshotControllerLines
-                                                                .capture()
-                                                                .then(
-                                                                    (value) async {
-                                                              // Uint8List capturedImage;
-                                                              var status =
-                                                                  await Permission
-                                                                      .storage
-                                                                      .request();
-                                                              if (status
-                                                                  .isGranted) {
-                                                                // String savePath = appDocDir.path+'/temp';
-                                                                final result =
-                                                                    await ImageGallerySaver.saveImage(
+                                                          ),
+                                                          Container(
+                                                            width: 120,
+                                                            child:
+                                                                MaterialButton(
+                                                              color: Color(
+                                                                  0xff6d96fa),
+                                                              onPressed:
+                                                                  () async {
+                                                                screenshotControllerLines
+                                                                    .capture()
+                                                                    .then(
+                                                                        (value) async {
+                                                                  // Uint8List capturedImage;
+                                                                  var status =
+                                                                      await Permission
+                                                                          .storage
+                                                                          .request();
+                                                                  if (status
+                                                                      .isGranted) {
+                                                                    // String savePath = appDocDir.path+'/temp';
+                                                                    final result = await ImageGallerySaver.saveImage(
                                                                         quality:
                                                                             100,
                                                                         value!,
                                                                         name:
                                                                             'graph_${dataa['$localkey']['chartTitle']}_${DateTime.now()}');
-                                                                print(result);
-                                                                // screenshotController
-                                                                //     .captureAndSave(appDocDir.path);
-                                                              }
-                                                            });
-                                                          },
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                              Text(
-                                                                'Save',
-                                                                style: TextStyle(
+                                                                    print(
+                                                                        result);
+                                                                    // screenshotController
+                                                                    //     .captureAndSave(appDocDir.path);
+                                                                  }
+                                                                });
+                                                              },
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Text(
+                                                                    'Save',
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .white),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    width: 5,
+                                                                  ),
+                                                                  Icon(
+                                                                    Icons
+                                                                        .download_for_offline,
                                                                     color: Colors
-                                                                        .white),
+                                                                        .white,
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              SizedBox(
-                                                                width: 5,
-                                                              ),
-                                                              Icon(
-                                                                Icons
-                                                                    .download_for_offline,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ).then((value) =>
-                                                  Navigator.pop(context));
+                                                            ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                  .then((value) =>
+                                                      Navigator.pop(context));
                                               Fluttertoast.showToast(
                                                   msg: "Converted to Lines",
                                                   toastLength:
@@ -1299,7 +1311,7 @@ class _TooltipsState extends State<Tooltips> {
 
   Future<void> _showNotification(bool downloadStatus) async {
     final android = AndroidNotificationDetails('channel id', 'channel name',
-        icon: 'fb', priority: Priority.high, importance: Importance.max);
+        icon: 'smartlogo', priority: Priority.high, importance: Importance.max);
 
     final platform = NotificationDetails(android: android);
     final json = jsonEncode(downloadStatus);

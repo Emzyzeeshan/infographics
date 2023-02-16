@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -17,8 +16,10 @@ import 'Services/themesetup/DarkThemeProvider.dart';
 import 'Services/themesetup/styles.dart';
 import 'login/loginPage.dart';
 import 'login/newphonescreen.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
+  tz.initializeTimeZones();
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
@@ -27,6 +28,7 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 final GlobalKey<NavigatorState> navigatorKey =
     GlobalKey(debugLabel: "Main Navigator");
+
 Color currentColor = Color(0xff443a49);
 bool authenticated = false;
 var Selectedinput;
@@ -66,6 +68,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   final LocalAuthentication auth = LocalAuthentication();
+
   Future<bool> _authenticate() async {
     String _authorized = 'Not Authorized';
     bool _isAuthenticating = false;
@@ -96,7 +99,7 @@ class _MyAppState extends State<MyApp> {
 
     setState(
         () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
-    if (!mounted) {}
+
     if (_authorized == 'Not Authorized') {
       setState(() {
         exit(0);

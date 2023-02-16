@@ -297,6 +297,7 @@
 //     ..close();
 // }
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_select/flutter_awesome_select.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Facebook.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Liveupdates.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/NewsChannel.dart';
@@ -305,6 +306,7 @@ import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Survey.
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Twitter.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Youtube.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/instagram.dart';
+import 'package:integraphics/widgets/SocialnewsFilter.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 SidebarXController _controller =
@@ -344,6 +346,12 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
           ),
       home: Builder(
         builder: (context) {
+          List<String> _Searchparty = ['CANADA'];
+          List<String> _searchdistrict = [''];
+          List<String> _SearchConstitution = ['Q1-2020'];
+          List<String> _Opp = [''];
+          List<String> _Industry = ['AUTOMOTIVE'];
+          List<String> _FiscalYear = [''];
           final isSmallScreen = MediaQuery.of(context).size.width < 600;
           return Scaffold(
             backgroundColor: Color(0xffd7e2fe),
@@ -351,16 +359,200 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
             appBar: isSmallScreen
                 ? AppBar(
                     actions: [
-                      IconButton(
-                          onPressed: () {
-                            setState(() {
-                              isvisible = !isvisible;
-                            });
-                          },
+                      // IconButton(
+                      //     onPressed: () {
+                      //       setState(() {
+                      //         isvisible = !isvisible;
+                      //       });
+                      //     },
+                      //     icon: Icon(
+                      //       Icons.reset_tv_rounded,
+                      //       color: Colors.black,
+                      //     ))
+                      PopupMenuButton(
                           icon: Icon(
-                            Icons.reset_tv_rounded,
+                            Icons.settings,
                             color: Colors.black,
-                          ))
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
+                          itemBuilder: ((context) {
+                            return [
+                              PopupMenuItem(
+                                onTap: (() {
+                                  setState(() {
+                                    isvisible = !isvisible;
+                                  });
+                                }),
+                                child: isvisible == true
+                                    ? Text('Hide Toolbar')
+                                    : Text('Show ToolBar'),
+                              ),
+                              PopupMenuItem(
+                                onTap: (() {
+                                  showDialog(
+                                      context: context,
+                                      builder: ((context) {
+                                        return Scaffold(
+                                          appBar: AppBar(
+                                            backgroundColor: Color(0xff6d96fa),
+                                            title: Text(
+                                              'Filter',
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 22),
+                                            ),
+                                            centerTitle: true,
+                                          ),
+                                          body: Column(
+                                            children: <Widget>[
+                                              const SizedBox(height: 7),
+                                              SmartSelect<String>.multiple(
+                                                title: 'Search Party',
+                                                selectedValue: _Searchparty,
+                                                onChange: (selected) =>
+                                                    setState(() =>
+                                                        _Searchparty =
+                                                            selected.value),
+                                                choiceItems: Searchparty,
+                                                modalType:
+                                                    S2ModalType.popupDialog,
+                                                tileBuilder: (context, state) {
+                                                  return ListTile(
+                                                    tileColor: Colors.grey[100],
+                                                    title:
+                                                        Text(state.title ?? ''),
+                                                    subtitle: Text(
+                                                      state.selected.toString(),
+                                                      style: const TextStyle(
+                                                          color: Colors.grey),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                    ),
+                                                    trailing: const Icon(
+                                                      Icons
+                                                          .keyboard_arrow_right,
+                                                      color: Colors.grey,
+                                                    ),
+                                                    onTap: state.showModal,
+                                                  );
+                                                },
+                                              ),
+                                              const Divider(
+                                                indent: 20,
+                                              ),
+                                              SmartSelect<String>.multiple(
+                                                title: 'Search District',
+                                                selectedValue:
+                                                    _SearchConstitution,
+                                                onChange: (selected) {
+                                                  setState(() =>
+                                                      _SearchConstitution =
+                                                          selected.value);
+                                                },
+                                                choiceItems: SearchDistrict,
+                                                modalType:
+                                                    S2ModalType.popupDialog,
+                                                tileBuilder: (context, state) {
+                                                  return ListTile(
+                                                    tileColor: Colors.grey[100],
+                                                    title:
+                                                        Text(state.title ?? ''),
+                                                    subtitle: Text(
+                                                      state.selected.toString(),
+                                                      style: const TextStyle(
+                                                          color: Colors.grey),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                    ),
+                                                    trailing: const Icon(
+                                                      Icons
+                                                          .keyboard_arrow_right,
+                                                      color: Colors.grey,
+                                                    ),
+                                                    onTap: state.showModal,
+                                                  );
+                                                },
+                                              ),
+                                              const SizedBox(height: 7),
+                                              SmartSelect<String>.multiple(
+                                                title: 'Search Constitition',
+                                                selectedValue: _searchdistrict,
+                                                onChange: (selected) =>
+                                                    setState(() =>
+                                                        _searchdistrict =
+                                                            selected.value),
+                                                choiceItems: SearchConstitution,
+                                                modalType:
+                                                    S2ModalType.popupDialog,
+                                                tileBuilder: (context, state) {
+                                                  return ListTile(
+                                                    tileColor: Colors.grey[100],
+                                                    title:
+                                                        Text(state.title ?? ''),
+                                                    subtitle: Text(
+                                                      state.selected.toString(),
+                                                      style: const TextStyle(
+                                                          color: Colors.grey),
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 1,
+                                                    ),
+                                                    trailing: const Icon(
+                                                      Icons
+                                                          .keyboard_arrow_right,
+                                                      color: Colors.grey,
+                                                    ),
+                                                    onTap: state.showModal,
+                                                  );
+                                                },
+                                              ),
+                                              const Divider(
+                                                indent: 20,
+                                              ),
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceEvenly,
+                                                  children: [
+                                                    MaterialButton(
+                                                      onPressed: () {},
+                                                      child: Text('Apply'),
+                                                      color: Color(0xff6d96fa),
+                                                    ),
+                                                    MaterialButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          _SearchConstitution
+                                                              .clear();
+                                                          _Searchparty.clear();
+                                                          _searchdistrict
+                                                              .clear();
+                                                        });
+                                                      },
+                                                      child: Text('Reset'),
+                                                      color: Color(0xff6d96fa),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      }));
+                                }),
+                                child: Text('Filter'),
+                              )
+                            ];
+                          }))
                     ],
                     elevation: 0,
                     backgroundColor: Color(0xffd7e2fe),

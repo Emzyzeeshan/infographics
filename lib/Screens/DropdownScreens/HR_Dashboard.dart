@@ -103,7 +103,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               print(dataa);
               return Body();
             } else {
-              return const Text('Empty data');
+              return Center(child: const Text('Server Error'));
             }
           } else {
             return Text('State: ${snapshot.connectionState}');
@@ -138,7 +138,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
     print('Get keys:');
     // Get all keys
 
-    
     dataa.keys.forEach((key) {
       if (dataa['$key']['chartType'] == 'pie') {
         FlipCardController flipCardController1 = FlipCardController();
