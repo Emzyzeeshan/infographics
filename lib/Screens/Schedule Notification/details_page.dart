@@ -3,17 +3,31 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-class DetailsPage extends StatelessWidget {
-  const DetailsPage({
+class DetailsPage extends StatefulWidget {
+  DetailsPage({
     Key? key,
     required this.payload,
   }) : super(key: key);
-  final String? payload;
+  var payload;
+
+  @override
+  State<DetailsPage> createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  @override
+  void initState() {
+    print(widget.payload);
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        backgroundColor: Color(0xff6d96fa),
         title: Text("Event Reminder"),
         centerTitle: true,
       ),
@@ -23,8 +37,9 @@ class DetailsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (payload != null) _buildNotifiedReminderCard(payload!),
-            if (payload == null)
+            if (widget.payload != null)
+              _buildNotifiedReminderCard(widget.payload!),
+            if (widget.payload == null)
               Padding(
                 padding: EdgeInsets.all(24.0),
                 child: Text(

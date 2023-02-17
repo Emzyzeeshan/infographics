@@ -114,12 +114,20 @@ class NotificationService {
   }
 }
 
-Future<void> onSelectNotification(NotificationResponse? payload) async {
-  // var details = await NotificationService()
-  //     .flutterLocalNotificationsPlugin
-  //     .getNotificationAppLaunchDetails();
-  // if (details!.didNotificationLaunchApp) {
-  //   print(details.notificationResponse);
-  // }
-  await Get.to(DetailsPage(payload: payload!.payload));
+Future<void> onSelectNotification(payload) async {
+  var details = await NotificationService()
+      .flutterLocalNotificationsPlugin
+      .getNotificationAppLaunchDetails();
+  if (details!.didNotificationLaunchApp) {
+    print(details.notificationResponse!.payload);
+  }
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  final didNotificationLaunchApp =
+      notificationAppLaunchDetails?.didNotificationLaunchApp ?? false;
+  didNotificationLaunchApp
+      ? await Get.to(
+          DetailsPage(payload: details.notificationResponse!.payload))
+      : await Get.to(
+          DetailsPage(payload: details.notificationResponse!.payload));
 }

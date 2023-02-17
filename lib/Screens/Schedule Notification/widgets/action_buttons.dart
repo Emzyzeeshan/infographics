@@ -12,7 +12,7 @@ class ActionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
           onPressed: onCancel,
@@ -25,8 +25,9 @@ class ActionButtons extends StatelessWidget {
             style: TextStyle(color: Colors.black87),
           ),
         ),
-        SizedBox(width: 12.0),
-        ElevatedButton(
+        SizedBox(width: 20.0),
+        MaterialButton(
+          color: Color(0xff6d96fa),
           onPressed: onCreate,
           child: Text("Create"),
         ),

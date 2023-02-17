@@ -11,7 +11,7 @@ import 'package:integraphics/Constants/ResponsiveSize.dart';
 import 'package:integraphics/Screens/DropdownScreens/HT_Dashboard.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product%20_and_service_spend.dart';
 import 'package:integraphics/Screens/DropdownScreens/Product_Dashboard.dart';
-import 'package:integraphics/Screens/Schedule%20Notification/home_page.dart';
+import 'package:integraphics/Screens/Schedule%20Notification/MyDay.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SocialMedia.dart';
 
 import 'package:integraphics/Screens/testpage.dart';

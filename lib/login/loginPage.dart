@@ -4,11 +4,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:integraphics/Screens/Infographics.dart';
 import 'package:integraphics/Screens/Mainview.dart';
+import 'package:integraphics/Screens/Schedule%20Notification/services/notification_service.dart';
 
 import 'package:integraphics/main.dart';
 import 'package:integraphics/widgets/unauthaccess.dart';
@@ -57,12 +59,28 @@ class _LoginPageState extends State<LoginPage> {
     userNameText.text = 'sasi_mgr';
     passWordText.text = 'P@ssw0rd';
     check_if_already_login();
+    Notifyplugin();
     super.initState();
     // auth.isDeviceSupported().then(
     //       (bool isSupported) => setState(() => _supportState = isSupported
     //           ? _SupportState.supported
     //           : _SupportState.unsupported),
     //     );
+  }
+
+  void Notifyplugin() async {
+    final android = AndroidInitializationSettings('mipmap/ic_launcher');
+    final initSettings = InitializationSettings(android: android);
+
+    await flutterLocalNotificationsPlugin.initialize(initSettings,
+        onDidReceiveNotificationResponse: onSelectNotification);
+
+    var details = await NotificationService()
+        .flutterLocalNotificationsPlugin
+        .getNotificationAppLaunchDetails();
+    if (details!.didNotificationLaunchApp) {
+      print(details.notificationResponse!.payload);
+    }
   }
 
   @override

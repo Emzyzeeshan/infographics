@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:get/get.dart';
+import 'package:integraphics/Screens/Schedule%20Notification/services/notification_service.dart';
 import 'package:integraphics/login/lg.dart';
 import 'package:integraphics/widgets/unauthaccess.dart';
 import 'package:local_auth/local_auth.dart';
@@ -12,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Screens/Infographics.dart';
+import 'Screens/Schedule Notification/details_page.dart';
 import 'Services/themesetup/DarkThemeProvider.dart';
 import 'Services/themesetup/styles.dart';
 import 'login/loginPage.dart';
@@ -48,6 +51,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
+    Notifyplugin();
     Future.delayed(Duration.zero, () async {
       await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
     });
@@ -55,6 +59,20 @@ class _MyAppState extends State<MyApp> {
     authb();
     super.initState();
     getCurrentAppTheme();
+  }
+
+  void Notifyplugin() async {
+    var details = await NotificationService()
+        .flutterLocalNotificationsPlugin
+        .getNotificationAppLaunchDetails();
+    final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+        await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+    final didNotificationLaunchApp =
+        notificationAppLaunchDetails?.didNotificationLaunchApp ?? false;
+    didNotificationLaunchApp
+        ? await Get.to(
+            DetailsPage(payload: details!.notificationResponse!.payload))
+        : null;
   }
 
   authb() async {
@@ -122,7 +140,7 @@ class _MyAppState extends State<MyApp> {
       },
       child: Consumer<DarkThemeProvider>(
         builder: (BuildContext context, value, Widget? child) {
-          return MaterialApp(
+          return GetMaterialApp(
             navigatorKey: navigatorKey,
             debugShowCheckedModeBanner: false,
             theme: Styles.themeData(themeChangeProvider.darkTheme, context),

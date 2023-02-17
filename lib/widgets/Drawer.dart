@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:integraphics/Screens/Schedule%20Notification/MyDay.dart';
 import 'package:integraphics/Screens/settings.dart';
 import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/main.dart';
@@ -77,7 +79,16 @@ class _drawerState extends State<drawer> {
                 },
                 leading: Icon(Icons.settings),
                 title: Text('Settings'),
-              )
+              ),
+              ExpansionTile(title: Text('Tools'), children: [
+                ListTile(
+                  title: Text('My Day'),
+                  leading: Icon(Icons.alarm_add),
+                  onTap: () {
+                    Get.to(() => Reminder());
+                  },
+                ),
+              ]),
             ]),
           )
         ],

@@ -17,7 +17,7 @@ import 'widgets/header.dart';
 import 'widgets/time_field.dart';
 
 class Reminder extends StatefulWidget {
-  const Reminder({Key? key}) : super(key: key);
+  Reminder({Key? key}) : super(key: key);
 
   @override
   _ReminderState createState() => _ReminderState();
@@ -37,7 +37,7 @@ class _ReminderState extends State<Reminder> {
 
   TimeOfDay currentTime = TimeOfDay.now();
   TimeOfDay? eventTime;
-
+  var load;
   Future<void> onCreate() async {
     if (_textEditingController.length != 0) {
       await notificationService.showNotification(
@@ -50,7 +50,11 @@ class _ReminderState extends State<Reminder> {
           "eventTime": eventTime!.format(context),
         }),
       );
-
+      load = jsonEncode({
+        "title": _textEditingController.text,
+        "eventDate": DateFormat("EEEE, d MMM y").format(eventDate!),
+        "eventTime": eventTime!.format(context),
+      });
       await notificationService.scheduleNotification(
         1,
         _textEditingController.text,
@@ -80,6 +84,7 @@ class _ReminderState extends State<Reminder> {
 
   Future<void> cancelAllNotifications() async {
     await notificationService.cancelAllNotifications();
+    load = null;
   }
 
   void resetForm() {
@@ -107,10 +112,10 @@ class _ReminderState extends State<Reminder> {
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => DetailsPage(payload: null),
+                  builder: (context) => DetailsPage(payload: load),
                 ),
               );
             },
