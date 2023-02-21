@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/Constants/ResponsiveSize.dart';
 import 'package:integraphics/Logout/logout.dart';
+import 'package:integraphics/Screens/Profile.dart';
 import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/login/loginPage.dart';
 import 'package:integraphics/main.dart';
@@ -74,6 +75,15 @@ class _SettingsState extends State<Settings> {
                 SettingsSection(
                   title: Text('General'),
                   tiles: [
+                    SettingsTile.navigation(
+                      title: Text('Profile'),
+                      leading: Icon(Icons.person),
+                      trailing: Icon(Icons.arrow_forward_ios_outlined),
+                      onPressed: (BuildContext context) {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => Profile()));
+                      },
+                    ),
                     SettingsTile(
                       title: Text('Language'),
                       trailing: Text('English'),

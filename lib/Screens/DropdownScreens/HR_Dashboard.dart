@@ -190,140 +190,137 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ],
                   ),
                 ),
-                back: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 70,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                            crossAxisCount:
-                                (orientation == Orientation.portrait) ? 2 : 3),
-                        itemCount: dataa['$chartname']['chartLevelsAndValueObj']
-                            .length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffAED6F1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      '${dataa['$chartname']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                  Text(
-                                      '${dataa['$chartname']['chartLevelsAndValueObj'][index]['Y']}'),
-                                ]),
-                          );
-                        })))),
+                back: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 50,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount: dataa['$chartname']
+                                  ['chartLevelsAndValueObj']
+                              .length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        '${dataa['$chartname']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    Text(
+                                        '${dataa['$chartname']['chartLevelsAndValueObj'][index]['Y']}'),
+                                  ]),
+                            );
+                          })),
+                    ],
+                  ),
+                )),
           );
         }
 
         piedata.add(
-          Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.grey[200],
-              child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      Piechart(key),
-                      Tooltips(
-                        color: () {
-                          showDialog(
-                              context: context,
-                              builder: ((context) => AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    content: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      height: 150,
-                                      width: 150,
-                                      child: Colorpanel(
-                                        ontapblue: () {
-                                          setState(() {
-                                            Allpiecolorlist[piecount
-                                                .indexOf(key)] = bluepalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.blue.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontapGreen: () {
-                                          setState(() {
-                                            Allpiecolorlist[piecount
-                                                .indexOf(key)] = Greenpalett;
-                                          });
+          Padding(
+              padding: EdgeInsets.only(left: 12, right: 12),
+              child: Row(
+                children: [
+                  Piechart(key),
+                  Tooltips(
+                    color: () {
+                      showDialog(
+                          context: context,
+                          builder: ((context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                content: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  height: 150,
+                                  width: 150,
+                                  child: Colorpanel(
+                                    ontapblue: () {
+                                      setState(() {
+                                        Allpiecolorlist[piecount.indexOf(key)] =
+                                            bluepalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.blue.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontapGreen: () {
+                                      setState(() {
+                                        Allpiecolorlist[piecount.indexOf(key)] =
+                                            Greenpalett;
+                                      });
 
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.green.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontapred: () {
-                                          setState(() {
-                                            Allpiecolorlist[piecount
-                                                .indexOf(key)] = redpalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.red.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontappink: () {
-                                          setState(() {
-                                            Allpiecolorlist[piecount
-                                                .indexOf(key)] = pinkpalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.pink.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                      ),
-                                    ),
-                                  )));
-                        },
-                        screenshotController:
-                            PieScreeshotcontrollerlistt[piedata.length],
-                        ChartName: dataa['$key']['chartTitle'],
-                        chartkey: '$key',
-                      )
-                    ],
-                  ))),
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              Colors.green.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontapred: () {
+                                      setState(() {
+                                        Allpiecolorlist[piecount.indexOf(key)] =
+                                            redpalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontappink: () {
+                                      setState(() {
+                                        Allpiecolorlist[piecount.indexOf(key)] =
+                                            pinkpalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.pink.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                  ),
+                                ),
+                              )));
+                    },
+                    screenshotController:
+                        PieScreeshotcontrollerlistt[piedata.length],
+                    ChartName: dataa['$key']['chartTitle'],
+                    chartkey: '$key',
+                  )
+                ],
+              )),
         );
       } else if (dataa['$key']['chartType'] == 'donut') {
         final orientation = MediaQuery.of(context).orientation;
@@ -375,143 +372,140 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ],
                   ),
                 ),
-                back: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 70,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                            crossAxisCount:
-                                (orientation == Orientation.portrait) ? 2 : 3),
-                        itemCount: dataa['$donutchart']
-                                ['chartLevelsAndValueObj']
-                            .length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffAED6F1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      '${dataa['$donutchart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                  Text(
-                                      '${dataa['$donutchart']['chartLevelsAndValueObj'][index]['Y']}'),
-                                ]),
-                          );
-                        }))),
+                back: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 50,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount: dataa['$donutchart']
+                                  ['chartLevelsAndValueObj']
+                              .length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        '${dataa['$donutchart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    Text(
+                                        '${dataa['$donutchart']['chartLevelsAndValueObj'][index]['Y']}'),
+                                  ]),
+                            );
+                          })),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
         }
 
         Doughnutt.add(
-          Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.grey[200],
-              child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      Doughnut(key),
-                      Tooltips(
-                        color: () {
-                          showDialog(
-                              context: context,
-                              builder: ((context) => AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    content: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      height: 150,
-                                      width: 150,
-                                      child: Colorpanel(
-                                        ontapblue: () {
-                                          setState(() {
-                                            Allcolorpalette[doughnutcount
-                                                .indexOf(key)] = bluepalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.blue.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontapGreen: () {
-                                          setState(() {
-                                            Allcolorpalette[doughnutcount
-                                                .indexOf(key)] = Greenpalett;
-                                          });
+          Padding(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Doughnut(key),
+                  Tooltips(
+                    color: () {
+                      showDialog(
+                          context: context,
+                          builder: ((context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                content: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  height: 150,
+                                  width: 150,
+                                  child: Colorpanel(
+                                    ontapblue: () {
+                                      setState(() {
+                                        Allcolorpalette[doughnutcount
+                                            .indexOf(key)] = bluepalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.blue.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontapGreen: () {
+                                      setState(() {
+                                        Allcolorpalette[doughnutcount
+                                            .indexOf(key)] = Greenpalett;
+                                      });
 
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.green.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontapred: () {
-                                          setState(() {
-                                            Allcolorpalette[doughnutcount
-                                                .indexOf(key)] = redpalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.red.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontappink: () {
-                                          setState(() {
-                                            Allcolorpalette[doughnutcount
-                                                .indexOf(key)] = pinkpalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.pink.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                      ),
-                                    ),
-                                  )));
-                        },
-                        screenshotController:
-                            DonutScreeshotcontrollerlist[Doughnutt.length],
-                        ChartName: dataa['$key']['chartTitle'],
-                        chartkey: '$key',
-                      )
-                    ],
-                  ))),
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              Colors.green.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontapred: () {
+                                      setState(() {
+                                        Allcolorpalette[doughnutcount
+                                            .indexOf(key)] = redpalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontappink: () {
+                                      setState(() {
+                                        Allcolorpalette[doughnutcount
+                                            .indexOf(key)] = pinkpalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.pink.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                  ),
+                                ),
+                              )));
+                    },
+                    screenshotController:
+                        DonutScreeshotcontrollerlist[Doughnutt.length],
+                    ChartName: dataa['$key']['chartTitle'],
+                    chartkey: '$key',
+                  )
+                ],
+              )),
         );
       } else if (dataa['$key']['chartType'] == 'column') {
         columncount.add(key);
@@ -573,100 +567,101 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ],
                   ),
                 ),
-                back: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 70,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                            crossAxisCount:
-                                (orientation == Orientation.portrait) ? 2 : 3),
-                        itemCount: dataa['$Coloumnchart']
-                                ['chartLevelsAndValueObj']
-                            .length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffAED6F1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      '${dataa['$Coloumnchart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                  Text(
-                                      '${dataa['$Coloumnchart']['chartLevelsAndValueObj'][index]['Y']}'),
-                                ]),
-                          );
-                        }))),
+                back: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 50,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount: dataa['$Coloumnchart']
+                                  ['chartLevelsAndValueObj']
+                              .length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        '${dataa['$Coloumnchart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    Text(
+                                        '${dataa['$Coloumnchart']['chartLevelsAndValueObj'][index]['Y']}'),
+                                  ]),
+                            );
+                          })),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
         }
 
         Columndata.add(
-          Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.grey[200],
-              child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      Columnn(key),
-                      Tooltips(
-                        color: () {
-                          void changeColor(Color color) {
-                            pickerColor = color;
-                          }
+          Padding(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Columnn(key),
+                  Tooltips(
+                    color: () {
+                      void changeColor(Color color) {
+                        pickerColor = color;
+                      }
 
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Pick a color!'),
-                              content: SingleChildScrollView(
-                                child: ColorPicker(
-                                  pickerColor: pickerColor,
-                                  onColorChanged: changeColor,
-                                ),
-                              ),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  child: const Text('Got it'),
-                                  onPressed: () {
-                                    setState(() {
-                                      allcolor[columncount.indexOf(key)] =
-                                          pickerColor;
-                                    });
-
-                                    print(pickerColor);
-                                    Navigator.of(context).pop();
-                                    Fluttertoast.showToast(
-                                        msg: "Sucessfully Updated",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.SNACKBAR,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: pickerColor,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                  },
-                                ),
-                              ],
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Pick a color!'),
+                          content: SingleChildScrollView(
+                            child: ColorPicker(
+                              pickerColor: pickerColor,
+                              onColorChanged: changeColor,
                             ),
-                          );
-                        },
-                        screenshotController:
-                            ColumnScreeshotcontrollerlist[Columndata.length],
-                        ChartName: dataa['$key']['chartTitle'],
-                        chartkey: '$key',
-                      )
-                    ],
-                  ))),
+                          ),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              child: const Text('Got it'),
+                              onPressed: () {
+                                setState(() {
+                                  allcolor[columncount.indexOf(key)] =
+                                      pickerColor;
+                                });
+
+                                print(pickerColor);
+                                Navigator.of(context).pop();
+                                Fluttertoast.showToast(
+                                    msg: "Sucessfully Updated",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.SNACKBAR,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: pickerColor,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    screenshotController:
+                        ColumnScreeshotcontrollerlist[Columndata.length],
+                    ChartName: dataa['$key']['chartTitle'],
+                    chartkey: '$key',
+                  )
+                ],
+              )),
         );
       } else if (dataa['$key']['chartType'] == 'bar') {
         final orientation = MediaQuery.of(context).orientation;
@@ -724,141 +719,132 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ],
                   ),
                 ),
-                back: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 70,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                            crossAxisCount:
-                                (orientation == Orientation.portrait) ? 2 : 3),
-                        itemCount:
-                            dataa['$Bar']['chartLevelsAndValueObj'].length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffAED6F1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      '${dataa['$Bar']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                  Text(
-                                      '${dataa['$Bar']['chartLevelsAndValueObj'][index]['Y']}'),
-                                ]),
-                          );
-                        }))),
+                back: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 50,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount:
+                              dataa['$Bar']['chartLevelsAndValueObj'].length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        '${dataa['$Bar']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    Text(
+                                        '${dataa['$Bar']['chartLevelsAndValueObj'][index]['Y']}'),
+                                  ]),
+                            );
+                          })),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
         }
 
         Bardata.add(
-          Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.grey[200],
-              child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      BarSeies(key),
-                      Tooltips(
-                        chartkey: '$key',
-                        screenshotController:
-                            BarScreeshotcontrollerlist[Bardata.length],
-                        ChartName: dataa['$key']['chartTitle'],
-                        color: () {
-                          showDialog(
-                              context: context,
-                              builder: ((context) => AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    content: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      height: 150,
-                                      width: 150,
-                                      child: Colorpanel(ontapblue: () {
-                                        setState(() {
-                                          AllBarcolorlist[
-                                                  Barcount.indexOf(key)] =
-                                              bluepalett;
-                                        });
-                                        Navigator.pop(context);
-                                        Fluttertoast.showToast(
-                                            msg: "Sucessfully Updated",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.SNACKBAR,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor:
-                                                Colors.blue.shade500,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                      }, ontapGreen: () {
-                                        setState(() {
-                                          AllBarcolorlist[
-                                                  Barcount.indexOf(key)] =
-                                              Greenpalett;
-                                        });
+          Padding(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  BarSeies(key),
+                  Tooltips(
+                    chartkey: '$key',
+                    screenshotController:
+                        BarScreeshotcontrollerlist[Bardata.length],
+                    ChartName: dataa['$key']['chartTitle'],
+                    color: () {
+                      showDialog(
+                          context: context,
+                          builder: ((context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                content: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  height: 150,
+                                  width: 150,
+                                  child: Colorpanel(ontapblue: () {
+                                    setState(() {
+                                      AllBarcolorlist[Barcount.indexOf(key)] =
+                                          bluepalett;
+                                    });
+                                    Navigator.pop(context);
+                                    Fluttertoast.showToast(
+                                        msg: "Sucessfully Updated",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.SNACKBAR,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.blue.shade500,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  }, ontapGreen: () {
+                                    setState(() {
+                                      AllBarcolorlist[Barcount.indexOf(key)] =
+                                          Greenpalett;
+                                    });
 
-                                        Navigator.pop(context);
-                                        Fluttertoast.showToast(
-                                            msg: "Sucessfully Updated",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.SNACKBAR,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor:
-                                                Colors.green.shade500,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                      }, ontapred: () {
-                                        setState(() {
-                                          AllBarcolorlist[
-                                                  Barcount.indexOf(key)] =
-                                              redpalett;
-                                        });
-                                        Navigator.pop(context);
-                                        Fluttertoast.showToast(
-                                            msg: "Sucessfully Updated",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.SNACKBAR,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor:
-                                                Colors.red.shade500,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                      }, ontappink: () {
-                                        setState(() {
-                                          AllBarcolorlist[
-                                                  Barcount.indexOf(key)] =
-                                              pinkpalett;
-                                        });
-                                        Navigator.pop(context);
-                                        Fluttertoast.showToast(
-                                            msg: "Sucessfully Updated",
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.SNACKBAR,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor:
-                                                Colors.pink.shade500,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0);
-                                      }),
-                                    ),
-                                  )));
-                        },
-                      )
-                    ],
-                  ))),
+                                    Navigator.pop(context);
+                                    Fluttertoast.showToast(
+                                        msg: "Sucessfully Updated",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.SNACKBAR,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.green.shade500,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  }, ontapred: () {
+                                    setState(() {
+                                      AllBarcolorlist[Barcount.indexOf(key)] =
+                                          redpalett;
+                                    });
+                                    Navigator.pop(context);
+                                    Fluttertoast.showToast(
+                                        msg: "Sucessfully Updated",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.SNACKBAR,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.red.shade500,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  }, ontappink: () {
+                                    setState(() {
+                                      AllBarcolorlist[Barcount.indexOf(key)] =
+                                          pinkpalett;
+                                    });
+                                    Navigator.pop(context);
+                                    Fluttertoast.showToast(
+                                        msg: "Sucessfully Updated",
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.SNACKBAR,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.pink.shade500,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0);
+                                  }),
+                                ),
+                              )));
+                    },
+                  )
+                ],
+              )),
         );
         print('bar');
       } else if (dataa['$key']['chartType'] == 'funnel') {
@@ -908,143 +894,139 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                             labelPosition: ChartDataLabelPosition.inside)),
                   ),
                 ),
-                back: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 70,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                            crossAxisCount:
-                                (orientation == Orientation.portrait) ? 2 : 3),
-                        itemCount: dataa['$Funneldata']
-                                ['chartLevelsAndValueObj']
-                            .length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffAED6F1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      '${dataa['$Funneldata']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                  Text(
-                                      '${dataa['$Funneldata']['chartLevelsAndValueObj'][index]['Y']}'),
-                                ]),
-                          );
-                        }))),
+                back: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 50,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount: dataa['$Funneldata']
+                                  ['chartLevelsAndValueObj']
+                              .length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        '${dataa['$Funneldata']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    Text(
+                                        '${dataa['$Funneldata']['chartLevelsAndValueObj'][index]['Y']}'),
+                                  ]),
+                            );
+                          })),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
         }
 
         FunnelData.add(
-          Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.grey[200],
-              child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      Funnelchart(key),
-                      Tooltips(
-                        chartkey: '$key',
-                        screenshotController:
-                            FunnelScreeshotcontrollerlist[FunnelData.length],
-                        ChartName: dataa['$key']['chartTitle'],
-                        color: () {
-                          showDialog(
-                              context: context,
-                              builder: ((context) => AlertDialog(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    content: Container(
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      height: 150,
-                                      width: 150,
-                                      child: Colorpanel(
-                                        ontapblue: () {
-                                          setState(() {
-                                            AllFunnelcolorlist[funnelcount
-                                                .indexOf(key)] = bluepalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.blue.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontapGreen: () {
-                                          setState(() {
-                                            AllFunnelcolorlist[funnelcount
-                                                .indexOf(key)] = Greenpalett;
-                                          });
+          Padding(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Funnelchart(key),
+                  Tooltips(
+                    chartkey: '$key',
+                    screenshotController:
+                        FunnelScreeshotcontrollerlist[FunnelData.length],
+                    ChartName: dataa['$key']['chartTitle'],
+                    color: () {
+                      showDialog(
+                          context: context,
+                          builder: ((context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                content: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15)),
+                                  height: 150,
+                                  width: 150,
+                                  child: Colorpanel(
+                                    ontapblue: () {
+                                      setState(() {
+                                        AllFunnelcolorlist[funnelcount
+                                            .indexOf(key)] = bluepalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.blue.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontapGreen: () {
+                                      setState(() {
+                                        AllFunnelcolorlist[funnelcount
+                                            .indexOf(key)] = Greenpalett;
+                                      });
 
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.green.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontapred: () {
-                                          setState(() {
-                                            AllFunnelcolorlist[funnelcount
-                                                .indexOf(key)] = redpalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.red.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                        ontappink: () {
-                                          setState(() {
-                                            AllFunnelcolorlist[funnelcount
-                                                .indexOf(key)] = pinkpalett;
-                                          });
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: "Sucessfully Updated",
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.SNACKBAR,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor:
-                                                  Colors.pink.shade500,
-                                              textColor: Colors.white,
-                                              fontSize: 16.0);
-                                        },
-                                      ),
-                                    ),
-                                  )));
-                        },
-                      )
-                    ],
-                  ))),
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor:
+                                              Colors.green.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontapred: () {
+                                      setState(() {
+                                        AllFunnelcolorlist[funnelcount
+                                            .indexOf(key)] = redpalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.red.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                    ontappink: () {
+                                      setState(() {
+                                        AllFunnelcolorlist[funnelcount
+                                            .indexOf(key)] = pinkpalett;
+                                      });
+                                      Navigator.pop(context);
+                                      Fluttertoast.showToast(
+                                          msg: "Sucessfully Updated",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.SNACKBAR,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.pink.shade500,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    },
+                                  ),
+                                ),
+                              )));
+                    },
+                  )
+                ],
+              )),
         );
       } else if (dataa['$key']['chartType'] == 'scatter') {
         final orientation = MediaQuery.of(context).orientation;
@@ -1110,100 +1092,101 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     // tooltipBehavior: _tooltipBehavior,
                   ),
                 ),
-                back: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 70,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                            crossAxisCount:
-                                (orientation == Orientation.portrait) ? 2 : 3),
-                        itemCount: dataa['$Scatterdataa']
-                                ['chartLevelsAndValueObj']
-                            .length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffAED6F1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      '${dataa['$Scatterdataa']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                  Text(
-                                      '${dataa['$Scatterdataa']['chartLevelsAndValueObj'][index]['Y']}'),
-                                ]),
-                          );
-                        }))),
+                back: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 50,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount: dataa['$Scatterdataa']
+                                  ['chartLevelsAndValueObj']
+                              .length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        '${dataa['$Scatterdataa']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    Text(
+                                        '${dataa['$Scatterdataa']['chartLevelsAndValueObj'][index]['Y']}'),
+                                  ]),
+                            );
+                          })),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
         }
 
         Scatterdata.add(
-          Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.grey[200],
-              child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      Scatterchart(key),
-                      Tooltips(
-                        chartkey: '$key',
-                        screenshotController:
-                            ScatterScreeshotcontrollerlist[Scatterdata.length],
-                        ChartName: dataa['$key']['chartTitle'],
-                        color: () {
-                          void changeColor(Color color) {
-                            pickerColor = color;
-                          }
+          Padding(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Scatterchart(key),
+                  Tooltips(
+                    chartkey: '$key',
+                    screenshotController:
+                        ScatterScreeshotcontrollerlist[Scatterdata.length],
+                    ChartName: dataa['$key']['chartTitle'],
+                    color: () {
+                      void changeColor(Color color) {
+                        pickerColor = color;
+                      }
 
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Pick a color!'),
-                              content: SingleChildScrollView(
-                                child: ColorPicker(
-                                  pickerColor: pickerColor,
-                                  onColorChanged: changeColor,
-                                ),
-                              ),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  child: const Text('Got it'),
-                                  onPressed: () {
-                                    setState(() {
-                                      Scattercolor[scattercount.indexOf(key)] =
-                                          pickerColor;
-                                    });
-
-                                    print(pickerColor);
-                                    Navigator.of(context).pop();
-                                    Fluttertoast.showToast(
-                                        msg: "Sucessfully Updated",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.SNACKBAR,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: pickerColor,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                  },
-                                ),
-                              ],
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Pick a color!'),
+                          content: SingleChildScrollView(
+                            child: ColorPicker(
+                              pickerColor: pickerColor,
+                              onColorChanged: changeColor,
                             ),
-                          );
-                        },
-                      )
-                    ],
-                  ))),
+                          ),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              child: const Text('Got it'),
+                              onPressed: () {
+                                setState(() {
+                                  Scattercolor[scattercount.indexOf(key)] =
+                                      pickerColor;
+                                });
+
+                                print(pickerColor);
+                                Navigator.of(context).pop();
+                                Fluttertoast.showToast(
+                                    msg: "Sucessfully Updated",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.SNACKBAR,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: pickerColor,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )
+                ],
+              )),
         );
       } else if (dataa['$key']['chartType'] == 'lines') {
         if (dataa['$key']['chartTitle'] ==
@@ -1229,7 +1212,6 @@ class _HR_DashboardState extends State<HR_Dashboard> {
 
               // sortlist
               //     .add();
-
             }
             return SfCartesianChart(
               plotAreaBorderWidth: 0,
@@ -1401,100 +1383,105 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     tooltipBehavior: TooltipBehavior(enable: true),
                   ),
                 ),
-                back: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 70,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                            crossAxisCount:
-                                (orientation == Orientation.portrait) ? 2 : 3),
-                        itemCount: dataa['$Lineschart']
-                                ['chartLevelsAndValueObj']
-                            .length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffAED6F1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      '${dataa['$Lineschart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                  Text(
-                                      '${dataa['$Lineschart']['chartLevelsAndValueObj'][index]['Y']}'),
-                                ]),
-                          );
-                        }))),
+                back: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 50,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount: dataa['$Lineschart']
+                                  ['chartLevelsAndValueObj']
+                              .length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                          '${dataa['$Lineschart']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                          '${dataa['$Lineschart']['chartLevelsAndValueObj'][index]['Y']}'),
+                                    ),
+                                  ]),
+                            );
+                          })),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
         }
 
         Spline.add(
-          Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.grey[200],
-              child: Padding(
-                  padding: EdgeInsets.all(12),
-                  child: Row(
-                    children: [
-                      Lineschart(key),
-                      Tooltips(
-                        chartkey: '$key',
-                        screenshotController:
-                            LinesScreeshotcontrollerlist[Spline.length],
-                        ChartName: dataa['$key']['chartTitle'],
-                        color: () {
-                          void changeColor(Color color) {
-                            pickerColor = color;
-                          }
+          Padding(
+              padding: EdgeInsets.all(12),
+              child: Row(
+                children: [
+                  Lineschart(key),
+                  Tooltips(
+                    chartkey: '$key',
+                    screenshotController:
+                        LinesScreeshotcontrollerlist[Spline.length],
+                    ChartName: dataa['$key']['chartTitle'],
+                    color: () {
+                      void changeColor(Color color) {
+                        pickerColor = color;
+                      }
 
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Pick a color!'),
-                              content: SingleChildScrollView(
-                                child: ColorPicker(
-                                  pickerColor: pickerColor,
-                                  onColorChanged: changeColor,
-                                ),
-                              ),
-                              actions: <Widget>[
-                                ElevatedButton(
-                                  child: const Text('Got it'),
-                                  onPressed: () {
-                                    setState(() {
-                                      Linescolor[Linescount.indexOf(key)] =
-                                          pickerColor;
-                                    });
-
-                                    print(pickerColor);
-                                    Navigator.of(context).pop();
-                                    Fluttertoast.showToast(
-                                        msg: "Sucessfully Updated",
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.SNACKBAR,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: pickerColor,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0);
-                                  },
-                                ),
-                              ],
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Pick a color!'),
+                          content: SingleChildScrollView(
+                            child: ColorPicker(
+                              pickerColor: pickerColor,
+                              onColorChanged: changeColor,
                             ),
-                          );
-                        },
-                      )
-                    ],
-                  ))),
+                          ),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              child: const Text('Got it'),
+                              onPressed: () {
+                                setState(() {
+                                  Linescolor[Linescount.indexOf(key)] =
+                                      pickerColor;
+                                });
+
+                                print(pickerColor);
+                                Navigator.of(context).pop();
+                                Fluttertoast.showToast(
+                                    msg: "Sucessfully Updated",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.SNACKBAR,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: pickerColor,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  )
+                ],
+              )),
         );
       } else if (dataa['$key']['chartType'] == 'scatterpolar') {
         final orientation = MediaQuery.of(context).orientation;
@@ -1555,71 +1542,77 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     ),
                   ),
                 ),
-                back: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    child: GridView.builder(
-                        shrinkWrap: true,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            mainAxisExtent: 70,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                            crossAxisCount:
-                                (orientation == Orientation.portrait) ? 2 : 3),
-                        itemCount: dataa['$Radachartdata']
-                                ['chartLevelsAndValueObj']
-                            .length,
-                        itemBuilder: ((context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                color: Color(0xffAED6F1),
-                                borderRadius: BorderRadius.circular(15)),
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                      '${dataa['$Radachartdata']['chartLevelsAndValueObj'][index]['X'].toString()}'),
-                                  Text(
-                                      '${dataa['$Radachartdata']['chartLevelsAndValueObj'][index]['Y']}'),
-                                ]),
-                          );
-                        }))),
+                back: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  mainAxisExtent: 50,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                  crossAxisCount:
+                                      (orientation == Orientation.portrait)
+                                          ? 2
+                                          : 3),
+                          itemCount: dataa['$Radachartdata']
+                                  ['chartLevelsAndValueObj']
+                              .length,
+                          itemBuilder: ((context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Color(0xffAED6F1),
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                          '${dataa['$Radachartdata']['chartLevelsAndValueObj'][index]['X'].toString()}'),
+                                    ),
+                                    Flexible(
+                                      child: Text(
+                                          '${dataa['$Radachartdata']['chartLevelsAndValueObj'][index]['Y']}'),
+                                    ),
+                                  ]),
+                            );
+                          })),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
         }
 
         Radardata.add(
-          Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              elevation: 10,
-              color: Colors.grey[200],
-              child: Column(
-                children: [
-                  Text(
-                    dataa['$key']['chartTitle'],
-                    style: TextStyle(
-                        fontSize: 15.0,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                      padding: EdgeInsets.all(12),
-                      child: Row(
-                        children: [
-                          RadarChartt(key),
-                          Tooltips(
-                            screenshotController:
-                                RadarScreeshotcontrollerlist[Radardata.length],
-                            ChartName: dataa['$key']['chartTitle'],
-                            chartkey: '$key',
-                          )
-                        ],
-                      )),
-                ],
-              )),
+          Column(
+            children: [
+              Text(
+                dataa['$key']['chartTitle'],
+                style: TextStyle(
+                    fontSize: 15.0,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.bold),
+              ),
+              Padding(
+                  padding: EdgeInsets.all(12),
+                  child: Row(
+                    children: [
+                      RadarChartt(key),
+                      Spacer(),
+                      Tooltips(
+                        screenshotController:
+                            RadarScreeshotcontrollerlist[Radardata.length],
+                        ChartName: dataa['$key']['chartTitle'],
+                        chartkey: '$key',
+                      )
+                    ],
+                  )),
+            ],
+          ),
         );
       }
     });
@@ -1663,62 +1656,60 @@ class _HR_DashboardState extends State<HR_Dashboard> {
                     );
                   })));
         } else {
-          return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: ListView(
-                children: [
-                  Selectedinput == 'CRM'
-                      ? SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                            children: [
-                              FlipCardWidet(
-                                dataa['cardData2']['result'][2].toString(),
-                                dataa['cardData2']['result'][0].toString(),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              FlipCardWidet(
-                                dataa['cardData5']['result'][2].toString(),
-                                dataa['cardData5']['result'][0].toString(),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              FlipCardWidet(
-                                dataa['cardData6']['result'][2].toString(),
-                                dataa['cardData6']['result'][0].toString(),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              FlipCardWidet(
-                                dataa['cardData15']['result'][2].toString(),
-                                dataa['cardData15']['result'][0].toString(),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              FlipCardWidet(
-                                dataa['cardData16']['result'][2].toString(),
-                                dataa['cardData16']['result'][0].toString(),
-                              ),
-                            ],
+          return ListView(
+            children: [
+              Selectedinput == 'CRM'
+                  ? SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: [
+                          FlipCardWidet(
+                            dataa['cardData2']['result'][2].toString(),
+                            dataa['cardData2']['result'][0].toString(),
                           ),
-                        )
-                      : Container(),
-                  ...piedata,
-                  ...Doughnutt,
-                  ...Columndata,
-                  ...Bardata,
-                  ...FunnelData,
-                  ...Scatterdata,
-                  ...Spline,
-                  ...Radardata,
-                  ...Doubleline
-                ],
-              ));
+                          SizedBox(
+                            width: 10,
+                          ),
+                          FlipCardWidet(
+                            dataa['cardData5']['result'][2].toString(),
+                            dataa['cardData5']['result'][0].toString(),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          FlipCardWidet(
+                            dataa['cardData6']['result'][2].toString(),
+                            dataa['cardData6']['result'][0].toString(),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          FlipCardWidet(
+                            dataa['cardData15']['result'][2].toString(),
+                            dataa['cardData15']['result'][0].toString(),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          FlipCardWidet(
+                            dataa['cardData16']['result'][2].toString(),
+                            dataa['cardData16']['result'][0].toString(),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(),
+              ...piedata,
+              ...Doughnutt,
+              ...Columndata,
+              ...Bardata,
+              ...FunnelData,
+              ...Scatterdata,
+              ...Spline,
+              ...Radardata,
+              ...Doubleline
+            ],
+          );
         }
       }),
     );

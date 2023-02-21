@@ -140,7 +140,7 @@ flutter:
     - assets/dashboard.json
     - assets/googleTrends1.png
     - assets/statistics.png
-
+    - assets/Data-Analytics-icon.png
     - assets/newspaper.png
     - assets/survey.jpg
     - assets/liveUpdares.png
@@ -148,6 +148,14 @@ flutter:
     - assets/surveydxp.png
     - assets/newspaperdxp.png
     - assets/smartlogo.png
+    - assets/iTransformETL.png
+    - assets/AnalyticsFeatures.png
+    - assets/BrainAIb.png
+    - assets/TransformFeatures.png
+    - assets/innovationBulb.png
+    - assets/Pricing.png
+    - assets/shopping-Cart-Icon.png
+    - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

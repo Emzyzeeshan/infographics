@@ -47,7 +47,31 @@ class _drawerState extends State<drawer> {
               ListTile(
                 leading: Image(
                   image: AssetImage(
-                    'assets/images/Master_Detail_Editable.png',
+                    'assets/Data-Analytics-icon.png',
+                  ),
+                  height: 25,
+                ),
+                title: const Text('Data Analytics'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Image(
+                  image: AssetImage(
+                    'assets/iTransformETL.png',
+                  ),
+                  height: 25,
+                ),
+                title: const Text('Data Integration'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Image(
+                  image: AssetImage(
+                    'assets/AnalyticsFeatures.png',
                   ),
                   height: 25,
                 ),
@@ -57,15 +81,51 @@ class _drawerState extends State<drawer> {
                 },
               ),
               ListTile(
-                leading: Icon(
-                  Icons.graphic_eq_sharp,
+                leading: Image(
+                  image: AssetImage(
+                    'assets/BrainAIb.png',
+                  ),
+                  height: 25,
                 ),
-                title: const Text('Info Graphics'),
+                title: const Text('Actionable Insights by AI'),
                 onTap: () {
-                  // Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: ((context) => InfoGraphics(logindata))));
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Image(
+                  image: AssetImage(
+                    'assets/TransformFeatures.png',
+                  ),
+                  height: 25,
+                ),
+                title: const Text('Transform Features'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Image(
+                  image: AssetImage(
+                    'assets/innovationBulb.png',
+                  ),
+                  height: 25,
+                ),
+                title: const Text('DS Knowledge Base'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                leading: Image(
+                  image: AssetImage(
+                    'assets/Pricing.png',
+                  ),
+                  height: 25,
+                ),
+                title: const Text('Pricing'),
+                onTap: () {
+                  Navigator.pop(context);
                 },
               ),
               ListTile(

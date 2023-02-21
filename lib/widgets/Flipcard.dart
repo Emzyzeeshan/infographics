@@ -19,8 +19,8 @@ class _FlipCardWidetState extends State<FlipCardWidet> {
           .fillBack, // Fill the back side of the card to make in the same size as the front.
       direction: FlipDirection.HORIZONTAL, // default
       front: Container(
-        height: 150,
-        width: 200,
+        height: 100,
+        width: 120,
         decoration: BoxDecoration(
             color: Color(0xff6d96fa).withOpacity(0.3),
             borderRadius: BorderRadius.circular(15)),

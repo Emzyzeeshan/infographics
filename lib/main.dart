@@ -57,8 +57,8 @@ class _MyAppState extends State<MyApp> {
     });
     dataa;
     authb();
-    super.initState();
     getCurrentAppTheme();
+    super.initState();
   }
 
   void Notifyplugin() async {
