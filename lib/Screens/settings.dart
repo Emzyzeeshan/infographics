@@ -130,7 +130,7 @@ class _SettingsState extends State<Settings> {
                 ),
                 SettingsSection(
                     // titlePadding: EdgeInsets.all(20),
-                    title: Text('Accout Actions'),
+                    title: Text('Account Actions'),
                     tiles: [
                       SettingsTile.navigation(
                         title: Text('Logout'),

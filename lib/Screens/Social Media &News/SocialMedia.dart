@@ -328,279 +328,435 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
     super.initState();
   }
 
+  List<String> _Searchparty = ['CANADA'];
+  List<String> _searchdistrict = [''];
+  List<String> _SearchConstitution = ['Q1-2020'];
+  List<String> _Opp = [''];
+  List<String> _Industry = ['AUTOMOTIVE'];
+  List<String> _FiscalYear = [''];
+
+  ScrollController _scrollController = ScrollController();
+  PageController? _controller = PageController();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          // primaryColor: primaryColor,
-          // canvasColor: canvasColor,
-          // scaffoldBackgroundColor: scaffoldBackgroundColor,
-          // textTheme: const TextTheme(
-          //   headlineSmall: TextStyle(
-          //     color: Colors.white,
-          //     fontSize: 46,
-          //     fontWeight: FontWeight.w800,
-          //   ),
-          // ),
-          ),
-      home: Builder(
-        builder: (context) {
-          List<String> _Searchparty = ['CANADA'];
-          List<String> _searchdistrict = [''];
-          List<String> _SearchConstitution = ['Q1-2020'];
-          List<String> _Opp = [''];
-          List<String> _Industry = ['AUTOMOTIVE'];
-          List<String> _FiscalYear = [''];
-          final isSmallScreen = MediaQuery.of(context).size.width < 600;
-          return Scaffold(
-            backgroundColor: Color(0xffd7e2fe),
-            key: _key,
-            appBar: isSmallScreen
-                ? AppBar(
-                    actions: [
-                      // IconButton(
-                      //     onPressed: () {
-                      //       setState(() {
-                      //         isvisible = !isvisible;
-                      //       });
-                      //     },
-                      //     icon: Icon(
-                      //       Icons.reset_tv_rounded,
-                      //       color: Colors.black,
-                      //     ))
-                      PopupMenuButton(
-                          icon: Icon(
-                            Icons.settings,
-                            color: Colors.black,
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15)),
-                          itemBuilder: ((context) {
-                            return [
-                              PopupMenuItem(
-                                onTap: (() {
-                                  setState(() {
-                                    isvisible = !isvisible;
-                                  });
-                                }),
-                                child: isvisible == true
-                                    ? Text('Hide Toolbar')
-                                    : Text('Show ToolBar'),
-                              ),
-                              PopupMenuItem(
-                                onTap: (() {
-                                  showDialog(
-                                      context: context,
-                                      builder: ((context) {
-                                        return Scaffold(
-                                          appBar: AppBar(
-                                            backgroundColor: Color(0xff6d96fa),
-                                            title: Text(
-                                              'Filter',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 22),
-                                            ),
-                                            centerTitle: true,
-                                          ),
-                                          body: Column(
-                                            children: <Widget>[
-                                              const SizedBox(height: 7),
-                                              SmartSelect<String>.multiple(
-                                                title: 'Search Party',
-                                                selectedValue: _Searchparty,
-                                                onChange: (selected) =>
-                                                    setState(() =>
-                                                        _Searchparty =
-                                                            selected.value),
-                                                choiceItems: Searchparty,
-                                                modalType:
-                                                    S2ModalType.popupDialog,
-                                                tileBuilder: (context, state) {
-                                                  return ListTile(
-                                                    tileColor: Colors.grey[100],
-                                                    title:
-                                                        Text(state.title ?? ''),
-                                                    subtitle: Text(
-                                                      state.selected.toString(),
-                                                      style: const TextStyle(
-                                                          color: Colors.grey),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                    ),
-                                                    trailing: const Icon(
-                                                      Icons
-                                                          .keyboard_arrow_right,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    onTap: state.showModal,
-                                                  );
+    final isSmallScreen = MediaQuery.of(context).size.width < 600;
+    return Scaffold(
+      backgroundColor: Color(0xffd7e2fe),
+      key: _key,
+      appBar: isSmallScreen
+          ? AppBar(
+              actions: [
+                // IconButton(
+                //     onPressed: () {
+                //       setState(() {
+                //         isvisible = !isvisible;
+                //       });
+                //     },
+                //     icon: Icon(
+                //       Icons.reset_tv_rounded,
+                //       color: Colors.black,
+                //     ))
+                PopupMenuButton(
+                    icon: Icon(
+                      Icons.settings,
+                      color: Colors.black,
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    itemBuilder: ((context) {
+                      return [
+                        PopupMenuItem(
+                          onTap: (() {
+                            setState(() {
+                              isvisible = !isvisible;
+                            });
+                          }),
+                          child: isvisible == true
+                              ? Text('Hide Toolbar')
+                              : Text('Show ToolBar'),
+                        ),
+                        PopupMenuItem(
+                          onTap: () async {
+                            await showDialog(
+                                context: context,
+                                builder: ((context) {
+                                  return Scaffold(
+                                    appBar: AppBar(
+                                      backgroundColor: Color(0xff6d96fa),
+                                      title: Text(
+                                        'Filter',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 22),
+                                      ),
+                                      centerTitle: true,
+                                    ),
+                                    body: Column(
+                                      children: <Widget>[
+                                        const SizedBox(height: 7),
+                                        SmartSelect<String>.multiple(
+                                          title: 'Search Party',
+                                          selectedValue: _Searchparty,
+                                          onChange: (selected) => setState(() =>
+                                              _Searchparty = selected.value),
+                                          choiceItems: Searchparty,
+                                          modalType: S2ModalType.popupDialog,
+                                          tileBuilder: (context, state) {
+                                            return ListTile(
+                                              tileColor: Colors.grey[100],
+                                              title: Text(state.title ?? ''),
+                                              subtitle: Text(
+                                                state.selected.toString(),
+                                                style: const TextStyle(
+                                                    color: Colors.grey),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                              trailing: const Icon(
+                                                Icons.keyboard_arrow_right,
+                                                color: Colors.grey,
+                                              ),
+                                              onTap: state.showModal,
+                                            );
+                                          },
+                                        ),
+                                        const Divider(
+                                          indent: 20,
+                                        ),
+                                        SmartSelect<String>.multiple(
+                                          title: 'Search District',
+                                          selectedValue: _SearchConstitution,
+                                          onChange: (selected) {
+                                            setState(() => _SearchConstitution =
+                                                selected.value);
+                                          },
+                                          choiceItems: SearchDistrict,
+                                          modalType: S2ModalType.popupDialog,
+                                          tileBuilder: (context, state) {
+                                            return ListTile(
+                                              tileColor: Colors.grey[100],
+                                              title: Text(state.title ?? ''),
+                                              subtitle: Text(
+                                                state.selected.toString(),
+                                                style: const TextStyle(
+                                                    color: Colors.grey),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                              trailing: const Icon(
+                                                Icons.keyboard_arrow_right,
+                                                color: Colors.grey,
+                                              ),
+                                              onTap: state.showModal,
+                                            );
+                                          },
+                                        ),
+                                        const SizedBox(height: 7),
+                                        SmartSelect<String>.multiple(
+                                          title: 'Search Constitition',
+                                          selectedValue: _searchdistrict,
+                                          onChange: (selected) => setState(() =>
+                                              _searchdistrict = selected.value),
+                                          choiceItems: SearchConstitution,
+                                          modalType: S2ModalType.popupDialog,
+                                          tileBuilder: (context, state) {
+                                            return ListTile(
+                                              tileColor: Colors.grey[100],
+                                              title: Text(state.title ?? ''),
+                                              subtitle: Text(
+                                                state.selected.toString(),
+                                                style: const TextStyle(
+                                                    color: Colors.grey),
+                                                overflow: TextOverflow.ellipsis,
+                                                maxLines: 1,
+                                              ),
+                                              trailing: const Icon(
+                                                Icons.keyboard_arrow_right,
+                                                color: Colors.grey,
+                                              ),
+                                              onTap: state.showModal,
+                                            );
+                                          },
+                                        ),
+                                        const Divider(
+                                          indent: 20,
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              MaterialButton(
+                                                onPressed: () {},
+                                                child: Text('Apply'),
+                                                color: Color(0xff6d96fa),
+                                              ),
+                                              MaterialButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    _SearchConstitution.clear();
+                                                    _Searchparty.clear();
+                                                    _searchdistrict.clear();
+                                                  });
                                                 },
+                                                child: Text('Reset'),
+                                                color: Color(0xff6d96fa),
                                               ),
-                                              const Divider(
-                                                indent: 20,
-                                              ),
-                                              SmartSelect<String>.multiple(
-                                                title: 'Search District',
-                                                selectedValue:
-                                                    _SearchConstitution,
-                                                onChange: (selected) {
-                                                  setState(() =>
-                                                      _SearchConstitution =
-                                                          selected.value);
-                                                },
-                                                choiceItems: SearchDistrict,
-                                                modalType:
-                                                    S2ModalType.popupDialog,
-                                                tileBuilder: (context, state) {
-                                                  return ListTile(
-                                                    tileColor: Colors.grey[100],
-                                                    title:
-                                                        Text(state.title ?? ''),
-                                                    subtitle: Text(
-                                                      state.selected.toString(),
-                                                      style: const TextStyle(
-                                                          color: Colors.grey),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                    ),
-                                                    trailing: const Icon(
-                                                      Icons
-                                                          .keyboard_arrow_right,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    onTap: state.showModal,
-                                                  );
-                                                },
-                                              ),
-                                              const SizedBox(height: 7),
-                                              SmartSelect<String>.multiple(
-                                                title: 'Search Constitition',
-                                                selectedValue: _searchdistrict,
-                                                onChange: (selected) =>
-                                                    setState(() =>
-                                                        _searchdistrict =
-                                                            selected.value),
-                                                choiceItems: SearchConstitution,
-                                                modalType:
-                                                    S2ModalType.popupDialog,
-                                                tileBuilder: (context, state) {
-                                                  return ListTile(
-                                                    tileColor: Colors.grey[100],
-                                                    title:
-                                                        Text(state.title ?? ''),
-                                                    subtitle: Text(
-                                                      state.selected.toString(),
-                                                      style: const TextStyle(
-                                                          color: Colors.grey),
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      maxLines: 1,
-                                                    ),
-                                                    trailing: const Icon(
-                                                      Icons
-                                                          .keyboard_arrow_right,
-                                                      color: Colors.grey,
-                                                    ),
-                                                    onTap: state.showModal,
-                                                  );
-                                                },
-                                              ),
-                                              const Divider(
-                                                indent: 20,
-                                              ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: [
-                                                    MaterialButton(
-                                                      onPressed: () {},
-                                                      child: Text('Apply'),
-                                                      color: Color(0xff6d96fa),
-                                                    ),
-                                                    MaterialButton(
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          _SearchConstitution
-                                                              .clear();
-                                                          _Searchparty.clear();
-                                                          _searchdistrict
-                                                              .clear();
-                                                        });
-                                                      },
-                                                      child: Text('Reset'),
-                                                      color: Color(0xff6d96fa),
-                                                    ),
-                                                  ],
-                                                ),
-                                              )
                                             ],
                                           ),
-                                        );
-                                      }));
-                                }),
-                                child: Text('Filter'),
-                              )
-                            ];
-                          }))
-                    ],
-                    elevation: 0,
-                    backgroundColor: Color(0xffd7e2fe),
-                    centerTitle: true,
-                    flexibleSpace: Padding(
-                      padding: const EdgeInsets.only(top: 18.0),
-                      child: Image.asset(
-                        'assets/images/IntegralGifLogo.gif',
-                        height: 40,
-                        width: 100,
-                      ),
-                    ),
-                    // flexibleSpace: Container(
-                    //   decoration: BoxDecoration(
-                    //     gradient: LinearGradient(
-                    //         colors: [
-                    //           Color(0xff6d96fa),
-                    //           Color(0xffd7e2fe),
-                    //         ],
-                    //         begin: Alignment.topCenter,
-                    //         end: Alignment.bottomCenter,
-                    //         stops: [0.0, 1.0],
-                    //         tileMode: TileMode.clamp),
-                    //   ),
-                    // ),
-                  )
-                : null,
-            body: Padding(
-              padding: const EdgeInsets.only(top: 30.0),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }));
+                          },
+                          child: Text('Filter'),
+                        )
+                      ];
+                    }))
+              ],
+              elevation: 0,
+              backgroundColor: Color(0xffd7e2fe),
+              centerTitle: true,
+              flexibleSpace: Padding(
+                padding: const EdgeInsets.only(top: 18.0),
+                child: Image.asset(
+                  'assets/images/IntegralGifLogo.gif',
+                  height: 40,
+                  width: 100,
+                ),
+              ),
+              // flexibleSpace: Container(
+              //   decoration: BoxDecoration(
+              //     gradient: LinearGradient(
+              //         colors: [
+              //           Color(0xff6d96fa),
+              //           Color(0xffd7e2fe),
+              //         ],
+              //         begin: Alignment.topCenter,
+              //         end: Alignment.bottomCenter,
+              //         stops: [0.0, 1.0],
+              //         tileMode: TileMode.clamp),
+              //   ),
+              // ),
+            )
+          : null,
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              controller: _scrollController,
+              scrollDirection: Axis.horizontal,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  isvisible == true
-                      ? ExampleSidebarX(controller: _controller)
-                      : Container(),
-                  // if (!isSmallScreen)
-                  //   ExampleSidebarX(controller: _controller),
-                  Expanded(
-                    child: Center(
-                      child: _ScreensExample(
-                        controller: _controller,
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _controller!.jumpToPage(0);
+                        },
+                        child: Image.asset(
+                          'assets/newspaperdxp.png',
+                          height: 30,
+                          width: 30,
+                        ),
                       ),
-                    ),
+                      Text(
+                        'NewsPaper',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _controller!.jumpToPage(1);
+                        },
+                        child: Image.asset(
+                          'assets/newsdxps.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                      ),
+                      Text(
+                        'News Channel',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _controller!.jumpToPage(2);
+                        },
+                        child: Image.asset(
+                          'assets/surveydxp.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                      ),
+                      Text(
+                        'Survey',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _controller!.jumpToPage(3);
+                        },
+                        child: Image.asset(
+                          'assets/liveUpdares.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                      ),
+                      Text(
+                        'live Updates',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _controller!.jumpToPage(4);
+                        },
+                        child: Image.asset(
+                          'assets/twitter.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                      ),
+                      Text(
+                        'Twitter',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _controller!.jumpToPage(5);
+                        },
+                        child: Image.asset(
+                          'assets/yt.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                      ),
+                      Text(
+                        'YouTube',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _controller!.jumpToPage(6);
+                        },
+                        child: Image.asset(
+                          'assets/fb.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                      ),
+                      Text(
+                        'FaceBook',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _controller!.jumpToPage(7);
+                        },
+                        child: Image.asset(
+                          'assets/insta.png',
+                          height: 30,
+                          width: 30,
+                        ),
+                      ),
+                      Text(
+                        'Instagram',
+                        style: TextStyle(color: Colors.black),
+                      )
+                    ],
                   ),
                 ],
               ),
             ),
-          );
-        },
+
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: PageView(
+                physics: NeverScrollableScrollPhysics(),
+                controller: _controller,
+                children: [
+                  NewsPaper(false),
+                  NewsChannnel(false),
+                  Survey(false),
+                  LiveUpdates(false),
+                  Twitter(false),
+                  YouTube(false),
+                  Facebook(false),
+                  Instagram(false),
+                ],
+              ),
+            )
+            // isvisible == true
+            //     ? ExampleSidebarX(controller: _controller)
+            //     : Container(),
+            // if (!isSmallScreen)
+            //   ExampleSidebarX(controller: _controller),
+            // Expanded(
+            //   child: Center(
+            //     child: _ScreensExample(
+            //       controller: _controller,
+            //     ),
+            //   ),
+            // ),
+          ],
+        ),
       ),
     );
   }

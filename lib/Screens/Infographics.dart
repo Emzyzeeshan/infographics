@@ -358,6 +358,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                             padding: const EdgeInsets.only(top: 28.0),
                             child: Image.asset(
                               'assets/images/IntegralGifLogo.gif',
+                              color: Colors.white,
                               height: 30,
                               width: 100,
                             ),
@@ -371,7 +372,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                   height: MediaQuery.of(context).orientation ==
                           Orientation.landscape
                       ? DeviceSizeConfig.screenHeight! * 0.2
-                      : DeviceSizeConfig.screenHeight! * 0.1,
+                      : DeviceSizeConfig.screenHeight! * 0.095,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: [
@@ -384,7 +385,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                         tileMode: TileMode.clamp),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
+                    padding: const EdgeInsets.only(top: 0.0),
                     child: Stack(
                       children: [
                         Align(

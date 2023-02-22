@@ -43,6 +43,7 @@ class _NewsPaperState extends State<NewsPaper> {
                 child: Icon(
                   Icons.newspaper,
                   size: 40,
+                  color: Colors.black,
                 ),
               ),
               SizedBox(
@@ -51,16 +52,25 @@ class _NewsPaperState extends State<NewsPaper> {
               Flexible(
                 child: Text(
                   'News Paper',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
               ),
               Spacer(),
               GestureDetector(
-                child: Icon(Icons.refresh),
+                child: Icon(
+                  Icons.refresh,
+                  color: Colors.black,
+                ),
                 onTap: () {},
               ),
               GestureDetector(
-                child: Icon(Icons.filter_alt_rounded),
+                child: Icon(
+                  Icons.filter_alt_rounded,
+                  color: Colors.black,
+                ),
                 onTap: () {
                   setState(() {
                     filter = !filter;
@@ -69,7 +79,10 @@ class _NewsPaperState extends State<NewsPaper> {
                 },
               ),
               GestureDetector(
-                child: Icon(Icons.calendar_month),
+                child: Icon(
+                  Icons.calendar_month,
+                  color: Colors.black,
+                ),
                 onTap: () {
                   setState(() {
                     datefilter = !datefilter;
@@ -86,7 +99,8 @@ class _NewsPaperState extends State<NewsPaper> {
           filter == true
               ? Text(
                   'Choose Filter: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
                 )
               : Container(),
           SizedBox(
@@ -149,7 +163,8 @@ class _NewsPaperState extends State<NewsPaper> {
           datefilter == true
               ? Text(
                   'Date:',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.black),
                 )
               : Container(),
           datefilter == true
@@ -162,7 +177,10 @@ class _NewsPaperState extends State<NewsPaper> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('From: '),
+                            Text(
+                              'From: ',
+                              style: TextStyle(color: Colors.black),
+                            ),
                             DateTimeField(
                               decoration: InputDecoration(
                                   filled: true,
@@ -195,7 +213,10 @@ class _NewsPaperState extends State<NewsPaper> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('To : '),
+                            Text(
+                              'To : ',
+                              style: TextStyle(color: Colors.black),
+                            ),
                             DateTimeField(
                               decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
@@ -233,11 +254,14 @@ class _NewsPaperState extends State<NewsPaper> {
                       child: ListTile(
                         style: ListTileStyle.drawer,
                         tileColor: Colors.white,
-                        title: Text('Economic Times'),
+                        title: Text(
+                          'Economic Times',
+                          style: TextStyle(color: Colors.black),
+                        ),
                         subtitle: widget.extended == false
                             ? Text(
                                 'JP Nadda spends 12 days a month outside Delhi in run-up to state polls',
-                                style: TextStyle(),
+                                style: TextStyle(color: Colors.black),
                               )
                             : Text(''),
                       ),
