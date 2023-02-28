@@ -1,5 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 
 class FlipCardWidet extends StatefulWidget {
@@ -15,8 +13,8 @@ class _FlipCardWidetState extends State<FlipCardWidet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      width: 120,
+      height: 70,
+      width: 100,
       decoration: BoxDecoration(
           color: Color(0xff6d96fa).withOpacity(0.3),
           borderRadius: BorderRadius.circular(15)),
@@ -32,16 +30,16 @@ class _FlipCardWidetState extends State<FlipCardWidet> {
                 Expanded(
                   child: Image.asset(
                     'assets/database.png',
-                    height: 25,
-                    width: 25,
+                    height: 20,
+                    width: 20,
                   ),
                 ),
                 Expanded(
-                    child: AutoSizeText(
+                    child: Text(
                   softWrap: true,
                   widget.Frontext,
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 8,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                   maxLines: 2,
@@ -49,14 +47,11 @@ class _FlipCardWidetState extends State<FlipCardWidet> {
                 Expanded(
                   child: Image.asset(
                     'assets/barimg.png',
-                    height: 25,
-                    width: 25,
+                    height: 20,
+                    width: 20,
                   ),
                 ),
               ],
-            ),
-            SizedBox(
-              height: 10,
             ),
             Text(
               '${widget.Backtext}',

@@ -2,27 +2,21 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
-import 'package:integraphics/Screens/Infographics.dart';
 import 'package:integraphics/Screens/Mainview.dart';
 import 'package:integraphics/Screens/Schedule%20Notification/services/notification_service.dart';
-
 import 'package:integraphics/main.dart';
-import 'package:integraphics/widgets/unauthaccess.dart';
-import 'package:local_auth/local_auth.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quickalert/quickalert.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-
-import '../Screens/DropdownScreens/HR_Dashboard.dart';
-
-import 'lg.dart';
-import 'widget/loginContainer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'widget/loginContainer.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -89,39 +83,49 @@ class _LoginPageState extends State<LoginPage> {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-        body: SizedBox(
-          height: height,
-          child: Stack(
-            children: [
-              Positioned(height: height * 0.43, child: const LoginContainer()),
-              SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: height * .55),
-                          _usernameWidget(),
-                          const SizedBox(height: 20),
-                          _passwordwidget(),
-                        ],
+        body: ConnectivityWidgetWrapper(
+          disableInteraction: true,
+          offlineWidget: Center(
+              child: Lottie.asset(
+            'assets/images/lostconnection.json',
+          )),
+          child: SizedBox(
+            height: height,
+            child: Stack(
+              children: [
+                Positioned(
+                    height: height * 0.43, child: const LoginContainer()),
+                SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(height: height * .55),
+                            _usernameWidget(),
+                            const SizedBox(height: 20),
+                            _passwordwidget(),
+                          ],
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _submitButton(),
-                      ],
-                    ),
-                    SizedBox(height: height * .035),
-                  ],
+                      const SizedBox(height: 30),
+                      Builder(builder: (context) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _submitButton(),
+                          ],
+                        );
+                      }),
+                      SizedBox(height: height * .035),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -232,8 +236,8 @@ class _LoginPageState extends State<LoginPage> {
                         shape: StadiumBorder(),
                       ),
                       /*shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(80.0)),
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(0),*/
+                              textColor: Colors.white,
+                              padding: const EdgeInsets.all(0),*/
                       child: Text(
                         "LOGIN",
                         textAlign: TextAlign.center,
@@ -301,9 +305,10 @@ class _LoginPageState extends State<LoginPage> {
                   backgroundColor: Color(0xff29378f),
                   textColor: Colors.white,
                   fontSize: 16.0);
-
-              Navigator.push(context,
-                  MaterialPageRoute(builder: ((context) => MainView())));
+              setState(() {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: ((context) => MainView())));
+              });
             }
 
             setState(() {

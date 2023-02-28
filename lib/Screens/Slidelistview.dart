@@ -1,7 +1,7 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:integraphics/main.dart';
-import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class SlideListView extends StatefulWidget {
   final Widget? view1;

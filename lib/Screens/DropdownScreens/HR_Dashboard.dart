@@ -1,13 +1,9 @@
-import 'dart:math';
-
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flip_card/flip_card.dart';
 import 'package:flip_card/flip_card_controller.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:flutter_radar_chart/flutter_radar_chart.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
@@ -19,6 +15,7 @@ import 'package:integraphics/widgets/Flipcard.dart';
 import 'package:integraphics/widgets/Tooltips.dart';
 import 'package:integraphics/widgets/allcharts.dart';
 import 'package:integraphics/widgets/radarchart.dart';
+import 'package:lottie/lottie.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -57,6 +54,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
 
   @override
   void dispose() {
+    DonutScreeshotcontrollerlist;
     super.dispose();
   }
 
@@ -82,33 +80,40 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       //       setState(() {});
       //     }),
       // child: Icon(Icons.refresh_sharp)),
-      body: FutureBuilder<dynamic>(
-        future: _value,
-        builder: (
-          BuildContext context,
-          AsyncSnapshot<dynamic> snapshot,
-        ) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: SpinKitSpinningLines(
-                lineWidth: 5,
-                size: 100,
-                color: Color(0xff6d96fa),
-              ),
-            );
-          } else if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return const Text('Error');
-            } else if (snapshot.hasData) {
-              print(dataa);
-              return Body();
+      body: ConnectivityWidgetWrapper(
+        stacked: false,
+        offlineWidget: Center(
+            child: Lottie.asset(
+          'assets/images/lostconnection.json',
+        )),
+        child: FutureBuilder<dynamic>(
+          future: _value,
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<dynamic> snapshot,
+          ) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: SpinKitSpinningLines(
+                  lineWidth: 5,
+                  size: 100,
+                  color: Color(0xff6d96fa),
+                ),
+              );
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return const Text('Error');
+              } else if (snapshot.hasData) {
+                print(dataa);
+                return Body();
+              } else {
+                return Center(child: const Text('Server Error'));
+              }
             } else {
-              return Center(child: const Text('Server Error'));
+              return Text('State: ${snapshot.connectionState}');
             }
-          } else {
-            return Text('State: ${snapshot.connectionState}');
-          }
-        },
+          },
+        ),
       ),
     );
   }
@@ -340,7 +345,7 @@ class _HR_DashboardState extends State<HR_Dashboard> {
               ),
             );
           }
-          return Flexible(
+          return Expanded(
             child: Screenshot(
               controller: DonutScreeshotcontrollerlist[Doughnutt.length],
               child: FlipCard(
@@ -1617,13 +1622,13 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       }
     });
 
-    print('pie: ${piecount.toList()}');
-    print('Column: ${columncount.toList()}');
-    print('Bar: ${Barcount.toList()}');
-    print('doughnut: ${doughnutcount.toList()}');
-    print('Scatter: ${scattercount.toList()}');
-    print('Funnel : ${funnelcount.toList()}');
-    print('Spline : ${Linescount.toList()}');
+    // print('pie: ${piecount.toList()}');
+    // print('Column: ${columncount.toList()}');
+    // print('Bar: ${Barcount.toList()}');
+    // print('doughnut: ${doughnutcount.toList()}');
+    // print('Scatter: ${scattercount.toList()}');
+    // print('Funnel : ${funnelcount.toList()}');
+    // print('Spline : ${Linescount.toList()}');
 
     List<Widget> all = [
       ...piedata,
@@ -1636,82 +1641,87 @@ class _HR_DashboardState extends State<HR_Dashboard> {
       ...Radardata,
       ...Doubleline
     ];
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: LayoutBuilder(
-          builder: (BuildContext ctx, BoxConstraints constraints) {
-        if (constraints.maxWidth >= 480) {
-          return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2),
-                  itemCount: all.length,
-                  itemBuilder: ((context, index) {
-                    return Column(
+    return LayoutBuilder(
+        builder: (BuildContext ctx, BoxConstraints constraints) {
+      if (constraints.maxWidth >= 480) {
+        return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2),
+                itemCount: all.length,
+                itemBuilder: ((context, index) {
+                  return Column(
+                    children: [
+                      Flexible(child: all[index]),
+                    ],
+                  );
+                })));
+      } else {
+        return ListView(
+          shrinkWrap: true,
+          children: [
+            Selectedinput == 'CRM'
+                ? SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Column(
                       children: [
-                        Flexible(child: all[index]),
+                        Row(
+                          children: [
+                            FlipCardWidet(
+                              dataa['cardData2']['result'][2].toString(),
+                              dataa['cardData2']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData5']['result'][2].toString(),
+                              dataa['cardData5']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData6']['result'][2].toString(),
+                              dataa['cardData6']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData15']['result'][2].toString(),
+                              dataa['cardData15']['result'][0].toString(),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            FlipCardWidet(
+                              dataa['cardData16']['result'][2].toString(),
+                              dataa['cardData16']['result'][0].toString(),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [Text('Swipe for more-->>')],
+                        ),
                       ],
-                    );
-                  })));
-        } else {
-          return ListView(
-            children: [
-              Selectedinput == 'CRM'
-                  ? SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          FlipCardWidet(
-                            dataa['cardData2']['result'][2].toString(),
-                            dataa['cardData2']['result'][0].toString(),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          FlipCardWidet(
-                            dataa['cardData5']['result'][2].toString(),
-                            dataa['cardData5']['result'][0].toString(),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          FlipCardWidet(
-                            dataa['cardData6']['result'][2].toString(),
-                            dataa['cardData6']['result'][0].toString(),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          FlipCardWidet(
-                            dataa['cardData15']['result'][2].toString(),
-                            dataa['cardData15']['result'][0].toString(),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          FlipCardWidet(
-                            dataa['cardData16']['result'][2].toString(),
-                            dataa['cardData16']['result'][0].toString(),
-                          ),
-                        ],
-                      ),
-                    )
-                  : Container(),
-              ...piedata,
-              ...Doughnutt,
-              ...Columndata,
-              ...Bardata,
-              ...FunnelData,
-              ...Scatterdata,
-              ...Spline,
-              ...Radardata,
-              ...Doubleline
-            ],
-          );
-        }
-      }),
-    );
+                    ),
+                  )
+                : Container(),
+            ...piedata,
+            ...Doughnutt,
+            ...Columndata,
+            ...Bardata,
+            ...FunnelData,
+            ...Scatterdata,
+            ...Spline,
+            ...Radardata,
+            ...Doubleline
+          ],
+        );
+      }
+    });
   }
 }

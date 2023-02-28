@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:integraphics/Screens/Schedule%20Notification/MyDay.dart';
 import 'package:integraphics/Screens/settings.dart';
-import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
-import 'package:integraphics/main.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../Screens/Infographics.dart';
 
 class drawer extends StatefulWidget {
   const drawer({super.key});

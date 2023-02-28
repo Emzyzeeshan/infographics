@@ -1,36 +1,21 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:convert';
-import 'package:add_2_calendar/add_2_calendar.dart';
+
 import 'package:animated_floating_buttons/widgets/animated_floating_action_button.dart';
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import 'package:floating_bottom_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_select/flutter_awesome_select.dart';
 import 'package:http/http.dart';
-import 'package:integraphics/Constants/ChartScreenshotcontroller.dart';
 import 'package:integraphics/Constants/ResponsiveSize.dart';
-import 'package:integraphics/Screens/DropdownScreens/HT_Dashboard.dart';
-import 'package:integraphics/Screens/DropdownScreens/Product%20_and_service_spend.dart';
-import 'package:integraphics/Screens/DropdownScreens/Product_Dashboard.dart';
-import 'package:integraphics/Screens/Schedule%20Notification/MyDay.dart';
-import 'package:integraphics/Screens/Social%20Media%20&News/SocialMedia.dart';
-
-import 'package:integraphics/Screens/testpage.dart';
-import 'package:integraphics/Services/themesetup/DarkThemeProvider.dart';
 import 'package:integraphics/widgets/CircularLoader.dart';
 import 'package:integraphics/widgets/Drawer.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
-import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
-import 'package:provider/provider.dart';
-import 'package:screenshot/screenshot.dart';
-import 'package:simple_speed_dial/simple_speed_dial.dart';
+import 'package:lottie/lottie.dart';
 
-import '../Logout/logout.dart';
 import '../main.dart';
-
 import 'DropdownScreens/HR_Dashboard.dart';
-
-import 'DropdownScreens/CRM.dart';
-import 'DropdownScreens/Demand&Supply.dart';
 
 class InfoGraphics extends StatefulWidget {
   var logindata;
@@ -123,6 +108,11 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                 return <Widget>[
                   SliverAppBar(
                       actions: [
+                        IconButton(
+                            onPressed: () {
+                              setState(() {});
+                            },
+                            icon: Icon(Icons.refresh)),
                         IconButton(
                           icon: Icon(Icons.filter_alt),
                           onPressed: () {
@@ -355,7 +345,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                       flexibleSpace: FlexibleSpaceBar(
                         background: Container(
                           child: Padding(
-                            padding: const EdgeInsets.only(top: 28.0),
+                            padding: const EdgeInsets.only(top: 18.0),
                             child: Image.asset(
                               'assets/images/IntegralGifLogo.gif',
                               color: Colors.white,
@@ -385,7 +375,7 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                         tileMode: TileMode.clamp),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 0.0),
+                    padding: const EdgeInsets.only(),
                     child: Stack(
                       children: [
                         Align(
@@ -404,12 +394,13 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                                   return const Text('Data Error');
                                 } else if (snapshot.hasData) {
                                   return Padding(
-                                    padding: const EdgeInsets.all(12.0),
+                                    padding: const EdgeInsets.only(
+                                        left: 12.0, right: 12, bottom: 7),
                                     child: DropdownButtonHideUnderline(
                                       child: DropdownButton2(
                                         key: DashboardDropdownkey,
                                         hint: Text(
-                                          'ok',
+                                          'Select',
                                           style: TextStyle(
                                             fontSize: 14,
                                             color: Theme.of(context).hintColor,
@@ -488,58 +479,12 @@ class _InfoGraphicsState extends State<InfoGraphics> {
                     ),
                   ),
                 ),
-                Container(
-                  child: Flexible(
-                    child: HR_Dashboard(),
-                  ),
+                Flexible(
+                  child: HR_Dashboard(),
                 ),
               ]))),
     );
   }
-
-  // Widget custompage() {
-  //   var customwid;
-
-  //   switch (Selectedinput) {
-  //     case 'CRM':
-  //       setState(() {
-  //         customwid = HR_Dashboard();
-  //       });
-
-  //       break;
-  //     case 'HT':
-  //       customwid = HR_Dashboard();
-
-  //       break;
-  //     case 'Products':
-  //       setState(() {
-  //         customwid = HR_Dashboard();
-  //       });
-
-  //       break;
-  //     case 'Demand & Supply':
-  //       setState(() {
-  //         customwid = HR_Dashboard();
-  //       });
-
-  //       break;
-  //     case 'HR Dashboard':
-  //       setState(() {
-  //         customwid = HR_Dashboard();
-  //       });
-  //       break;
-  //     case 'Product and Service Spend':
-  //       setState(() {
-  //         customwid = HR_Dashboard();
-  //       });
-  //       break;
-  //     default:
-  //       setState(() => customwid = Container());
-  //   }
-
-  //   return customwid;
-  // }
-//note: Api call for Dropdown element of infographics
 
   Future<dynamic> DropdownApi() async {
     // await Future.delayed(Duration(seconds: 1));

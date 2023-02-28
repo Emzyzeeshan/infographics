@@ -1,25 +1,22 @@
 import 'dart:io';
 
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:get/get.dart';
 import 'package:integraphics/Screens/Schedule%20Notification/services/notification_service.dart';
-import 'package:integraphics/login/lg.dart';
-import 'package:integraphics/widgets/unauthaccess.dart';
 import 'package:local_auth/local_auth.dart';
-import 'package:open_filex/open_filex.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:timezone/data/latest.dart' as tz;
 
-import 'Screens/Infographics.dart';
 import 'Screens/Schedule Notification/details_page.dart';
 import 'Services/themesetup/DarkThemeProvider.dart';
 import 'Services/themesetup/styles.dart';
 import 'login/loginPage.dart';
-import 'login/newphonescreen.dart';
-import 'package:timezone/data/latest.dart' as tz;
 
 void main() async {
   tz.initializeTimeZones();
@@ -140,11 +137,17 @@ class _MyAppState extends State<MyApp> {
       },
       child: Consumer<DarkThemeProvider>(
         builder: (BuildContext context, value, Widget? child) {
-          return GetMaterialApp(
-            navigatorKey: navigatorKey,
-            debugShowCheckedModeBanner: false,
-            theme: Styles.themeData(themeChangeProvider.darkTheme, context),
-            home: LoginPage(),
+          return ConnectivityAppWrapper(
+            app: GetMaterialApp(
+                navigatorKey: navigatorKey,
+                debugShowCheckedModeBanner: false,
+                theme: Styles.themeData(themeChangeProvider.darkTheme, context),
+                home: AnimatedSplashScreen(
+                  animationDuration: Duration(seconds: 3),
+                  splash: 'assets/smartlogo.png',
+                  nextScreen: LoginPage(),
+                  splashTransition: SplashTransition.fadeTransition,
+                )),
           );
         },
       ),

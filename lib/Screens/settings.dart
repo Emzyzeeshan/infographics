@@ -257,7 +257,7 @@ class _SettingsState extends State<Settings> {
       print(response.body);
       logindata.setBool('login', true);
 
-      Navigator.push(
+      Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => LoginPage()));
 
       await Fluttertoast.showToast(

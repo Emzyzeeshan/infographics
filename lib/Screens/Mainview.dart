@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:integraphics/Screens/Infographics.dart';
 import 'package:integraphics/Screens/Slidelistview.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SocialMedia.dart';
 import 'package:integraphics/main.dart';
 import 'package:is_first_run/is_first_run.dart';
-import 'package:lottie/lottie.dart';
-import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -36,7 +33,7 @@ class _MainViewState extends State<MainView> {
         backgroundColor: Colors.amberAccent[50],
         body: SlideListView(
           floatingActionButtonColor: Color(0xff6d96fa),
-          showFloatingActionButton: true,
+          showFloatingActionButton: false,
           view1: InfoGraphics(logindata),
           view2: SidebarXExampleApp(),
           enabledSwipe: true,

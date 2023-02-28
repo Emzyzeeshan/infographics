@@ -296,8 +296,11 @@
 //     ..lineTo(rect.size.width, 0)
 //     ..close();
 // }
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_select/flutter_awesome_select.dart';
+import 'package:folding_cell/folding_cell.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Facebook.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Liveupdates.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/NewsChannel.dart';
@@ -307,10 +310,11 @@ import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Twitter
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/Youtube.dart';
 import 'package:integraphics/Screens/Social%20Media%20&News/SubNewspages/instagram.dart';
 import 'package:integraphics/widgets/SocialnewsFilter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sidebarx/sidebarx.dart';
 
-SidebarXController _controller =
-    SidebarXController(selectedIndex: 0, extended: false);
+// SidebarXController _controller =
+//     SidebarXController(selectedIndex: 0, extended: false);
 
 class SidebarXExampleApp extends StatefulWidget {
   SidebarXExampleApp({Key? key}) : super(key: key);
@@ -337,567 +341,917 @@ class _SidebarXExampleAppState extends State<SidebarXExampleApp> {
 
   ScrollController _scrollController = ScrollController();
   PageController? _controller = PageController();
+  final _foldingCellKey = GlobalKey<SimpleFoldingCellState>();
+  bool isfolded = true;
   @override
   Widget build(BuildContext context) {
     final isSmallScreen = MediaQuery.of(context).size.width < 600;
-    return Scaffold(
-      backgroundColor: Color(0xffd7e2fe),
-      key: _key,
-      appBar: isSmallScreen
-          ? AppBar(
-              actions: [
-                // IconButton(
-                //     onPressed: () {
+    return Builder(
+      builder: (ctx) {
+        return Scaffold(
+          // backgroundColor: Color(0xffd7e2fe),
+          key: _key,
+          appBar: isSmallScreen
+              ? AppBar(
+                  actions: [
+                    IconButton(
+                        onPressed: () {
+                          showDialog(
+                              context: ctx,
+                              builder: ((ctx) {
+                                return Scaffold(
+                                  appBar: AppBar(
+                                    backgroundColor: Color(0xff6d96fa),
+                                    title: Text(
+                                      'Filter',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22),
+                                    ),
+                                    centerTitle: true,
+                                  ),
+                                  body: Column(
+                                    children: <Widget>[
+                                      const SizedBox(height: 7),
+                                      SmartSelect<String>.multiple(
+                                        title: 'Search Party',
+                                        selectedValue: _Searchparty,
+                                        onChange: (selected) => setState(() =>
+                                            _Searchparty = selected.value),
+                                        choiceItems: Searchparty,
+                                        modalType: S2ModalType.popupDialog,
+                                        tileBuilder: (context, state) {
+                                          return ListTile(
+                                            tileColor: Colors.grey[100],
+                                            title: Text(state.title ?? ''),
+                                            subtitle: Text(
+                                              state.selected.toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.grey),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                            trailing: const Icon(
+                                              Icons.keyboard_arrow_right,
+                                              color: Colors.grey,
+                                            ),
+                                            onTap: state.showModal,
+                                          );
+                                        },
+                                      ),
+                                      const Divider(
+                                        indent: 20,
+                                      ),
+                                      SmartSelect<String>.multiple(
+                                        title: 'Search District',
+                                        selectedValue: _SearchConstitution,
+                                        onChange: (selected) {
+                                          setState(() => _SearchConstitution =
+                                              selected.value);
+                                        },
+                                        choiceItems: SearchDistrict,
+                                        modalType: S2ModalType.popupDialog,
+                                        tileBuilder: (context, state) {
+                                          return ListTile(
+                                            tileColor: Colors.grey[100],
+                                            title: Text(state.title ?? ''),
+                                            subtitle: Text(
+                                              state.selected.toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.grey),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                            trailing: const Icon(
+                                              Icons.keyboard_arrow_right,
+                                              color: Colors.grey,
+                                            ),
+                                            onTap: state.showModal,
+                                          );
+                                        },
+                                      ),
+                                      const SizedBox(height: 7),
+                                      SmartSelect<String>.multiple(
+                                        title: 'Search Constitition',
+                                        selectedValue: _searchdistrict,
+                                        onChange: (selected) => setState(() =>
+                                            _searchdistrict = selected.value),
+                                        choiceItems: SearchConstitution,
+                                        modalType: S2ModalType.popupDialog,
+                                        tileBuilder: (context, state) {
+                                          return ListTile(
+                                            tileColor: Colors.grey[100],
+                                            title: Text(state.title ?? ''),
+                                            subtitle: Text(
+                                              state.selected.toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.grey),
+                                              overflow: TextOverflow.ellipsis,
+                                              maxLines: 1,
+                                            ),
+                                            trailing: const Icon(
+                                              Icons.keyboard_arrow_right,
+                                              color: Colors.grey,
+                                            ),
+                                            onTap: state.showModal,
+                                          );
+                                        },
+                                      ),
+                                      const Divider(
+                                        indent: 20,
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            MaterialButton(
+                                              onPressed: () {},
+                                              child: Text('Apply'),
+                                              color: Color(0xff6d96fa),
+                                            ),
+                                            MaterialButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  _SearchConstitution.clear();
+                                                  _Searchparty.clear();
+                                                  _searchdistrict.clear();
+                                                });
+                                              },
+                                              child: Text('Reset'),
+                                              color: Color(0xff6d96fa),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              }));
+                        },
+                        icon: Icon(
+                          Icons.filter_alt_rounded,
+                          color: Colors.black,
+                        )),
+                  ],
+                  elevation: 0,
+                  backgroundColor: Colors.white,
+                  // backgroundColor: Color(0xffd7e2fe),
+                  centerTitle: true,
+                  flexibleSpace: Padding(
+                    padding: const EdgeInsets.only(top: 18.0),
+                    child: Image.asset(
+                      'assets/images/IntegralGifLogo.gif',
+                      height: 40,
+                      width: 100,
+                    ),
+                  ),
+                  // flexibleSpace: Container(
+                  //   decoration: BoxDecoration(
+                  //     gradient: LinearGradient(
+                  //         colors: [
+                  //           Color(0xff6d96fa),
+                  //           Color(0xffd7e2fe),
+                  //         ],
+                  //         begin: Alignment.topCenter,
+                  //         end: Alignment.bottomCenter,
+                  //         stops: [0.0, 1.0],
+                  //         tileMode: TileMode.clamp),
+                  //   ),
+                  // ),
+                )
+              : null,
+          body: ConnectivityWidgetWrapper(
+            stacked: false,
+            offlineWidget: Center(
+                child: Lottie.asset(
+              'assets/images/lostconnection.json',
+            )),
+            child: Column(
+              children: [
+                // Container(
+                //   alignment: Alignment.topCenter,
+                //   child: SimpleFoldingCell.create(
+                //     key: _foldingCellKey,
+                //     frontWidget: _buildFrontWidget(),
+                //     innerWidget: _buildInnerWidget(),
+                //     cellSize: Size(MediaQuery.of(context).size.width, 65),
+                //     padding: EdgeInsets.all(10),
+                //     animationDuration: Duration(milliseconds: 300),
+                //     borderRadius: 10,
+                //     onOpen: () {
+                //       print('cell opened');
                 //       setState(() {
-                //         isvisible = !isvisible;
+                //         isfolded = false;
                 //       });
                 //     },
-                //     icon: Icon(
-                //       Icons.reset_tv_rounded,
-                //       color: Colors.black,
-                //     ))
-                PopupMenuButton(
-                    icon: Icon(
-                      Icons.settings,
-                      color: Colors.black,
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    itemBuilder: ((context) {
-                      return [
-                        PopupMenuItem(
-                          onTap: (() {
-                            setState(() {
-                              isvisible = !isvisible;
-                            });
-                          }),
-                          child: isvisible == true
-                              ? Text('Hide Toolbar')
-                              : Text('Show ToolBar'),
-                        ),
-                        PopupMenuItem(
-                          onTap: () async {
-                            await showDialog(
-                                context: context,
-                                builder: ((context) {
-                                  return Scaffold(
-                                    appBar: AppBar(
-                                      backgroundColor: Color(0xff6d96fa),
-                                      title: Text(
-                                        'Filter',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 22),
-                                      ),
-                                      centerTitle: true,
-                                    ),
-                                    body: Column(
-                                      children: <Widget>[
-                                        const SizedBox(height: 7),
-                                        SmartSelect<String>.multiple(
-                                          title: 'Search Party',
-                                          selectedValue: _Searchparty,
-                                          onChange: (selected) => setState(() =>
-                                              _Searchparty = selected.value),
-                                          choiceItems: Searchparty,
-                                          modalType: S2ModalType.popupDialog,
-                                          tileBuilder: (context, state) {
-                                            return ListTile(
-                                              tileColor: Colors.grey[100],
-                                              title: Text(state.title ?? ''),
-                                              subtitle: Text(
-                                                state.selected.toString(),
-                                                style: const TextStyle(
-                                                    color: Colors.grey),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                              trailing: const Icon(
-                                                Icons.keyboard_arrow_right,
-                                                color: Colors.grey,
-                                              ),
-                                              onTap: state.showModal,
-                                            );
-                                          },
-                                        ),
-                                        const Divider(
-                                          indent: 20,
-                                        ),
-                                        SmartSelect<String>.multiple(
-                                          title: 'Search District',
-                                          selectedValue: _SearchConstitution,
-                                          onChange: (selected) {
-                                            setState(() => _SearchConstitution =
-                                                selected.value);
-                                          },
-                                          choiceItems: SearchDistrict,
-                                          modalType: S2ModalType.popupDialog,
-                                          tileBuilder: (context, state) {
-                                            return ListTile(
-                                              tileColor: Colors.grey[100],
-                                              title: Text(state.title ?? ''),
-                                              subtitle: Text(
-                                                state.selected.toString(),
-                                                style: const TextStyle(
-                                                    color: Colors.grey),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                              trailing: const Icon(
-                                                Icons.keyboard_arrow_right,
-                                                color: Colors.grey,
-                                              ),
-                                              onTap: state.showModal,
-                                            );
-                                          },
-                                        ),
-                                        const SizedBox(height: 7),
-                                        SmartSelect<String>.multiple(
-                                          title: 'Search Constitition',
-                                          selectedValue: _searchdistrict,
-                                          onChange: (selected) => setState(() =>
-                                              _searchdistrict = selected.value),
-                                          choiceItems: SearchConstitution,
-                                          modalType: S2ModalType.popupDialog,
-                                          tileBuilder: (context, state) {
-                                            return ListTile(
-                                              tileColor: Colors.grey[100],
-                                              title: Text(state.title ?? ''),
-                                              subtitle: Text(
-                                                state.selected.toString(),
-                                                style: const TextStyle(
-                                                    color: Colors.grey),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 1,
-                                              ),
-                                              trailing: const Icon(
-                                                Icons.keyboard_arrow_right,
-                                                color: Colors.grey,
-                                              ),
-                                              onTap: state.showModal,
-                                            );
-                                          },
-                                        ),
-                                        const Divider(
-                                          indent: 20,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              MaterialButton(
-                                                onPressed: () {},
-                                                child: Text('Apply'),
-                                                color: Color(0xff6d96fa),
-                                              ),
-                                              MaterialButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    _SearchConstitution.clear();
-                                                    _Searchparty.clear();
-                                                    _searchdistrict.clear();
-                                                  });
-                                                },
-                                                child: Text('Reset'),
-                                                color: Color(0xff6d96fa),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }));
-                          },
-                          child: Text('Filter'),
-                        )
-                      ];
-                    }))
-              ],
-              elevation: 0,
-              backgroundColor: Color(0xffd7e2fe),
-              centerTitle: true,
-              flexibleSpace: Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: Image.asset(
-                  'assets/images/IntegralGifLogo.gif',
-                  height: 40,
-                  width: 100,
+                //     onClose: () {
+                //       setState(() {
+                //         isfolded = true;
+                //       });
+                //       print('cell closed');
+                //     },
+                //   ),
+                // ),
+                NewsRow(
+                    scrollController: _scrollController,
+                    controller: _controller),
+
+                SizedBox(
+                  height: 6,
                 ),
-              ),
-              // flexibleSpace: Container(
-              //   decoration: BoxDecoration(
-              //     gradient: LinearGradient(
-              //         colors: [
-              //           Color(0xff6d96fa),
-              //           Color(0xffd7e2fe),
-              //         ],
-              //         begin: Alignment.topCenter,
-              //         end: Alignment.bottomCenter,
-              //         stops: [0.0, 1.0],
-              //         tileMode: TileMode.clamp),
-              //   ),
-              // ),
-            )
-          : null,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              controller: _scrollController,
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Column(
+                Expanded(
+                  child: PageView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: _controller,
                     children: [
-                      GestureDetector(
-                        onTap: () {
-                          _controller!.jumpToPage(0);
-                        },
-                        child: Image.asset(
-                          'assets/newspaperdxp.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        'NewsPaper',
-                        style: TextStyle(color: Colors.black),
-                      )
+                      NewsPaper(false),
+                      NewsChannnel(false),
+                      Survey(false),
+                      LiveUpdates(false),
+                      Twitter(false),
+                      YouTube(false),
+                      Facebook(false),
+                      Instagram(false),
                     ],
                   ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _controller!.jumpToPage(1);
-                        },
-                        child: Image.asset(
-                          'assets/newsdxps.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        'News Channel',
-                        style: TextStyle(color: Colors.black),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _controller!.jumpToPage(2);
-                        },
-                        child: Image.asset(
-                          'assets/surveydxp.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        'Survey',
-                        style: TextStyle(color: Colors.black),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _controller!.jumpToPage(3);
-                        },
-                        child: Image.asset(
-                          'assets/liveUpdares.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        'live Updates',
-                        style: TextStyle(color: Colors.black),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _controller!.jumpToPage(4);
-                        },
-                        child: Image.asset(
-                          'assets/twitter.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        'Twitter',
-                        style: TextStyle(color: Colors.black),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _controller!.jumpToPage(5);
-                        },
-                        child: Image.asset(
-                          'assets/yt.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        'YouTube',
-                        style: TextStyle(color: Colors.black),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _controller!.jumpToPage(6);
-                        },
-                        child: Image.asset(
-                          'assets/fb.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        'FaceBook',
-                        style: TextStyle(color: Colors.black),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Column(
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          _controller!.jumpToPage(7);
-                        },
-                        child: Image.asset(
-                          'assets/insta.png',
-                          height: 30,
-                          width: 30,
-                        ),
-                      ),
-                      Text(
-                        'Instagram',
-                        style: TextStyle(color: Colors.black),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+                ),
+                // isvisible == true
+                //     ? ExampleSidebarX(controller: _controller)
+                //     : Container(),
+                // if (!isSmallScreen)
+                //   ExampleSidebarX(controller: _controller),
+                // Expanded(
+                //   child: Center(
+                //     child: _ScreensExample(
+                //       controller: _controller,
+                //     ),
+                //   ),
+                // ),
+              ],
             ),
-
-            SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: _controller,
-                children: [
-                  NewsPaper(false),
-                  NewsChannnel(false),
-                  Survey(false),
-                  LiveUpdates(false),
-                  Twitter(false),
-                  YouTube(false),
-                  Facebook(false),
-                  Instagram(false),
-                ],
-              ),
-            )
-            // isvisible == true
-            //     ? ExampleSidebarX(controller: _controller)
-            //     : Container(),
-            // if (!isSmallScreen)
-            //   ExampleSidebarX(controller: _controller),
-            // Expanded(
-            //   child: Center(
-            //     child: _ScreensExample(
-            //       controller: _controller,
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ExampleSidebarX extends StatelessWidget {
-  const ExampleSidebarX({
-    Key? key,
-    required SidebarXController controller,
-  })  : _controller = controller,
-        super(key: key);
-
-  final SidebarXController _controller;
-
-  @override
-  Widget build(BuildContext context) {
-    return SidebarX(
-      controller: _controller,
-      theme: SidebarXTheme(
-        margin: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: Color(0xff6d96fa).withOpacity(0.3),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        hoverColor: scaffoldBackgroundColor,
-        textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
-        selectedTextStyle: const TextStyle(color: Colors.white),
-        itemTextPadding: const EdgeInsets.only(left: 30),
-        selectedItemTextPadding: const EdgeInsets.only(left: 30),
-        itemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: canvasColor),
-        ),
-        selectedItemDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: actionColor.withOpacity(0.37),
-          ),
-          gradient: const LinearGradient(
-            colors: [accentCanvasColor, canvasColor],
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.28),
-              blurRadius: 30,
-            )
-          ],
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.white.withOpacity(0.7),
-          size: 20,
-        ),
-        selectedIconTheme: const IconThemeData(
-          color: Colors.white,
-          size: 20,
-        ),
-      ),
-      extendedTheme: const SidebarXTheme(
-        width: 200,
-        decoration: BoxDecoration(
-          color: canvasColor,
-        ),
-      ),
-      footerDivider: divider,
-      headerBuilder: (context, extended) {
-        return SizedBox(
-          height: 100,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Image.asset('assets/images/IntegralGifLogo.gif'),
           ),
         );
       },
-      items: items,
+    );
+  }
+
+  Widget _buildFrontWidget() {
+    return Container(
+      alignment: Alignment.center,
+      child: Stack(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(top: 5.0),
+            child: Align(
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _controller!.jumpToPage(0);
+                          },
+                          child: Image.asset(
+                            'assets/images/news2.png',
+                            height: 30,
+                            width: 30,
+                          ),
+                        ),
+                        Text(
+                          'NewsPaper',
+                          style: TextStyle(fontSize: 11),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _controller!.jumpToPage(1);
+                          },
+                          child: Image.asset(
+                            'assets/newsdxps.png',
+                            height: 30,
+                            width: 30,
+                          ),
+                        ),
+                        Text(
+                          'News Channel',
+                          style: TextStyle(fontSize: 11),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _controller!.jumpToPage(2);
+                          },
+                          child: Image.asset(
+                            'assets/images/survey2.png',
+                            height: 32,
+                            width: 32,
+                          ),
+                        ),
+                        Text(
+                          'Survey',
+                          style: TextStyle(fontSize: 11),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            _controller!.jumpToPage(3);
+                          },
+                          child: Image.asset(
+                            'assets/liveUpdares.png',
+                            height: 30,
+                            width: 30,
+                          ),
+                        ),
+                        Text(
+                          'live Updates',
+                          style: TextStyle(fontSize: 11),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      children: [
+                        GestureDetector(
+                            onTap: () {
+                              _foldingCellKey?.currentState?.toggleFold();
+                            },
+                            child: Icon(
+                              Icons.arrow_circle_down_rounded,
+                              size: 30,
+                            )),
+                        Text(
+                          'Show more',
+                          style: TextStyle(fontSize: 11),
+                        )
+                      ],
+                    )
+                  ],
+                )),
+          ),
+          // Positioned(
+          //   top: 10,
+          //   right: 10,
+          //   bottom: 10,
+          //   child: TextButton(
+          //     onPressed: () => _foldingCellKey?.currentState?.toggleFold(),
+          //     child: Text(
+          //       "More",
+          //     ),
+          //     style: TextButton.styleFrom(
+          //       backgroundColor: Colors.white,
+          //     ),
+          //   ),
+          // )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInnerWidget() {
+    return Container(
+      color: Color(0xFFecf2f9),
+      padding: EdgeInsets.only(top: 6),
+      child: Stack(
+        children: [
+          // todo : 2nd line of open state
+          isfolded == false
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 50.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              _controller!.jumpToPage(4);
+                            },
+                            child: Image.asset(
+                              'assets/twitter.png',
+                              height: 30,
+                              width: 30,
+                            ),
+                          ),
+                          Text(
+                            'Twitter',
+                            style: TextStyle(fontSize: 10),
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              _controller!.jumpToPage(5);
+                            },
+                            child: Image.asset(
+                              'assets/yt.png',
+                              height: 30,
+                              width: 30,
+                            ),
+                          ),
+                          Text(
+                            'YouTube',
+                            style: TextStyle(fontSize: 10),
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              _controller!.jumpToPage(6);
+                            },
+                            child: Image.asset(
+                              'assets/fb.png',
+                              height: 30,
+                              width: 30,
+                            ),
+                          ),
+                          Text(
+                            'FaceBook',
+                            style: TextStyle(fontSize: 10),
+                          )
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              _controller!.jumpToPage(7);
+                            },
+                            child: Image.asset(
+                              'assets/insta.png',
+                              height: 30,
+                              width: 30,
+                            ),
+                          ),
+                          Text(
+                            'Instagram',
+                            style: TextStyle(fontSize: 10),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                )
+              : Container(),
+
+          //todo : 1st line
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _controller!.jumpToPage(0);
+                    },
+                    child: Image.asset(
+                      'assets/images/news2.png',
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+                  Text(
+                    'NewsPaper',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _controller!.jumpToPage(1);
+                    },
+                    child: Image.asset(
+                      'assets/newsdxps.png',
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+                  Text(
+                    'News Channel',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _controller!.jumpToPage(2);
+                    },
+                    child: Image.asset(
+                      'assets/images/survey2.png',
+                      height: 32,
+                      width: 32,
+                    ),
+                  ),
+                  Text(
+                    'Survey',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              ),
+              Column(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _controller!.jumpToPage(3);
+                    },
+                    child: Image.asset(
+                      'assets/liveUpdares.png',
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+                  Text(
+                    'live Updates',
+                    style: TextStyle(fontSize: 10),
+                  )
+                ],
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          isfolded == false
+              ? Align(
+                  alignment: Alignment.bottomCenter,
+                  child: TextButton(
+                    onPressed: () =>
+                        _foldingCellKey?.currentState?.toggleFold(),
+                    child: Text(
+                      "Close",
+                    ),
+                    // style: TextButton.styleFrom(
+                    //   backgroundColor: Colors.white,
+                    // ),
+                  ),
+                )
+              : Container(),
+        ],
+      ),
     );
   }
 }
 
-class _ScreensExample extends StatefulWidget {
-  _ScreensExample({
-    Key? key,
-    required this.controller,
-  }) : super(key: key);
+class NewsRow extends StatelessWidget {
+  const NewsRow({
+    super.key,
+    required ScrollController scrollController,
+    required PageController? controller,
+  })  : _scrollController = scrollController,
+        _controller = controller;
 
-  final SidebarXController controller;
-
-  @override
-  State<_ScreensExample> createState() => _ScreensExampleState();
-}
-
-class _ScreensExampleState extends State<_ScreensExample> {
-  PageController pageController = PageController();
-  var setStateHandler;
-  @override
-  void setState(VoidCallback fn) {
-    // TODO: implement setState
-    setStateHandler = fn;
-    super.setState(fn);
-  }
-  // @override
-  // void initSetState(Function setState) {
-  //    = setState;
-  //   super.initState();
-  // }
+  final ScrollController _scrollController;
+  final PageController? _controller;
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return AnimatedBuilder(
-      animation: widget.controller,
-      builder: (context, child) {
-        // final pageTitle = _getTitleByIndex(controller.selectedIndex);
-        switch (widget.controller.selectedIndex) {
-          case 0:
-            return NewsPaper(_controller.extended);
-          case 1:
-            return NewsChannnel(_controller.extended);
-          case 2:
-            return LiveUpdates(_controller.extended);
-          case 3:
-            return Survey(
-              _controller.extended,
-            );
-          case 4:
-            return Twitter(_controller.extended);
-          case 5:
-            return YouTube(_controller.extended);
-          case 6:
-            return Facebook(_controller.extended);
-          case 7:
-            return Instagram(_controller.extended);
-          default:
-            return Text(
-              '',
-              style: theme.textTheme.headlineSmall,
-            );
-        }
-      },
+    return SingleChildScrollView(
+      controller: _scrollController,
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller!.jumpToPage(0);
+                },
+                child: Image.asset(
+                  'assets/images/news2.png',
+                  height: 30,
+                  width: 30,
+                ),
+              ),
+              Text(
+                'NewsPaper',
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller!.jumpToPage(1);
+                },
+                child: Image.asset(
+                  'assets/newsdxps.png',
+                  height: 30,
+                  width: 30,
+                ),
+              ),
+              Text(
+                'News Channel',
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller!.jumpToPage(2);
+                },
+                child: Image.asset(
+                  'assets/images/survey2.png',
+                  height: 32,
+                  width: 32,
+                ),
+              ),
+              Text(
+                'Survey',
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller!.jumpToPage(3);
+                },
+                child: Image.asset(
+                  'assets/liveUpdares.png',
+                  height: 30,
+                  width: 30,
+                ),
+              ),
+              Text(
+                'live Updates',
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller!.jumpToPage(4);
+                },
+                child: Image.asset(
+                  'assets/twitter.png',
+                  height: 30,
+                  width: 30,
+                ),
+              ),
+              Text(
+                'Twitter',
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller!.jumpToPage(5);
+                },
+                child: Image.asset(
+                  'assets/yt.png',
+                  height: 30,
+                  width: 30,
+                ),
+              ),
+              Text(
+                'YouTube',
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller!.jumpToPage(6);
+                },
+                child: Image.asset(
+                  'assets/fb.png',
+                  height: 30,
+                  width: 30,
+                ),
+              ),
+              Text(
+                'FaceBook',
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+          SizedBox(
+            width: 10,
+          ),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _controller!.jumpToPage(7);
+                },
+                child: Image.asset(
+                  'assets/insta.png',
+                  height: 30,
+                  width: 30,
+                ),
+              ),
+              Text(
+                'Instagram',
+                style: TextStyle(fontSize: 11),
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
+
+// class ExampleSidebarX extends StatelessWidget {
+//   const ExampleSidebarX({
+//     Key? key,
+//     required SidebarXController controller,
+//   })  : _controller = controller,
+//         super(key: key);
+
+//   final SidebarXController _controller;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return SidebarX(
+//       controller: _controller,
+//       theme: SidebarXTheme(
+//         margin: const EdgeInsets.all(10),
+//         decoration: BoxDecoration(
+//           color: Color(0xff6d96fa).withOpacity(0.3),
+//           borderRadius: BorderRadius.circular(20),
+//         ),
+//         hoverColor: scaffoldBackgroundColor,
+//         textStyle: TextStyle(color: Colors.white.withOpacity(0.7)),
+//         selectedTextStyle: const TextStyle(color: Colors.white),
+//         itemTextPadding: const EdgeInsets.only(left: 30),
+//         selectedItemTextPadding: const EdgeInsets.only(left: 30),
+//         itemDecoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(10),
+//           border: Border.all(color: canvasColor),
+//         ),
+//         selectedItemDecoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(10),
+//           border: Border.all(
+//             color: actionColor.withOpacity(0.37),
+//           ),
+//           gradient: const LinearGradient(
+//             colors: [accentCanvasColor, canvasColor],
+//           ),
+//           boxShadow: [
+//             BoxShadow(
+//               color: Colors.black.withOpacity(0.28),
+//               blurRadius: 30,
+//             )
+//           ],
+//         ),
+//         iconTheme: IconThemeData(
+//           color: Colors.white.withOpacity(0.7),
+//           size: 20,
+//         ),
+//         selectedIconTheme: const IconThemeData(
+//           color: Colors.white,
+//           size: 20,
+//         ),
+//       ),
+//       extendedTheme: const SidebarXTheme(
+//         width: 200,
+//         decoration: BoxDecoration(
+//           color: canvasColor,
+//         ),
+//       ),
+//       footerDivider: divider,
+//       headerBuilder: (context, extended) {
+//         return SizedBox(
+//           height: 100,
+//           child: Padding(
+//             padding: const EdgeInsets.all(16.0),
+//             child: Image.asset('assets/images/IntegralGifLogo.gif'),
+//           ),
+//         );
+//       },
+//       items: items,
+//     );
+//   }
+// }
+
+// class _ScreensExample extends StatefulWidget {
+//   _ScreensExample({
+//     Key? key,
+//     required this.controller,
+//   }) : super(key: key);
+
+//   final SidebarXController controller;
+
+//   @override
+//   State<_ScreensExample> createState() => _ScreensExampleState();
+// }
+
+// class _ScreensExampleState extends State<_ScreensExample> {
+//   PageController pageController = PageController();
+//   var setStateHandler;
+//   @override
+//   void setState(VoidCallback fn) {
+//     // TODO: implement setState
+//     setStateHandler = fn;
+//     super.setState(fn);
+//   }
+//   // @override
+//   // void initSetState(Function setState) {
+//   //    = setState;
+//   //   super.initState();
+//   // }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final theme = Theme.of(context);
+//     return AnimatedBuilder(
+//       animation: widget.controller,
+//       builder: (context, child) {
+//         // final pageTitle = _getTitleByIndex(controller.selectedIndex);
+//         switch (widget.controller.selectedIndex) {
+//           case 0:
+//             return NewsPaper(_controller.extended);
+//           case 1:
+//             return NewsChannnel(_controller.extended);
+//           case 2:
+//             return LiveUpdates(_controller.extended);
+//           case 3:
+//             return Survey(
+//               _controller.extended,
+//             );
+//           case 4:
+//             return Twitter(_controller.extended);
+//           case 5:
+//             return YouTube(_controller.extended);
+//           case 6:
+//             return Facebook(_controller.extended);
+//           case 7:
+//             return Instagram(_controller.extended);
+//           default:
+//             return Text(
+//               '',
+//               style: theme.textTheme.headlineSmall,
+//             );
+//         }
+//       },
+//     );
+//   }
+// }
 
 List<SidebarXItem> items = [
   SidebarXItem(
